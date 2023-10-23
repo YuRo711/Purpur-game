@@ -2,13 +2,15 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UnityEngine.Serialization;
 
 
 public class GameLauncher : MonoBehaviourPunCallbacks
 {
     #region Serializable Fields
 
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TMP_InputField roomInput;
+    [SerializeField] private TMP_InputField nicknameInput;
     
     #endregion
     
@@ -46,7 +48,7 @@ public class GameLauncher : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom(inputField.text);
+        PhotonNetwork.CreateRoom(roomInput.text);
     }
 
     #endregion
@@ -64,7 +66,8 @@ public class GameLauncher : MonoBehaviourPunCallbacks
 
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(inputField.text);
+        PhotonNetwork.NickName = nicknameInput.text;
+        PhotonNetwork.JoinRoom(roomInput.text);
     }
 
     #endregion
