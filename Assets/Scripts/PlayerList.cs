@@ -10,47 +10,53 @@ public class PlayerList : MonoBehaviourPunCallbacks
 {
     #region Private Fields
 
-    private List<(GameObject, string)> _listItems = new ();
+    private readonly List<PlayerItem> _listItems = new ();
+
+    #endregion
+
+    #region Serialized Fields
+
+    [SerializeField] private ReadyButton readyButton;
 
     #endregion
     
-    #region Serializable Fields
+    #region Static Fields
 
-    [SerializeField] private GameObject itemPrefab;
+    private static readonly string ItemPrefabPath = "Prefabs/PlayerElement";
 
     #endregion
-
-    #region Private Mathodds
+    
+    #region Private Methods
 
     private void Awake()
     {
-        foreach (var player in PhotonNetwork.PlayerList)
-        {
-            AddPlayer(player);
-        }
+        LoadLocalPlayer(PhotonNetwork.LocalPlayer);
     }
 
-    private void AddPlayer(Player newPlayer)
+    private void LoadLocalPlayer(Player newPlayer)
     {
-        var newItem = Instantiate(itemPrefab, transform);
-        _listItems.Add((newItem, newPlayer.UserId));
-        newItem.GetComponentInChildren<TMP_Text>().text = newPlayer.NickName;
+        // var newItem = Instantiate(
+        //     Resources.Load<GameObject>(_itemPrefabPath),
+        //     transform);
+        var itemObject = PhotonNetwork.Instantiate(
+            ItemPrefabPath,
+            transform.position,
+            Quaternion.identity);
+        itemObject.transform.parent = transform;
+        itemObject.transform.localScale = Vector3.one;
+        var playerItem = itemObject.GetComponent<PlayerItem>();
+        playerItem.ConnectToPlayer(newPlayer);
+        playerItem.ConnectToList(this);
+        readyButton.PlayerItem = playerItem;
+        _listItems.Add(playerItem);
     }
-
-    #endregion
     
-    #region MonoBehaviourPunCallbacks
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-       AddPlayer(newPlayer);
-    }
+    #endregion
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    #region MonoBehaviourPun Callbacks
+
+    public override void OnLeftRoom()
     {
-        var item = _listItems
-            .Single(item => item.Item2 == otherPlayer.UserId);
-        _listItems.Remove(item);
-        Destroy(item.Item1);
     }
 
     #endregion

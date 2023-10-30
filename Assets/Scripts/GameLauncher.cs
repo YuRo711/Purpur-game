@@ -28,7 +28,7 @@ public class GameLauncher : MonoBehaviourPunCallbacks
 
     #endregion
     
-    #region MonoBehaviourPunCallbacks 
+    #region MonoBehaviourPun Callbacks 
 
     public override void OnConnectedToMaster()
     {
