@@ -44,6 +44,10 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     public void ConnectToList(PlayerList playerList)
     {
         _playerList = playerList;
+        var myTransform = transform;
+        var listTransform = playerList.transform;
+        myTransform.parent = listTransform;
+        myTransform.position = listTransform.position;
     }
 
     public void GetReady()
@@ -61,7 +65,6 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     {
         readyImage.sprite = _ready ? trueSprite : falseSprite;
     }
-
     #endregion
     
     #region IPunObservable Callbacks
@@ -71,11 +74,15 @@ public class PlayerItem : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(_ready);
+            stream.SendNext(UserNickname);
+            // Debug.LogError("sent " + _ready);
         }
         else
         {
             _ready = (bool)stream.ReceiveNext();
-            Debug.LogError("received " + _ready);
+            UserNickname = (string)stream.ReceiveNext();
+            nicknameText.text = UserNickname;
+            Debug.LogError("received " + _ready + " from " + UserNickname);
             photonView.RPC("UpdateImage", RpcTarget.AllBuffered);
         }
     }
@@ -86,6 +93,8 @@ public class PlayerItem : MonoBehaviour, IPunObservable
 
     private void Awake()
     {
+        ConnectToList(FindObjectOfType<PlayerList>());
+        transform.localScale = Vector3.one;
         IsMine = GetComponent<PhotonView>().IsMine;
         if (IsMine)
             ConnectToPlayer(PhotonNetwork.LocalPlayer);

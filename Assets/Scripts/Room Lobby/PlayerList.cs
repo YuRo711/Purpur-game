@@ -28,28 +28,17 @@ public class PlayerList : MonoBehaviourPunCallbacks
     
     #region Private Methods
 
-    private void Awake()
+    /*private void LoadLocalPlayer(Player newPlayer)
     {
-        LoadLocalPlayer(PhotonNetwork.LocalPlayer);
-    }
-
-    private void LoadLocalPlayer(Player newPlayer)
-    {
-        // var newItem = Instantiate(
-        //     Resources.Load<GameObject>(_itemPrefabPath),
-        //     transform);
         var itemObject = PhotonNetwork.Instantiate(
             ItemPrefabPath,
             transform.position,
             Quaternion.identity);
-        itemObject.transform.parent = transform;
-        itemObject.transform.localScale = Vector3.one;
         var playerItem = itemObject.GetComponent<PlayerItem>();
         playerItem.ConnectToPlayer(newPlayer);
-        playerItem.ConnectToList(this);
         readyButton.PlayerItem = playerItem;
         _listItems.Add(playerItem);
-    }
+    }*/
     
     #endregion
 
@@ -57,6 +46,34 @@ public class PlayerList : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        var itemObject = PhotonNetwork.Instantiate(
+            ItemPrefabPath,
+            transform.position,
+            Quaternion.identity);
+        var playerItem = itemObject.GetComponent<PlayerItem>();
+        playerItem.ConnectToPlayer(newPlayer);
+        _listItems.Add(playerItem);
+    }
+
+    #endregion
+
+    #region MonoBehaviour Callbacks
+    
+    private void Start()
+    {
+        // LoadLocalPlayer(PhotonNetwork.LocalPlayer);
+        foreach (var playerItem in FindObjectsOfType<PlayerItem>())
+        {
+            _listItems.Add(playerItem);
+            playerItem.ConnectToList(this);
+            var itemObject = playerItem.gameObject;
+            itemObject.transform.parent = transform;
+            itemObject.transform.localScale = Vector3.one;
+        }
     }
 
     #endregion

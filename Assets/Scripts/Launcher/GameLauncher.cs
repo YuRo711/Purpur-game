@@ -11,6 +11,7 @@ public class GameLauncher : MonoBehaviourPunCallbacks
 
     [SerializeField] private TMP_InputField roomInput;
     [SerializeField] private TMP_InputField nicknameInput;
+    [SerializeField] private GameObject loader;
     
     #endregion
     
@@ -42,8 +43,9 @@ public class GameLauncher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("RoomLobby");
         Debug.Log(string.Format("Joined room {0}", PhotonNetwork.CurrentRoom.Name));
+        PhotonNetwork.LoadLevel("RoomLobby");
+        // loader.SetActive(true);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
