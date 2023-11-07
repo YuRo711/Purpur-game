@@ -29,6 +29,8 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     public string UserId { get; private set; }
     public string UserNickname { get; private set; }
     public bool IsMine { get; private set; }
+    
+    public Player Player { get; private set; }
 
     #endregion
 
@@ -36,6 +38,7 @@ public class PlayerItem : MonoBehaviour, IPunObservable
 
     public void ConnectToPlayer(Player player)
     {
+        Player = player;
         UserId = player.UserId;
         UserNickname = player.NickName;
         nicknameText.text = UserNickname;
@@ -44,10 +47,7 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     public void ConnectToList(PlayerList playerList)
     {
         _playerList = playerList;
-        var myTransform = transform;
-        var listTransform = playerList.transform;
-        myTransform.parent = listTransform;
-        myTransform.position = listTransform.position;
+        transform.SetParent(playerList.transform, worldPositionStays: false);
     }
 
     public void GetReady()
@@ -65,6 +65,7 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     {
         readyImage.sprite = _ready ? trueSprite : falseSprite;
     }
+    
     #endregion
     
     #region IPunObservable Callbacks
