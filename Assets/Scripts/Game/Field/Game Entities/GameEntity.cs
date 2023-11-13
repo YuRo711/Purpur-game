@@ -14,7 +14,7 @@ public abstract class GameEntity : MonoBehaviour
     
     #region Properties
 
-    public Direction Direction { get; set; }
+    public Direction LookDirection { get; set; }
     public GameGrid gameGrid;
 
     #endregion
@@ -27,7 +27,7 @@ public abstract class GameEntity : MonoBehaviour
     {
         var newX = _x;
         var newY = _y;
-        var moveVector = Direction.TurnTo(moveDir).Vector;
+        var moveVector = LookDirection.TurnTo(moveDir).Vector;
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
 
@@ -42,6 +42,11 @@ public abstract class GameEntity : MonoBehaviour
     {
         _x = destX;
         _y = destX;
+    }
+
+    public void TurnTo(TurnDirections turnDirections)
+    {
+        LookDirection = LookDirection.TurnTo(turnDirections);
     }
 
     public void Die()
