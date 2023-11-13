@@ -17,6 +17,9 @@ public class Direction
             if (Math.Abs(value.x) > 1 || Math.Abs(value.y) > 1)
                 throw new ArgumentException(
                     "You can't set coordinates to anything but 0, 1 and -1, dummy");
+            if (value.x.Equals(value.y))
+                throw new ArgumentException(
+                    "Diagonal directions don't exist, they can't harm you");
             _vector = value;
         }
     }

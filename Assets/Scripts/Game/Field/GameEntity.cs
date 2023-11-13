@@ -21,13 +21,13 @@ public abstract class GameEntity : MonoBehaviour
     #region Public Methods
 
     // For movement in some direction
-    public void Move(TurnDirections moveDir)
+    public void Move(TurnDirections moveDir, int speed = 1)
     {
         var newX = _x;
         var newY = _y;
         var moveVector = Direction.TurnTo(moveDir).Vector;
-        newX += (int)moveVector.x;
-        newY += (int)moveVector.y;
+        newX += (int)moveVector.x * speed;
+        newY += (int)moveVector.y * speed;
 
         if (newX < 0)
             newX = 0;
@@ -46,6 +46,11 @@ public abstract class GameEntity : MonoBehaviour
     {
         _x = destX;
         _y = destX;
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
     #endregion
