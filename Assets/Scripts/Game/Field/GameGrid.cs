@@ -9,8 +9,8 @@ public class GameGrid : MonoBehaviour
     #region Serializable Fields
 
     [SerializeField] private float cellSize;
-    [SerializeField] private int height;
-    [SerializeField] private int width;
+    [SerializeField] public int height;
+    [SerializeField] public int width;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private Transform cellParent;
 

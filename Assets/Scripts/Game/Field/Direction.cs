@@ -26,7 +26,7 @@ public class Direction
 
     #region Constructor
 
-    public Direction(int x, int y)
+    public Direction(float x, float y)
     {
         Vector = new Vector2(x, y);
     }
@@ -35,20 +35,18 @@ public class Direction
 
     #region Public Methods
 
-    public void TurnTo(TurnDirections turn)
+    public Direction TurnTo(TurnDirections turn)
     {
         switch (turn)
         {
             case TurnDirections.Left:
-                Vector = new Vector2(- Vector.y, Vector.x);
-                break;
+                return new Direction(-Vector.y, Vector.x);
             case TurnDirections.Right:
-                Vector = new Vector2(Vector.y, -Vector.x);
-                break;
+                return new Direction(Vector.y, -Vector.x);
             case TurnDirections.Around:
-                Vector = new Vector2(-Vector.x, -Vector.y);
-                break;
+                return new Direction(-Vector.x, -Vector.y);
         }
+        return this;
     }
     
     #endregion
