@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -18,6 +19,7 @@ public abstract class GameEntity : MonoBehaviour
 
     #endregion
 
+    
     #region Public Methods
 
     // For movement in some direction
@@ -29,14 +31,8 @@ public abstract class GameEntity : MonoBehaviour
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
 
-        if (newX < 0)
-            newX = 0;
-        if (newY < 0)
-            newY = 0;
-        if (newX > gameGrid.width - 1)
-            newX = gameGrid.width - 1;
-        if (newY > gameGrid.height - 1)
-            newY = gameGrid.height - 1;
+        newX = Math.Min(Math.Max(newX, 0), gameGrid.width - 1);
+        newY = Math.Min(Math.Max(newY, 0), gameGrid.height - 1);
         
         MoveTo(newX, newY);
     }

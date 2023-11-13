@@ -21,9 +21,9 @@ public class GameGrid : MonoBehaviour
     public GridCell[,] Cells;
 
     #endregion
+    
 
     #region Private Methods
-
     
     private void Generate()
     {
@@ -41,8 +41,6 @@ public class GameGrid : MonoBehaviour
         cell.X = x;
         cell.Y = y;
     }
-
-
 
     #endregion
 

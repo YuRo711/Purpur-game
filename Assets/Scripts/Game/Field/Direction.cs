@@ -35,6 +35,7 @@ public class Direction
     }
 
     #endregion
+    
 
     #region Public Methods
 
