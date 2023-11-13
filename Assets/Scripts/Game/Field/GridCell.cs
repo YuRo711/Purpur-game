@@ -1,23 +1,13 @@
 using UnityEngine;
 
-public class GridCell
+public class GridCell : MonoBehaviour
 {
     #region Properties
 
     public bool Taken { get; set; }
     public GameEntity GameEntity { get; set; }
-    public int X { get; private set; }
-    public int Y { get; private set; }
-
-    #endregion
-
-    #region Constructor
-
-    public GridCell(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
+    public int X { get; set; }
+    public int Y { get; set; }
 
     #endregion
 }
