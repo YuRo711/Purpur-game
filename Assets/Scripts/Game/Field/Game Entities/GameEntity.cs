@@ -14,8 +14,8 @@ public abstract class GameEntity : MonoBehaviour
     #endregion
     
     #region Properties
-    
-    public GameGrid LevelGrid { get; set; }
+
+    public GameGrid LevelGrid;
     public Direction LookDirection { get; protected set; }
 
     #endregion
@@ -24,7 +24,7 @@ public abstract class GameEntity : MonoBehaviour
     #region Public Methods
 
     // For movement in some direction
-    public virtual void Move(TurnDirections moveDir, int speed = 1)
+    public virtual void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
         var newX = x;
         var newY = y;
@@ -42,7 +42,7 @@ public abstract class GameEntity : MonoBehaviour
     public virtual void MoveTo(int destX, int destY)
     {
         x = destX;
-        y = destX;
+        y = destY;
     }
 
     public virtual void TurnTo(TurnDirections turnDirections)
