@@ -6,6 +6,7 @@ public class Direction
 {
     #region Properties
 
+    private Vector2 _vector;
     public Vector2 Vector
     {
         get => _vector;
@@ -23,7 +24,6 @@ public class Direction
             _vector = value;
         }
     }
-    private Vector2 _vector;
 
     #endregion
 
@@ -51,6 +51,17 @@ public class Direction
                 return new Direction(-Vector.x, -Vector.y);
         }
         return this;
+    }
+
+    public int GetDirectionAngle()
+    {
+        if (Vector.Equals(new Vector2(0, 1)))
+            return 0; // up
+        if (Vector.Equals(new Vector2(-1, 0)))
+            return 90; // left
+        if (Vector.Equals(new Vector2(1, 0)))
+            return -90; // right
+        return 180; // down
     }
     
     #endregion

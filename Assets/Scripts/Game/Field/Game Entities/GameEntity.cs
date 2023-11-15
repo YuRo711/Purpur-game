@@ -7,15 +7,16 @@ public abstract class GameEntity : MonoBehaviour
 {
     #region Serializable Fields
 
-    private int _x;
-    private int _y;
+    [SerializeField] protected int x;
+    [SerializeField] protected int y;
+    [SerializeField] protected int health;
 
     #endregion
     
     #region Properties
-
-    public Direction LookDirection { get; set; }
-    public GameGrid gameGrid;
+    
+    public GameGrid LevelGrid { get; set; }
+    public Direction LookDirection { get; protected set; }
 
     #endregion
 
@@ -23,33 +24,44 @@ public abstract class GameEntity : MonoBehaviour
     #region Public Methods
 
     // For movement in some direction
-    public void Move(TurnDirections moveDir, int speed = 1)
+    public virtual void Move(TurnDirections moveDir, int speed = 1)
     {
-        var newX = _x;
-        var newY = _y;
+        var newX = x;
+        var newY = y;
         var moveVector = LookDirection.TurnTo(moveDir).Vector;
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
 
-        newX = Math.Min(Math.Max(newX, 0), gameGrid.width - 1);
-        newY = Math.Min(Math.Max(newY, 0), gameGrid.height - 1);
+        newX = Math.Min(Math.Max(newX, 0), LevelGrid.width - 1);
+        newY = Math.Min(Math.Max(newY, 0), LevelGrid.height - 1);
         
         MoveTo(newX, newY);
     }
 
     // For precise movement: warp, etc. Only use it if you're sure the cell exists.
-    public void MoveTo(int destX, int destY)
+    public virtual void MoveTo(int destX, int destY)
     {
-        _x = destX;
-        _y = destX;
+        x = destX;
+        y = destX;
     }
 
-    public void TurnTo(TurnDirections turnDirections)
+    public virtual void TurnTo(TurnDirections turnDirections)
     {
         LookDirection = LookDirection.TurnTo(turnDirections);
     }
 
-    public void Die()
+    public virtual void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+            Die();
+    }
+
+    #endregion
+
+    #region Protected Methods
+
+    protected virtual void Die()
     {
         Destroy(gameObject);
     }
