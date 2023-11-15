@@ -1,34 +1,37 @@
 using System;
 using UnityEngine;
 
-public class Enemy : GameEntity
+public class Enemy : AutoEntity
 {
     #region Public Methods
 
-    public void TakeAction()
+    public override void TakeAction()
     {
-        var lookVector = LookDirection.Vector;
-        var nextCell = LevelGrid.Cells[x + (int)lookVector.x, y + (int)lookVector.y];
-        if (nextCell.GameEntity is PlayerShip playerShip)
+        MoveInDirection(TurnDirections.Forward);
+    }
+
+    public override void MoveTo(int destX, int destY)
+    {
+        if (CheckForBorder(destX, destY))
+        {
+            TurnTo(TurnDirections.Around);
+            return;
+        }
+        
+        var newCell = LevelGrid.Cells[destX, destY];
+        if (newCell.GameEntity is PlayerShip playerShip)
         {
             playerShip.TakeDamage(1);
             Die();
             return;
         }
-        if (nextCell.GameEntity is not null)
+        if (newCell.GameEntity is GameEntity gameEntity)
+        {
             TurnTo(TurnDirections.Around);
-        if (nextCell.GameEntity is null)
-            MoveInDirection(TurnDirections.Forward);
-    }
-
-    #endregion
-
-    #region MonoBehaviour Callbacks
-
-    private void Start()
-    {
-        LookDirection = new Direction(1, 0);
-        TakeAction();
+            return;
+        }
+        x = destX;
+        y = destY;
     }
 
     #endregion

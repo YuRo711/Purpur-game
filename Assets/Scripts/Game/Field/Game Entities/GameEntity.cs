@@ -24,23 +24,23 @@ public abstract class GameEntity : MonoBehaviour
     #region Public Methods
 
     // For movement in some direction
-    public virtual void MoveInDirection(TurnDirections moveDir, int speed = 1)
+    public void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
         var newX = x;
         var newY = y;
         var moveVector = LookDirection.TurnTo(moveDir).Vector;
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
-
-        newX = Math.Min(Math.Max(newX, 0), LevelGrid.width - 1);
-        newY = Math.Min(Math.Max(newY, 0), LevelGrid.height - 1);
-        
         MoveTo(newX, newY);
     }
 
-    // For precise movement: warp, etc. Only use it if you're sure the cell exists.
+    // For precise movement: warp, etc.
     public virtual void MoveTo(int destX, int destY)
     {
+        var borderCheck = CheckForBorder(destX, destY);
+        if (borderCheck)
+            return;
+        
         x = destX;
         y = destY;
     }
@@ -50,20 +50,26 @@ public abstract class GameEntity : MonoBehaviour
         LookDirection = LookDirection.TurnTo(turnDirections);
     }
 
-    public virtual void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
             Die();
     }
+    
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
 
     #endregion
 
     #region Protected Methods
-
-    protected virtual void Die()
+    
+    protected bool CheckForBorder(int newX, int newY)
     {
-        Destroy(gameObject);
+        return newX >= LevelGrid.width || newX < 0 ||
+               newY >= LevelGrid.height || newY < 0;
     }
 
     #endregion

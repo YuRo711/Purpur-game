@@ -12,6 +12,20 @@ public class PlayerShip : GameEntity
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+    public override void MoveTo(int destX, int destY)
+    {
+        if (CheckForBorder(destX, destY))
+            return;
+        x = destX;
+        y = destY;
+        var newCell = LevelGrid.Cells[x, y];
+        if (newCell.GameEntity is GameEntity gameEntity)
+        {
+            gameEntity.Die();
+            TakeDamage(1);
+        }
+    }
+
     public void Shoot()
     {
         
