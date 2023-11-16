@@ -5,7 +5,21 @@ using UnityEngine;
 public abstract class PanelButton : MonoBehaviour
 {
     [field: SerializeField] public bool IsFunctioning { get; private set; }
+    [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
+
+    private bool isCharging;
+    public bool IsCharging
+    {
+        get => isCharging;
+        set
+        {
+            isCharging = value;
+        }
+    }
+
+    public bool IsFullyCharged
+        => CurrentCharge >= 1;
 
     void Start()
     {
@@ -13,18 +27,15 @@ public abstract class PanelButton : MonoBehaviour
         CurrentCharge = 0;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        CurrentCharge = Mathf.Min(1, CurrentCharge);
+        UpdateCharge();
     }
-
-    public bool IsFullyCharged
-        => CurrentCharge >= 1;
 
     [ContextMenu("Activate")]
     public virtual void Activate()
     {
-        if (!IsFunctioning || !IsFullyCharged)
+        if (!IsFullyCharged || !IsFunctioning)
             return;
 
         PerformShipAction();
@@ -33,18 +44,33 @@ public abstract class PanelButton : MonoBehaviour
         IsFunctioning = false;
     }
 
-    public void ChargeBy(float amount)
-    {
-        if (!IsFunctioning)
-            return;
-
-        CurrentCharge = Mathf.Min(1, CurrentCharge + amount);
-    }
-
     public void Repair()
     {
         IsFunctioning = true;
     }
 
+    public void StopCharging()
+    {
+        IsCharging = false;
+    }
+
+    private void UpdateCharge()
+    {
+        if (!IsFunctioning)
+            CurrentCharge = 0;
+
+        else if(IsCharging)
+            CurrentCharge = Mathf.Min(1, CurrentCharge + ChargeAmount);
+
+        else if(!IsFullyCharged)
+            CurrentCharge = Mathf.Max(0, CurrentCharge - ChargeAmount);
+    }
+
     protected abstract void PerformShipAction();
+
+    [ContextMenu("Start charging")]
+    private void StartCharging()
+    {
+        IsCharging = true;
+    }
 }
