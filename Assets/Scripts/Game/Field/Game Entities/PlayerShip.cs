@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerShip : GameEntity
@@ -19,6 +20,10 @@ public class PlayerShip : GameEntity
         x = destX;
         y = destY;
         var newCell = LevelGrid.Cells[x, y];
+        var rt = (RectTransform)transform;
+        rt.SetParent(newCell.transform);
+        rt.sizeDelta = new Vector2(size, size);
+        rt.localPosition = Vector3.zero;
         if (newCell.GameEntity is GameEntity gameEntity)
         {
             gameEntity.Die();
@@ -28,7 +33,7 @@ public class PlayerShip : GameEntity
 
     public void Shoot()
     {
-        
+        var currentCell = LevelGrid.Cells[x, y];
     }
 
     #endregion

@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class Enemy : AutoEntity
+public class Enemy : GameEntity
 {
     #region Public Methods
 
-    public override void TakeAction()
+    public void TakeAction()
     {
         MoveInDirection(TurnDirections.Forward);
     }
@@ -32,7 +32,11 @@ public class Enemy : AutoEntity
         }
         x = destX;
         y = destY;
+        transform.SetParent(newCell.transform);
     }
+    
+    public void CheckForPlayer()
+    {}
 
     #endregion
 }

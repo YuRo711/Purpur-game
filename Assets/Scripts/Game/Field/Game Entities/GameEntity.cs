@@ -9,14 +9,15 @@ public abstract class GameEntity : MonoBehaviour
 
     [SerializeField] protected int x;
     [SerializeField] protected int y;
-    [SerializeField] protected int health;
+    [SerializeField] protected int health = 1;
+    [SerializeField] protected int size = 100;
 
     #endregion
     
     #region Properties
 
     public GameGrid LevelGrid;
-    public Direction LookDirection { get; protected set; }
+    public Direction LookDirection { get; set; }
 
     #endregion
 
@@ -70,6 +71,15 @@ public abstract class GameEntity : MonoBehaviour
     {
         return newX >= LevelGrid.width || newX < 0 ||
                newY >= LevelGrid.height || newY < 0;
+    }
+
+    #endregion
+
+    #region Monobehaviour Callbacks
+
+    protected void Start()
+    {
+        MoveTo(x, y);
     }
 
     #endregion
