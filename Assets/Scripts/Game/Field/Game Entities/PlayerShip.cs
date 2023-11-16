@@ -33,7 +33,21 @@ public class PlayerShip : GameEntity
 
     public void Shoot()
     {
-        var currentCell = LevelGrid.Cells[x, y];
+        var checkX = x;
+        var checkY = y;
+        var lookVector = LookDirection.Vector;
+        var lookX = (int)lookVector.x;
+        var lookY = (int)lookVector.y;
+        while (CheckForBorder(checkX, checkY))
+        {
+            checkX += lookX;
+            checkY += lookY;
+            if (LevelGrid.Cells[checkX, checkY].GameEntity is GameEntity gameEntity)
+            {
+                gameEntity.TakeDamage(1);
+                break;
+            }
+        }
     }
 
     #endregion
