@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public abstract class PanelButton : MonoBehaviour
     [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
 
+    public event Action<PanelButton> OnBeginCharging;
+
     private bool isCharging;
     public bool IsCharging
     {
@@ -15,6 +18,8 @@ public abstract class PanelButton : MonoBehaviour
         set
         {
             isCharging = value;
+            if(value == true)
+                OnBeginCharging?.Invoke(this);
         }
     }
 
