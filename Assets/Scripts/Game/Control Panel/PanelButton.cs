@@ -2,35 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ShipButton : MonoBehaviour
+public abstract class PanelButton : MonoBehaviour
 {
-    public bool IsFunctioning { get; private set; }
-    public float CurrentCharge { get; private set; }
+    [field: SerializeField] public bool IsFunctioning { get; private set; }
+    [field: SerializeField] public float CurrentCharge { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public bool FullyCharged
-        => CurrentCharge == 1;
-
-    public ShipButton()
     {
         IsFunctioning = true;
         CurrentCharge = 0;
     }
 
+    void Update()
+    {
+        CurrentCharge = Mathf.Min(1, CurrentCharge);
+    }
+
+    public bool IsFullyCharged
+        => CurrentCharge >= 1;
+
+    [ContextMenu("Activate")]
     public virtual void Activate()
     {
-        if (!IsFunctioning)
+        if (!IsFunctioning || !IsFullyCharged)
             return;
 
         PerformShipAction();

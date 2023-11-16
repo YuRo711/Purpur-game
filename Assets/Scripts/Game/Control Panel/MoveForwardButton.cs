@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveForwardButton : ShipButton
+public class MoveForwardButton : PanelButton
 {
     protected override void PerformShipAction()
     {

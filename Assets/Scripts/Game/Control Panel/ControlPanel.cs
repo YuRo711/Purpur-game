@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class ControlPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float chargeAmount;
 
-    // Update is called once per frame
+    [field: SerializeField] public PanelButton SelectedButton { get; private set; }
+
     void Update()
     {
-        
+        ChargeSelectedButton();
+    }
+
+    public void SelectButton(PanelButton button)
+    {
+        SelectedButton = button;
+    }
+
+    private void ChargeSelectedButton()
+    {
+        if(SelectedButton != null)
+            SelectedButton.ChargeBy(chargeAmount);
     }
 }
