@@ -11,8 +11,9 @@ public class GameGrid : MonoBehaviour
     [SerializeField] private float cellSize;
     [SerializeField] public int height;
     [SerializeField] public int width;
+    [SerializeField] public int enemiesCount;
     [SerializeField] private GridCell cellPrefab;
-    [SerializeField] private Transform cellParent;
+    [SerializeField] private RectTransform cellParent;
 
     #endregion
     
@@ -27,6 +28,7 @@ public class GameGrid : MonoBehaviour
     
     private void Generate()
     {
+        cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
         Cells = new GridCell[height, width];
         for (var x = 0; x < width; x++)
         for (int y = 0; y < height; y++)
@@ -37,11 +39,25 @@ public class GameGrid : MonoBehaviour
     
     private void CreateCell (int x, int y)
     {
-        GridCell cell = Cells[y, x] = Instantiate(cellPrefab, cellParent.transform);
+        GridCell cell = Cells[y, x] = Instantiate(cellPrefab, cellParent);
         cell.X = x;
         cell.Y = y;
     }
 
+    // private void GenerateEntities()
+    // {
+    //     var random = new System.Random();
+    //     for (var i = 0; i < enemiesCount; i++)
+    //     {
+    //         var x = random.Next(0, width - 1);
+    //         var y = random.Next(0, height - 1);
+    //         
+    //     }
+    //     
+    //     var playerX = random.Next(0, width - 1);
+    //     var playerY = random.Next(0, height - 1);
+    // }
+    
     #endregion
 
     #region MonoBehaviour Callbacks

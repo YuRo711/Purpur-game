@@ -1,9 +1,10 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public abstract class GameEntity : MonoBehaviour
+public abstract class GameEntity : MonoBehaviour, IPunObservable
 {
     #region Serializable Fields
 
@@ -11,6 +12,7 @@ public abstract class GameEntity : MonoBehaviour
     [SerializeField] protected int y;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
+    [SerializeField] protected EnemyManager enemyManager;
 
     #endregion
     
@@ -53,12 +55,13 @@ public abstract class GameEntity : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(name + " took " + damage + " damage");
         health -= damage;
         if (health <= 0)
             Die();
     }
     
-    public void Die()
+    public virtual void Die()
     {
         Destroy(gameObject);
     }
@@ -75,9 +78,31 @@ public abstract class GameEntity : MonoBehaviour
 
     #endregion
 
+    #region IPunObservable Callbacks
+
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+            stream.SendNext(x);
+            stream.SendNext(y);
+            stream.SendNext(LookDirection.Vector);
+        }
+        else
+        {
+            health = (int)stream.ReceiveNext();
+            x = (int)stream.ReceiveNext();
+            y = (int)stream.ReceiveNext();
+            LookDirection = new Direction((Vector2)stream.ReceiveNext());
+        }
+    }
+
+    #endregion
+
     #region Monobehaviour Callbacks
 
-    protected void Start()
+    protected virtual void Start()
     {
         MoveTo(x, y);
     }

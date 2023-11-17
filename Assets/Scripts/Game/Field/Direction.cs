@@ -27,11 +27,16 @@ public class Direction
 
     #endregion
 
-    #region Constructor
+    #region Constructors
 
     public Direction(float x, float y)
     {
         Vector = new Vector2(x, y);
+    }
+
+    public Direction(Vector2 vector)
+    {
+        Vector = vector;
     }
 
     #endregion
