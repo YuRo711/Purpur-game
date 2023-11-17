@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 5299404812875662014}
   - component: {fileID: 3222584182048381825}
   - component: {fileID: 2706950701755090738}
+  - component: {fileID: 7347118462608687539}
   m_Layer: 0
   m_Name: PanelButton
   m_TagString: Untagged
@@ -220,6 +221,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7347118462608687539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653469561732472070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee66447c35203e4b90bc242ffbc218a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ButtonType>k__BackingField: {fileID: 11400000, guid: 5e72702e284c83a4db5e57c2149b2b38, type: 2}
+  <IsFunctional>k__BackingField: 1
+  <IsCharging>k__BackingField: 0
+  <ChargeAmount>k__BackingField: 0.005
+  <CurrentCharge>k__BackingField: 0
 --- !u!1 &6310315305657523357
 GameObject:
   m_ObjectHideFlags: 0

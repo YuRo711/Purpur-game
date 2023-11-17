@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PanelButton : MonoBehaviour
+public class PanelButton : MonoBehaviour
 {
     [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
-    [field: SerializeField] public bool IsFunctional { get; private set; }
+    [field: SerializeField] public bool IsFunctional { get; private set; } = true;
     [field: SerializeField] public bool IsCharging { get; private set; }
     [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
@@ -22,17 +22,17 @@ public abstract class PanelButton : MonoBehaviour
         UpdateAutoActivation();
     }
 
-    [ContextMenu("Activate")]
-    public virtual void Activate()
+    [ContextMenu("Trigger")]
+    public virtual void Trigger()
     {
         if (!IsFullyCharged || !IsFunctional)
             return;
 
-        PerformShipAction();
+        ButtonType.PerformAction();
 
         CurrentCharge = 0;
 
-        if(ButtonType.BreaksAfterActivation)
+        if(ButtonType.BreaksAfterTrigger)
             IsFunctional = false;
     }
 
@@ -60,13 +60,11 @@ public abstract class PanelButton : MonoBehaviour
 
     private void UpdateAutoActivation()
     {
-        if(ButtonType.AutoActivatesWhenCharged && IsFullyCharged)
+        if(ButtonType.AutoTriggers && IsFullyCharged)
         {
-            Activate();
+            Trigger();
         }
     }
-
-    protected abstract void PerformShipAction();
 
     [ContextMenu("Start charging")]
     private void StartCharging()
