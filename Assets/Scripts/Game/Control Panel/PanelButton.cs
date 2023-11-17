@@ -5,53 +5,40 @@ using UnityEngine;
 
 public abstract class PanelButton : MonoBehaviour
 {
-    [field: SerializeField] public bool IsFunctioning { get; private set; }
+    [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
+    [field: SerializeField] public bool IsFunctional { get; private set; }
+    [field: SerializeField] public bool IsCharging { get; private set; }
     [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
 
     public event Action<PanelButton> OnBeginCharging;
 
-    private bool isCharging;
-    public bool IsCharging
-    {
-        get => isCharging;
-        set
-        {
-            isCharging = value;
-            if(value == true)
-                OnBeginCharging?.Invoke(this);
-        }
-    }
-
     public bool IsFullyCharged
         => CurrentCharge >= 1;
-
-    void Start()
-    {
-        IsFunctioning = true;
-        CurrentCharge = 0;
-    }
 
     private void FixedUpdate()
     {
         UpdateCharge();
+        UpdateAutoActivation();
     }
 
     [ContextMenu("Activate")]
     public virtual void Activate()
     {
-        if (!IsFullyCharged || !IsFunctioning)
+        if (!IsFullyCharged || !IsFunctional)
             return;
 
         PerformShipAction();
 
         CurrentCharge = 0;
-        IsFunctioning = false;
+
+        if(ButtonType.BreaksAfterActivation)
+            IsFunctional = false;
     }
 
     public void Repair()
     {
-        IsFunctioning = true;
+        IsFunctional = true;
     }
 
     public void StopCharging()
@@ -61,7 +48,7 @@ public abstract class PanelButton : MonoBehaviour
 
     private void UpdateCharge()
     {
-        if (!IsFunctioning)
+        if (!IsFunctional)
             CurrentCharge = 0;
 
         else if(IsCharging)
@@ -71,11 +58,20 @@ public abstract class PanelButton : MonoBehaviour
             CurrentCharge = Mathf.Max(0, CurrentCharge - ChargeAmount);
     }
 
+    private void UpdateAutoActivation()
+    {
+        if(ButtonType.AutoActivatesWhenCharged && IsFullyCharged)
+        {
+            Activate();
+        }
+    }
+
     protected abstract void PerformShipAction();
 
     [ContextMenu("Start charging")]
     private void StartCharging()
     {
         IsCharging = true;
+        OnBeginCharging?.Invoke(this);
     }
 }
