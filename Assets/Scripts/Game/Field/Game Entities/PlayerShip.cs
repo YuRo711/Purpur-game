@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -32,21 +33,23 @@ public class PlayerShip : GameEntity
         newCell.GameEntity = this;
     }
 
-    [ContextMenu("Shoot")]
-    public void Shoot()
+    public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
     {
         var checkX = x;
         var checkY = y;
-        var lookVector = LookDirection.Vector;
-        var lookX = (int)lookVector.x;
-        var lookY = (int)lookVector.y;
+        var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
+        var shootVector = shootAbsDirection.Vector;
+        var shootX = (int)shootVector.x;
+        var shootY = (int)shootVector.y;
+        var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
+        MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
         while (!CheckForBorder(checkX, checkY))
         {
-            checkX += lookX;
-            checkY += lookY;
+            checkX += shootX;
+            checkY += shootY;
             if (LevelGrid.Cells[checkX, checkY].GameEntity is GameEntity gameEntity)
             {
-                gameEntity.TakeDamage(1);
+                gameEntity.TakeDamage(shotPower);
                 break;
             }
         }

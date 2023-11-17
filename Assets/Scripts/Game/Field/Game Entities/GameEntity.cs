@@ -1,9 +1,10 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public abstract class GameEntity : MonoBehaviour
+public abstract class GameEntity : MonoBehaviour, IPunObservable
 {
     #region Serializable Fields
 
@@ -72,6 +73,15 @@ public abstract class GameEntity : MonoBehaviour
     {
         return newX >= LevelGrid.width || newX < 0 ||
                newY >= LevelGrid.height || newY < 0;
+    }
+
+    #endregion
+
+    #region IPunObservable Callbacks
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new NotImplementedException();
     }
 
     #endregion
