@@ -12,6 +12,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     [SerializeField] protected int y;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
+    [SerializeField] protected EnemyManager enemyManager;
 
     #endregion
     
@@ -60,7 +61,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
             Die();
     }
     
-    public void Die()
+    public virtual void Die()
     {
         Destroy(gameObject);
     }
@@ -79,16 +80,29 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
 
     #region IPunObservable Callbacks
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new NotImplementedException();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+            stream.SendNext(x);
+            stream.SendNext(y);
+            stream.SendNext(LookDirection.Vector);
+        }
+        else
+        {
+            health = (int)stream.ReceiveNext();
+            x = (int)stream.ReceiveNext();
+            y = (int)stream.ReceiveNext();
+            LookDirection = new Direction((Vector2)stream.ReceiveNext());
+        }
     }
 
     #endregion
 
     #region Monobehaviour Callbacks
 
-    protected void Start()
+    protected virtual void Start()
     {
         MoveTo(x, y);
     }

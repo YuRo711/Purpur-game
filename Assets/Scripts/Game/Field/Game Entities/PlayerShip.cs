@@ -18,19 +18,21 @@ public class PlayerShip : GameEntity
     {
         if (CheckForBorder(destX, destY))
             return;
+        LevelGrid.Cells[y, x].GameEntity = null;
         x = destX;
         y = destY;
-        var newCell = LevelGrid.Cells[x, y];
+        var newCell = LevelGrid.Cells[y, x];
         var rt = (RectTransform)transform;
         rt.SetParent(newCell.transform);
         rt.sizeDelta = new Vector2(size, size);
         rt.localPosition = Vector3.zero;
-        if (newCell.GameEntity is GameEntity gameEntity)
+        if (newCell.GameEntity is not null)
         {
-            gameEntity.Die();
+            newCell.GameEntity.Die();
             TakeDamage(1);
         }
         newCell.GameEntity = this;
+        enemyManager.LookForPlayer();
     }
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
@@ -47,7 +49,7 @@ public class PlayerShip : GameEntity
         {
             checkX += shootX;
             checkY += shootY;
-            if (LevelGrid.Cells[checkX, checkY].GameEntity is GameEntity gameEntity)
+            if (LevelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
                 gameEntity.TakeDamage(shotPower);
                 break;
