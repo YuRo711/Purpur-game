@@ -54,7 +54,6 @@ public class Enemy : GameEntity
 
     public void LookForPlayer()
     {
-        Debug.Log("start looking");
         var y1 = y;
         for (var x1 = 0; x1 < LevelGrid.width; x1++)
         {
@@ -67,24 +66,29 @@ public class Enemy : GameEntity
                 return;
             }
             if (checkCell.GameEntity is not null)
-                return;
+                if (x1 <= x)
+                    x1 = x;
+                else
+                    break;
         }
 
         var x2 = x;
         for (var y2 = 0; y2 < LevelGrid.height; y2++)
         {
-            Debug.Log("looking for player on " + y2);
             var checkCell = LevelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
-                Debug.Log("see player");
                 LookDirection = y2 < y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);
                 return;
             }
             if (checkCell.GameEntity is not null)
-                return;
+                
+                if (y2 <= y)
+                    y2 = y;
+                else
+                    break;
         }
     }
 

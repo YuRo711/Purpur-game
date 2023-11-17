@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
     public void TakeActions()
     {
-        foreach (var enemy in enemies)
+        foreach (var enemy in enemies.ToList())
         {
             enemy.TakeAction();
         }
