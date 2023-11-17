@@ -12,7 +12,7 @@ public class GameGrid : MonoBehaviour
     [SerializeField] public int height;
     [SerializeField] public int width;
     [SerializeField] private GridCell cellPrefab;
-    [SerializeField] private Transform cellParent;
+    [SerializeField] private RectTransform cellParent;
 
     #endregion
     
@@ -27,6 +27,7 @@ public class GameGrid : MonoBehaviour
     
     private void Generate()
     {
+        cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
         Cells = new GridCell[height, width];
         for (var x = 0; x < width; x++)
         for (int y = 0; y < height; y++)
@@ -37,7 +38,7 @@ public class GameGrid : MonoBehaviour
     
     private void CreateCell (int x, int y)
     {
-        GridCell cell = Cells[y, x] = Instantiate(cellPrefab, cellParent.transform);
+        GridCell cell = Cells[y, x] = Instantiate(cellPrefab, cellParent);
         cell.X = x;
         cell.Y = y;
     }

@@ -29,8 +29,10 @@ public class PlayerShip : GameEntity
             gameEntity.Die();
             TakeDamage(1);
         }
+        newCell.GameEntity = this;
     }
 
+    [ContextMenu("Shoot")]
     public void Shoot()
     {
         var checkX = x;
@@ -38,7 +40,7 @@ public class PlayerShip : GameEntity
         var lookVector = LookDirection.Vector;
         var lookX = (int)lookVector.x;
         var lookY = (int)lookVector.y;
-        while (CheckForBorder(checkX, checkY))
+        while (!CheckForBorder(checkX, checkY))
         {
             checkX += lookX;
             checkY += lookY;

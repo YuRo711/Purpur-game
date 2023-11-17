@@ -53,6 +53,7 @@ public abstract class GameEntity : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(name + " took " + damage + " damage");
         health -= damage;
         if (health <= 0)
             Die();

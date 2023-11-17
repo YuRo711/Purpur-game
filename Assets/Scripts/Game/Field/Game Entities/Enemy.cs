@@ -32,7 +32,11 @@ public class Enemy : GameEntity
         }
         x = destX;
         y = destY;
-        transform.SetParent(newCell.transform);
+        var rt = (RectTransform)transform;
+        rt.SetParent(newCell.transform);
+        rt.sizeDelta = new Vector2(size, size);
+        rt.localPosition = Vector3.zero;
+        newCell.GameEntity = this;
     }
 
     public void CheckForPlayer()
