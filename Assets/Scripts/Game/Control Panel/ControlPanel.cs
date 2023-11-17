@@ -10,7 +10,7 @@ public class ControlPanel : MonoBehaviour
     {
         Buttons = GetComponentsInChildren<PanelButton>();
         foreach (var button in Buttons)
-            button.OnBeginCharging += ButtonSelected;
+            button.OnStartCharging += ButtonSelected;
     }
 
     private void ButtonSelected(PanelButton button)

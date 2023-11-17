@@ -11,7 +11,7 @@ public class PanelButton : MonoBehaviour
     [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
 
-    public event Action<PanelButton> OnBeginCharging;
+    public event Action<PanelButton> OnStartCharging;
 
     public bool IsFullyCharged
         => CurrentCharge >= 1;
@@ -20,6 +20,17 @@ public class PanelButton : MonoBehaviour
     {
         UpdateCharge();
         UpdateAutoActivation();
+    }
+    public void HandleClick()
+    {
+        if (!IsFunctional)
+            return;
+
+        if (IsFullyCharged)
+            Trigger();
+
+        else
+            StartCharging();
     }
 
     [ContextMenu("Trigger")]
@@ -66,10 +77,12 @@ public class PanelButton : MonoBehaviour
         }
     }
 
-    [ContextMenu("Start charging")]
     private void StartCharging()
     {
+        if (!IsFunctional)
+            return;
+
         IsCharging = true;
-        OnBeginCharging?.Invoke(this);
+        OnStartCharging?.Invoke(this);
     }
 }
