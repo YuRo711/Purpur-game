@@ -13,8 +13,15 @@ public class PanelButton : MonoBehaviour
 
     public event Action<PanelButton> OnStartCharging;
 
+    private ControlPanel controlPanel;
+
     public bool IsFullyCharged
         => CurrentCharge >= 1;
+
+    private void Start()
+    {
+        controlPanel = GetComponentInParent<ControlPanel>();
+    }
 
     private void FixedUpdate()
     {
@@ -39,7 +46,7 @@ public class PanelButton : MonoBehaviour
         if (!IsFullyCharged || !IsFunctional)
             return;
 
-        ButtonType.PerformAction();
+        ButtonType.PerformAction(controlPanel);
 
         CurrentCharge = 0;
 
