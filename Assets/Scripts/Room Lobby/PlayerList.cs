@@ -31,6 +31,20 @@ public class PlayerList : MonoBehaviourPunCallbacks
     private static readonly string ItemPrefabPath = "Prefabs/PlayerElement";
 
     #endregion
+
+    #region Public Methods
+
+    public void CheckPlayersReady()
+    {
+        foreach (var item in _listItems)
+        {
+            if (!item.Ready)
+                return;
+        }
+        PhotonNetwork.LoadLevel("Game");
+    }
+
+    #endregion
     
     #region Private Methods
 
@@ -72,15 +86,7 @@ public class PlayerList : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-    #region MonoBehaviourPun Callbacks
-
-    public override void OnLeftRoom()
-    {
-    }
-
-    #endregion
-
+    
     #region MonoBehaviour Callbacks
     
     private void Start()

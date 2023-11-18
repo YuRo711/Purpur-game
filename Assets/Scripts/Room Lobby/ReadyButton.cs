@@ -16,6 +16,7 @@ public class ReadyButton : MonoBehaviour
     public void GetReady()
     {
         PlayerItem.GetReady();
+        PlayerItem.PlayerList.CheckPlayersReady();
     }
 
     #endregion

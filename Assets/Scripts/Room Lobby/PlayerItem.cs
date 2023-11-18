@@ -7,13 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerItem : MonoBehaviour, IPunObservable
 {
-    #region PrivateFields
-    
-    private bool _ready;
-    private PlayerList _playerList;
-
-    #endregion
-    
     #region Serializable Fields
 
     [SerializeField] private Image readyImage;
@@ -32,6 +25,10 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     
     public Player Player { get; private set; }
 
+    public PlayerList PlayerList { get; private set; }
+    
+    public bool Ready { get; private set; }
+
     #endregion
 
     #region Public Methods
@@ -46,13 +43,13 @@ public class PlayerItem : MonoBehaviour, IPunObservable
 
     public void ConnectToList(PlayerList playerList)
     {
-        _playerList = playerList;
+        PlayerList = playerList;
         transform.SetParent(playerList.transform, worldPositionStays: false);
     }
 
     public void GetReady()
     {
-        _ready = true;
+        Ready = true;
         UpdateImage();
     }
     
@@ -63,7 +60,7 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     [PunRPC]
     private void UpdateImage()
     {
-        readyImage.sprite = _ready ? trueSprite : falseSprite;
+        readyImage.sprite = Ready ? trueSprite : falseSprite;
     }
     
     #endregion
@@ -74,16 +71,16 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(_ready);
+            stream.SendNext(Ready);
             stream.SendNext(UserNickname);
             // Debug.LogError("sent " + _ready);
         }
         else
         {
-            _ready = (bool)stream.ReceiveNext();
+            Ready = (bool)stream.ReceiveNext();
             UserNickname = (string)stream.ReceiveNext();
             nicknameText.text = UserNickname;
-            Debug.LogError("received " + _ready + " from " + UserNickname);
+            Debug.LogError("received " + Ready + " from " + UserNickname);
             photonView.RPC("UpdateImage", RpcTarget.AllBuffered);
         }
     }
