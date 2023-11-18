@@ -45,8 +45,8 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        // if (!PhotonNetwork.IsMasterClient)
-        //     Destroy(gameObject);
+        if (!PhotonNetwork.IsMasterClient)
+            Destroy(gameObject);
         ResetTimer();
     }
 

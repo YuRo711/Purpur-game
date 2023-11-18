@@ -36,6 +36,8 @@ public class PlayerList : MonoBehaviourPunCallbacks
 
     public void CheckPlayersReady()
     {
+        if (_listItems.Count < 2)
+            return;
         foreach (var item in _listItems)
         {
             if (!item.Ready)

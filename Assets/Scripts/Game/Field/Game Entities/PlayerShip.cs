@@ -45,15 +45,17 @@ public class PlayerShip : GameEntity
         var shootY = (int)shootVector.y;
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
+        checkX += shootX;
+        checkY += shootY;
         while (!CheckForBorder(checkX, checkY))
         {
-            checkX += shootX;
-            checkY += shootY;
             if (LevelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
                 gameEntity.TakeDamage(shotPower);
                 break;
             }
+            checkX += shootX;
+            checkY += shootY;
         }
     }
 

@@ -33,11 +33,11 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     
     #region MonoBehaviour Callbacks
 
-    // private void Awake()
-    // {
-    //     if (!PhotonNetwork.IsMasterClient)
-    //         Destroy(gameObject);
-    // }
+    private void Awake()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            Destroy(gameObject);
+    }
 
     #endregion
 }
