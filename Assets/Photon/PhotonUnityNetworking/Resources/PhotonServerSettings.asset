@@ -47,6 +47,8 @@ MonoBehaviour:
   - LoadGame
   - SyncEntity
   - SyncRPC
+  - SyncParameters
+  - SyncStart
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

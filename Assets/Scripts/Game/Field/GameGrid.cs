@@ -59,11 +59,11 @@ public class GameGrid : MonoBehaviourPunCallbacks
     private void GenerateEntities()
     {
         for (var i = 0; i < enemiesCount; i++)
-            SpawnEntity(EnemyPrefabPath);
-        SpawnEntity(PlayerPrefabPath);
+            SpawnEntity(EnemyPrefabPath, i);
+        SpawnEntity(PlayerPrefabPath, enemiesCount);
     }
 
-    private void SpawnEntity(string prefabPath)
+    private void SpawnEntity(string prefabPath, int id)
     {
         Debug.Log("spawning " + prefabPath);
         var random = new System.Random();
@@ -79,7 +79,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
-        gameEntity.SetStartParameters();
+        gameEntity.SetStartParameters(id);
     }
     
     #endregion

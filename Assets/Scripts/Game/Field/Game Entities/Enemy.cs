@@ -18,7 +18,7 @@ public class Enemy : GameEntity
         MoveInDirection(TurnDirections.Forward);
     }
 
-    public override void MoveTo(int destX, int destY)
+    public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         if (CheckForBorder(destX, destY))
         {
@@ -50,6 +50,8 @@ public class Enemy : GameEntity
         rt.localPosition = Vector3.zero;
         newCell.GameEntity = this;
         LookForPlayer();
+        if (callSync)
+            CallSync();
     }
 
     public void LookForPlayer()
@@ -90,17 +92,18 @@ public class Enemy : GameEntity
                 else
                     break;
         }
+        CallSync();
     }
 
     public override void Die()
     {
         enemyManager.enemies.Remove(this);
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
-    public override void SetStartParameters()
+    public override void SetStartParameters(int id)
     {
-        base.SetStartParameters();
+        base.SetStartParameters(id);
         enemyManager.enemies.Add(this);
     }
 

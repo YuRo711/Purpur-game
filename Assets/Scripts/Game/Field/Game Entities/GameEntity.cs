@@ -8,6 +8,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Serializable Fields
 
+    [SerializeField] protected int entityId;
     [SerializeField] protected int x;
     [SerializeField] protected int y;
     [SerializeField] protected int health = 1;
@@ -35,10 +36,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
         MoveTo(newX, newY);
+        CallSync();
     }
 
     // For precise movement: warp, etc.
-    public virtual void MoveTo(int destX, int destY)
+    public virtual void MoveTo(int destX, int destY, bool callSync = true)
     {
         var borderCheck = CheckForBorder(destX, destY);
         if (borderCheck)
@@ -46,11 +48,15 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         
         x = destX;
         y = destY;
+        if (callSync)
+            CallSync();
     }
 
-    public virtual void TurnTo(TurnDirections turnDirections)
+    public virtual void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
         LookDirection = LookDirection.TurnTo(turnDirections);
+        if (callSync)
+            CallSync();
     }
 
     public void TakeDamage(int damage)
@@ -59,22 +65,26 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         health -= damage;
         if (health <= 0)
             Die();
+        CallSync();
     }
     
     public virtual void Die()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
     
-    public virtual void SetStartParameters()
+    public virtual void SetStartParameters(int id)
     {
-        photonView.RPC("SyncRPC", RpcTarget.AllBuffered);
+        entityId = id;
+        photonView.RPC("SyncStart", RpcTarget.AllBuffered, entityId);
     }
 
-    // That's bad. Rewrite it once you have free time.
+    // That looks bad. Rewrite it once you have free time.
     [PunRPC]
-    public void SyncRPC()
+    public void SyncStart(int id)
     {
+        if (entityId != id)
+            return;
         levelGrid = FindObjectOfType<GameGrid>();
         enemyManager = FindObjectOfType<EnemyManager>();
         if (this is PlayerShip playerShip)
@@ -83,6 +93,17 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         MoveTo(x, y);
         transform.localScale = new Vector3(1, 1, 1);
         LookDirection = new Direction(0, 1);
+    }
+
+    [PunRPC]
+    public void SyncParameters(int id, int newHealth, int newX, int newY, int turnX, int turnY)
+    {
+        if (entityId != id)
+            return;
+        health = newHealth;
+        // MoveTo(newX, newY);
+        LookDirection = new Direction(turnX, turnY);
+        TurnTo(TurnDirections.Forward, false);
     }
 
     #endregion
@@ -95,27 +116,26 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
                newY >= levelGrid.height || newY < 0;
     }
 
+    protected void CallSync()
+    {
+        var vector = LookDirection is null ? new Vector2(0, 1) : LookDirection.Vector;
+        photonView.RPC("SyncParameters", RpcTarget.AllBuffered, 
+            entityId, health, x, y, (int)vector.x, (int)vector.y);
+    }
+
     #endregion
 
     #region IPunObservable Callbacks
 
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(health);
-            stream.SendNext(x);
-            stream.SendNext(y);
-            stream.SendNext(LookDirection is null ?
-                new Vector2(0, 1) :
-                LookDirection.Vector);
+            stream.SendNext(entityId);
         }
         else
         {
-            health = (int)stream.ReceiveNext();
-            x = (int)stream.ReceiveNext();
-            y = (int)stream.ReceiveNext();
-            LookDirection = new Direction((Vector2)stream.ReceiveNext());
+            entityId = (int)stream.ReceiveNext();
         }
     }
 

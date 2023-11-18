@@ -7,14 +7,17 @@ public class PlayerShip : GameEntity
 {
     #region Public Methods
 
-    public override void TurnTo(TurnDirections turnDirections)
+    public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
-        base.TurnTo(turnDirections);
+        base.TurnTo(turnDirections, callSync);
         var angle = LookDirection.GetDirectionAngle();
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
+        if (callSync)
+            CallSync();
     }
 
-    public override void MoveTo(int destX, int destY)
+    public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         Debug.LogError("moving to " + destX + " " + destY);
         if (CheckForBorder(destX, destY))
@@ -35,6 +38,9 @@ public class PlayerShip : GameEntity
         newCell.GameEntity = this;
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
+        
+        if (callSync)
+            CallSync();
     }
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
@@ -59,6 +65,7 @@ public class PlayerShip : GameEntity
             checkX += shootX;
             checkY += shootY;
         }
+        CallSync();
     }
 
     #endregion
