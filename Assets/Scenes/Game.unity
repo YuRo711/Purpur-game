@@ -306,7 +306,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6310315305657523357, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
       insertIndex: -1
@@ -592,7 +591,6 @@ MonoBehaviour:
   cellSize: 130
   height: 6
   width: 6
-  enemiesCount: 0
   cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
   cellParent: {fileID: 1836010925}
 --- !u!1 &987267346
@@ -865,7 +863,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1022492167}
-  - {fileID: 2041981196}
   m_Father: {fileID: 987267347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1291,5 +1288,3 @@ SceneRoots:
   - {fileID: 1464325622}
   - {fileID: 1171826743}
   - {fileID: 939692386}
-  - {fileID: 595285033}
-  - {fileID: 604966455}
