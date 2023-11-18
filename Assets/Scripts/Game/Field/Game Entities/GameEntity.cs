@@ -101,7 +101,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (entityId != id)
             return;
         health = newHealth;
-        // MoveTo(newX, newY);
+        MoveTo(newX, newY, false);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
     }
