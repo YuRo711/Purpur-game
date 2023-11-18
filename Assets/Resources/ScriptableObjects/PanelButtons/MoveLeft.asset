@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c9de23e0903bc34a991a005eb5f53ae, type: 3}
-  m_Name: ShootLeft
+  m_Script: {fileID: 11500000, guid: efd2e7647df41cb409574ead77c8562c, type: 3}
+  m_Name: MoveLeft
   m_EditorClassIdentifier: 
   <ActionDirection>k__BackingField: 1
   <ChargeMultiplier>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 0
   <AutoTriggers>k__BackingField: 0
-  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 63f4a131601d9f747a8378d1a18c9e05, type: 3}
-  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: c3908bbda89819146817b5ebba6b8350, type: 3}
-  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: cbcdced8dca47b947aa21b7d7a41d8f4, type: 3}
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 9fe9aabd214328244bb5bc2ee8be790c, type: 3}
+  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: 59c168061c185d64e9fa296254c89803, type: 3}
+  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: b13a7f249f5a17349b90d68ddbab27c7, type: 3}
