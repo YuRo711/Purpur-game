@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 using UnityEngine;
-using Random = System.Random;
 
 public class PlayerList : MonoBehaviourPunCallbacks
 {
@@ -43,7 +38,7 @@ public class PlayerList : MonoBehaviourPunCallbacks
             if (!item.Ready)
                 return;
         }
-        PhotonNetwork.LoadLevel("Game");
+        photonView.RPC("LoadGame", RpcTarget.AllBuffered);
     }
 
     #endregion
@@ -85,6 +80,12 @@ public class PlayerList : MonoBehaviourPunCallbacks
                 transform.SetParent(transform, worldPositionStays: false);
             itemObject.transform.localScale = Vector3.one;
         }
+    }
+
+    [PunRPC]
+    private void LoadGame()
+    {
+        PhotonNetwork.LoadLevel("Game");
     }
 
     #endregion

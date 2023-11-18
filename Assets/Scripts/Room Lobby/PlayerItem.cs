@@ -73,14 +73,12 @@ public class PlayerItem : MonoBehaviour, IPunObservable
         {
             stream.SendNext(Ready);
             stream.SendNext(UserNickname);
-            // Debug.LogError("sent " + _ready);
         }
         else
         {
             Ready = (bool)stream.ReceiveNext();
             UserNickname = (string)stream.ReceiveNext();
             nicknameText.text = UserNickname;
-            Debug.LogError("received " + Ready + " from " + UserNickname);
             photonView.RPC("UpdateImage", RpcTarget.AllBuffered);
         }
     }
@@ -96,10 +94,6 @@ public class PlayerItem : MonoBehaviour, IPunObservable
         IsMine = GetComponent<PhotonView>().IsMine;
         if (IsMine)
             ConnectToPlayer(PhotonNetwork.LocalPlayer);
-        if (IsMine)
-            Debug.LogError("I am " + UserNickname);
-        else
-            Debug.LogError("I am not " + UserNickname);
     }
 
     #endregion

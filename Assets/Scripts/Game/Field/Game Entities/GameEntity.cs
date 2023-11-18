@@ -86,6 +86,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
         {
             stream.SendNext(health);
             stream.SendNext(x);
+            Debug.LogError("sent x " + x);
             stream.SendNext(y);
             stream.SendNext(LookDirection.Vector);
         }
@@ -93,6 +94,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
         {
             health = (int)stream.ReceiveNext();
             x = (int)stream.ReceiveNext();
+            Debug.LogError("got x " + x);
             y = (int)stream.ReceiveNext();
             LookDirection = new Direction((Vector2)stream.ReceiveNext());
         }
