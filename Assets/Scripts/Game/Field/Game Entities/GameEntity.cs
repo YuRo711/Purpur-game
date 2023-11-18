@@ -12,13 +12,13 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     [SerializeField] protected int y;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
-    [SerializeField] protected EnemyManager enemyManager;
 
     #endregion
     
     #region Properties
 
-    public GameGrid LevelGrid;
+    public GameGrid levelGrid;
+    public EnemyManager enemyManager;
     public Direction LookDirection { get; set; }
 
     #endregion
@@ -72,8 +72,8 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     
     protected bool CheckForBorder(int newX, int newY)
     {
-        return newX >= LevelGrid.width || newX < 0 ||
-               newY >= LevelGrid.height || newY < 0;
+        return newX >= levelGrid.width || newX < 0 ||
+               newY >= levelGrid.height || newY < 0;
     }
 
     #endregion

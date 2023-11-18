@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,6 +15,14 @@ public class GameGrid : MonoBehaviour
     [SerializeField] public int enemiesCount;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
+    [SerializeField] private EnemyManager enemyManager;
+
+    #endregion
+
+    #region Static Fields
+    
+    private static readonly string PlayerPrefabPath = "Prefabs/PlayerShip";
+    private static readonly string EnemyPrefabPath = "Prefabs/EnemyShip";
 
     #endregion
     
@@ -35,6 +44,8 @@ public class GameGrid : MonoBehaviour
         {
             CreateCell(x, y);
         }
+        if (PhotonNetwork.IsMasterClient)
+            GenerateEntities();
     }
     
     private void CreateCell (int x, int y)
@@ -44,19 +55,33 @@ public class GameGrid : MonoBehaviour
         cell.Y = y;
     }
 
-    // private void GenerateEntities()
-    // {
-    //     var random = new System.Random();
-    //     for (var i = 0; i < enemiesCount; i++)
-    //     {
-    //         var x = random.Next(0, width - 1);
-    //         var y = random.Next(0, height - 1);
-    //         
-    //     }
-    //     
-    //     var playerX = random.Next(0, width - 1);
-    //     var playerY = random.Next(0, height - 1);
-    // }
+    private void GenerateEntities()
+    {
+        for (var i = 0; i < enemiesCount; i++)
+            SpawnEntity(EnemyPrefabPath);
+        SpawnEntity(PlayerPrefabPath);
+    }
+
+    private void SpawnEntity(string prefabPath)
+    {
+        var random = new System.Random();
+        var x = random.Next(0, width - 1);
+        var y = random.Next(0, height - 1);
+        while (Cells[y, x].GameEntity is not null)
+        {
+            x = random.Next(0, width - 1);
+            y = random.Next(0, height - 1);
+        }
+        var entityObject = PhotonNetwork.Instantiate(
+            EnemyPrefabPath,
+            transform.position,
+            Quaternion.identity);
+        if (entityObject.TryGetComponent(out GameEntity gameEntity))
+        {
+            gameEntity.levelGrid = this;
+            gameEntity.enemyManager = enemyManager;
+        }
+    }
     
     #endregion
 

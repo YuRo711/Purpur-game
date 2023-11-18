@@ -18,10 +18,10 @@ public class PlayerShip : GameEntity
     {
         if (CheckForBorder(destX, destY))
             return;
-        LevelGrid.Cells[y, x].GameEntity = null;
+        levelGrid.Cells[y, x].GameEntity = null;
         x = destX;
         y = destY;
-        var newCell = LevelGrid.Cells[y, x];
+        var newCell = levelGrid.Cells[y, x];
         var rt = (RectTransform)transform;
         rt.SetParent(newCell.transform);
         rt.sizeDelta = new Vector2(size, size);
@@ -49,7 +49,7 @@ public class PlayerShip : GameEntity
         checkY += shootY;
         while (!CheckForBorder(checkX, checkY))
         {
-            if (LevelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
+            if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
                 gameEntity.TakeDamage(shotPower);
                 break;
@@ -66,6 +66,7 @@ public class PlayerShip : GameEntity
     private void Awake()
     {
         LookDirection = new Direction(0, 1);
+        health = 3;
     }
 
     #endregion

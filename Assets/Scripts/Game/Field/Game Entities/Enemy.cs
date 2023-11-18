@@ -26,9 +26,9 @@ public class Enemy : GameEntity
             return;
         }
 
-        if (LevelGrid.Cells[y, x].GameEntity is not null)
-            LevelGrid.Cells[y, x].GameEntity = null;
-        var newCell = LevelGrid.Cells[destY, destX];
+        if (levelGrid.Cells[y, x].GameEntity is not null)
+            levelGrid.Cells[y, x].GameEntity = null;
+        var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null)
         {
             Debug.Log(newCell.GameEntity);
@@ -55,9 +55,9 @@ public class Enemy : GameEntity
     public void LookForPlayer()
     {
         var y1 = y;
-        for (var x1 = 0; x1 < LevelGrid.width; x1++)
+        for (var x1 = 0; x1 < levelGrid.width; x1++)
         {
-            var checkCell = LevelGrid.Cells[y1, x1];
+            var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
                 LookDirection = x1 < x ?
@@ -73,9 +73,9 @@ public class Enemy : GameEntity
         }
 
         var x2 = x;
-        for (var y2 = 0; y2 < LevelGrid.height; y2++)
+        for (var y2 = 0; y2 < levelGrid.height; y2++)
         {
-            var checkCell = LevelGrid.Cells[y2, x2];
+            var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
                 LookDirection = y2 < y ?
@@ -110,6 +110,7 @@ public class Enemy : GameEntity
     protected override void Start()
     {
         base.Start();
+        health = 1;
         enemyManager.enemies.Add(this);
     }
 
