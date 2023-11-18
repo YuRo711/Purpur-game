@@ -123,6 +123,97 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &222065263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222065265}
+  - component: {fileID: 222065264}
+  m_Layer: 0
+  m_Name: Enemy manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &222065264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222065263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8670c6aa6d36426f9613d137c8ce0bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: []
+--- !u!4 &222065265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222065263}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.77616817, y: 0.35963446, z: 90.00001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &318839774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318839776}
+  - component: {fileID: 318839775}
+  m_Layer: 0
+  m_Name: Game Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &318839775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318839774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c1659c0d49f4124a4edac9dc11728b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDuration: 4
+  enemyManager: {fileID: 222065264}
+--- !u!4 &318839776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318839774}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.77616817, y: 0.35963446, z: 90.00001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &350198959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -591,6 +682,7 @@ MonoBehaviour:
   cellSize: 130
   height: 6
   width: 6
+  enemiesCount: 0
   cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
   cellParent: {fileID: 1836010925}
 --- !u!1 &987267346
@@ -1272,6 +1364,10 @@ PrefabInstance:
       propertyPath: LevelGrid
       value: 
       objectReference: {fileID: 939692387}
+    - target: {fileID: 3373086845753813169, guid: 7a5f3926d03967562a787c18c5d1975b, type: 3}
+      propertyPath: enemyManager
+      value: 
+      objectReference: {fileID: 222065264}
     - target: {fileID: 6485535597063332447, guid: 7a5f3926d03967562a787c18c5d1975b, type: 3}
       propertyPath: m_Name
       value: PlayerShip
@@ -1288,3 +1384,5 @@ SceneRoots:
   - {fileID: 1464325622}
   - {fileID: 1171826743}
   - {fileID: 939692386}
+  - {fileID: 318839776}
+  - {fileID: 222065265}
