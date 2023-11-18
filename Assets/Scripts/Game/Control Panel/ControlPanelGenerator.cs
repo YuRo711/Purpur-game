@@ -11,7 +11,6 @@ public class ControlPanelGenerator : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField] private List<GameObject> playerPanels;
-    [SerializeField] private PlayerShip playerShip;
     [SerializeField] private int currentIndex;
     [SerializeField] private ControlPanel controlPanel;
 
@@ -22,7 +21,7 @@ public class ControlPanelGenerator : MonoBehaviour
 
     public void ConnectToPlayer(PlayerShip player)
     {
-        playerShip = player;
+        controlPanel.PlayerShip = player;
     }
     
     #endregion
@@ -38,7 +37,6 @@ public class ControlPanelGenerator : MonoBehaviour
         if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
         {
             controlPanel = newControlPanel;
-            controlPanel.PlayerShip = playerShip;
         }
     }
 

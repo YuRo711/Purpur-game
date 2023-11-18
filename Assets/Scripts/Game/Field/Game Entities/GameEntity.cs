@@ -68,7 +68,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     
     public virtual void SetStartParameters()
     {
-        Debug.LogError("moving to start");
+        LookDirection = new Direction(0, 1);
         MoveTo(x, y);
         transform.localScale = new Vector3(1, 1, 1);
     }
@@ -77,6 +77,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
 
     #region Protected Methods
     
+    // Move to GameGrid later
     protected bool CheckForBorder(int newX, int newY)
     {
         return newX >= levelGrid.width || newX < 0 ||
@@ -105,16 +106,6 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
             y = (int)stream.ReceiveNext();
             LookDirection = new Direction((Vector2)stream.ReceiveNext());
         }
-    }
-
-    #endregion
-    
-    #region MonoBehaviour Callbacks
-
-    private void Awake()
-    {
-        LookDirection = new Direction(0, 1);
-        Debug.LogError(LookDirection.Vector);
     }
 
     #endregion

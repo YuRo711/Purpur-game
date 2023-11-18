@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 90415193}
   - component: {fileID: 90415194}
   m_Layer: 5
-  m_Name: Control Panel
+  m_Name: Control Panel Gen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   - {fileID: 8156574980974248118, guid: 8ca05955665001e42ad42bc05729a951, type: 3}
   playerShip: {fileID: 0}
   currentIndex: 0
+  controlPanel: {fileID: 0}
 --- !u!1 &222065263
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +320,7 @@ MonoBehaviour:
   cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
   cellParent: {fileID: 1836010925}
   enemyManager: {fileID: 222065264}
+  controlPanelGenerator: {fileID: 90415194}
 --- !u!1 &987267346
 GameObject:
   m_ObjectHideFlags: 0
