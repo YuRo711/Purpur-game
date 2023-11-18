@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PanelButton : MonoBehaviour
 {
-    private static float BasicChargeAmount = 0.01f;
-
     [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
     [field: SerializeField] public bool IsFunctional { get; private set; } = true;
     [field: SerializeField] public bool IsCharging { get; private set; }
@@ -70,11 +68,11 @@ public class PanelButton : MonoBehaviour
         if (!IsFunctional)
             CurrentCharge = 0;
 
-        else if(IsCharging)
-            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier*BasicChargeAmount);
+        else if (IsCharging)
+            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
 
-        else if(!IsFullyCharged)
-            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * BasicChargeAmount);
+        else if (!IsFullyCharged)
+            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
     }
 
     private void UpdateAutoActivation()
