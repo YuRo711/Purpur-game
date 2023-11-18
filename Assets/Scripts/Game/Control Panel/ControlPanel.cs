@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ControlPanel : MonoBehaviour, IShipController
 {
+    [field: SerializeField] public float BasicChargeAmount { get; private set; }
     [field: SerializeField] public PanelButton[] Buttons { get; private set; }
     [field: SerializeField] public PlayerShip PlayerShip { get; private set; }
 
@@ -35,6 +36,6 @@ public class ControlPanel : MonoBehaviour, IShipController
 
     public void Shoot(TurnDirections direction)
     {
-        throw new System.NotImplementedException();
+        PlayerShip.Shoot(direction);
     }
 }

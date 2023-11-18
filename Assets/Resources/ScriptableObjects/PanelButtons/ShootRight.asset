@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9de23e0903bc34a991a005eb5f53ae, type: 3}
+  m_Name: ShootRight
+  m_EditorClassIdentifier: 
+  <ActionDirection>k__BackingField: 2
+  <BreaksAfterTrigger>k__BackingField: 0
+  <AutoTriggers>k__BackingField: 1
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: b29824a84e396d8499c18f2e307462d5, type: 3}
+  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: fa4f6ade97c86314c943be2bbfe6b4b6, type: 3}
+  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: 1b53c40e932c1d1419964c425794faea, type: 3}

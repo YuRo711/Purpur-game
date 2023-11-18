@@ -8,7 +8,6 @@ public class PanelButton : MonoBehaviour
     [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
     [field: SerializeField] public bool IsFunctional { get; private set; } = true;
     [field: SerializeField] public bool IsCharging { get; private set; }
-    [field: SerializeField] public float ChargeAmount { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
 
     public event Action<PanelButton> OnStartCharging;
@@ -69,11 +68,11 @@ public class PanelButton : MonoBehaviour
         if (!IsFunctional)
             CurrentCharge = 0;
 
-        else if(IsCharging)
-            CurrentCharge = Mathf.Min(1, CurrentCharge + ChargeAmount);
+        else if (IsCharging)
+            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
 
-        else if(!IsFullyCharged)
-            CurrentCharge = Mathf.Max(0, CurrentCharge - ChargeAmount);
+        else if (!IsFullyCharged)
+            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
     }
 
     private void UpdateAutoActivation()

@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efd2e7647df41cb409574ead77c8562c, type: 3}
-  m_Name: MoveForwardButton
+  m_Name: MoveForward
   m_EditorClassIdentifier: 
+  <ActionDirection>k__BackingField: 0
   <BreaksAfterTrigger>k__BackingField: 0
-  <AutoTriggers>k__BackingField: 0
+  <AutoTriggers>k__BackingField: 1
   <BaseSprite>k__BackingField: {fileID: 21300000, guid: f42b8136417d27c46ad83e57faacb3c7, type: 3}
   <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: 2d83e69a87516a741884aa9cbe4dd52f, type: 3}
   <BrokenSprite>k__BackingField: {fileID: 21300000, guid: b5be210d7ad936442999d378f26dbb20, type: 3}

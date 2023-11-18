@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a89cb95030e2c284fba293ece569ef54, type: 3}
-  m_Name: TurnLeftButton
+  m_Name: TurnLeft
   m_EditorClassIdentifier: 
+  <ActionDirection>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 0
-  <AutoTriggers>k__BackingField: 0
+  <AutoTriggers>k__BackingField: 1
   <BaseSprite>k__BackingField: {fileID: 21300000, guid: af8de7d2323396e4eac3756307177d68, type: 3}
   <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: e4c382c336c06134081c403b7060d1c0, type: 3}
   <BrokenSprite>k__BackingField: {fileID: 21300000, guid: 6d485d04decca7e478b97ee45339727f, type: 3}
