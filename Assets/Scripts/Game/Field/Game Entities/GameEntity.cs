@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public abstract class GameEntity : MonoBehaviour, IPunObservable
+public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Serializable Fields
 
@@ -68,16 +68,27 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     
     public virtual void SetStartParameters()
     {
-        LookDirection = new Direction(0, 1);
+        photonView.RPC("SyncRPC", RpcTarget.AllBuffered);
+    }
+
+    // That's bad. Rewrite it once you have free time.
+    [PunRPC]
+    public void SyncRPC()
+    {
+        levelGrid = FindObjectOfType<GameGrid>();
+        enemyManager = FindObjectOfType<EnemyManager>();
+        if (this is PlayerShip playerShip)
+            FindObjectOfType<ControlPanelGenerator>()
+                .ConnectToPlayer(playerShip);
         MoveTo(x, y);
         transform.localScale = new Vector3(1, 1, 1);
+        LookDirection = new Direction(0, 1);
     }
 
     #endregion
 
     #region Protected Methods
     
-    // Move to GameGrid later
     protected bool CheckForBorder(int newX, int newY)
     {
         return newX >= levelGrid.width || newX < 0 ||

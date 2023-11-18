@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class GameGrid : MonoBehaviour
+public class GameGrid : MonoBehaviourPunCallbacks
 {
     #region Serializable Fields
 
@@ -78,14 +78,8 @@ public class GameGrid : MonoBehaviour
             prefabPath,
             transform.position,
             Quaternion.identity);
-        if (entityObject.TryGetComponent(out GameEntity gameEntity))
-        {
-            gameEntity.levelGrid = this;
-            gameEntity.enemyManager = enemyManager;
-            gameEntity.SetStartParameters();
-            if (gameEntity is PlayerShip playerShip)
-                controlPanelGenerator.ConnectToPlayer(playerShip);
-        }
+        var gameEntity = entityObject.GetComponent<GameEntity>();
+        gameEntity.SetStartParameters();
     }
     
     #endregion

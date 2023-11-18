@@ -45,6 +45,8 @@ MonoBehaviour:
   - LookForPlayer
   - TakeAction
   - LoadGame
+  - SyncEntity
+  - SyncRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

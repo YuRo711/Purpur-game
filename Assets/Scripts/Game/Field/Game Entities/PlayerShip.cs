@@ -33,7 +33,8 @@ public class PlayerShip : GameEntity
             TakeDamage(1);
         }
         newCell.GameEntity = this;
-        enemyManager.LookForPlayer();
+        if (enemyManager is not null)
+            enemyManager.LookForPlayer();
     }
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
