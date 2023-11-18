@@ -16,6 +16,7 @@ public class GameGrid : MonoBehaviour
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
     [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private ControlPanelGenerator controlPanelGenerator;
 
     #endregion
 
@@ -64,6 +65,7 @@ public class GameGrid : MonoBehaviour
 
     private void SpawnEntity(string prefabPath)
     {
+        Debug.Log("spawning " + prefabPath);
         var random = new System.Random();
         var x = random.Next(0, width - 1);
         var y = random.Next(0, height - 1);
@@ -73,13 +75,16 @@ public class GameGrid : MonoBehaviour
             y = random.Next(0, height - 1);
         }
         var entityObject = PhotonNetwork.Instantiate(
-            EnemyPrefabPath,
+            prefabPath,
             transform.position,
             Quaternion.identity);
         if (entityObject.TryGetComponent(out GameEntity gameEntity))
         {
             gameEntity.levelGrid = this;
             gameEntity.enemyManager = enemyManager;
+            gameEntity.SetStartParameters();
+            if (gameEntity is PlayerShip playerShip)
+                controlPanelGenerator.ConnectToPlayer(playerShip);
         }
     }
     
@@ -87,7 +92,7 @@ public class GameGrid : MonoBehaviour
 
     #region MonoBehaviour Callbacks
 
-    private void Awake()
+    private void Start()
     {
         Generate();
     }

@@ -94,8 +94,8 @@ MonoBehaviour:
   y: 0
   health: 0
   size: 100
+  levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
-  LevelGrid: {fileID: 0}
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0

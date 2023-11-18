@@ -13,8 +13,20 @@ public class ControlPanelGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> playerPanels;
     [SerializeField] private PlayerShip playerShip;
     [SerializeField] private int currentIndex;
+    [SerializeField] private ControlPanel controlPanel;
 
     #endregion
+    
+    
+    #region Public Methods
+
+    public void ConnectToPlayer(PlayerShip player)
+    {
+        playerShip = player;
+    }
+    
+    #endregion
+    
     #region MonoBehaviour Callbacks
 
     private void Awake()
@@ -23,8 +35,9 @@ public class ControlPanelGenerator : MonoBehaviour
         var index = PhotonNetwork.IsMasterClient ? 0 : 1;
         var panel = playerPanels[index];
         var newPanel = Instantiate(panel, transform);
-        if (newPanel.TryGetComponent(out ControlPanel controlPanel))
+        if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
         {
+            controlPanel = newControlPanel;
             controlPanel.PlayerShip = playerShip;
         }
     }

@@ -25,7 +25,7 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
 
     
     #region Public Methods
-
+    
     // For movement in some direction
     public void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
@@ -65,6 +65,13 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
     {
         Destroy(gameObject);
     }
+    
+    public virtual void SetStartParameters()
+    {
+        Debug.LogError("moving to start");
+        MoveTo(x, y);
+        transform.localScale = new Vector3(1, 1, 1);
+    }
 
     #endregion
 
@@ -86,27 +93,28 @@ public abstract class GameEntity : MonoBehaviour, IPunObservable
         {
             stream.SendNext(health);
             stream.SendNext(x);
-            Debug.LogError("sent x " + x);
             stream.SendNext(y);
-            stream.SendNext(LookDirection.Vector);
+            stream.SendNext(LookDirection is null ?
+                new Vector2(0, 1) :
+                LookDirection.Vector);
         }
         else
         {
             health = (int)stream.ReceiveNext();
             x = (int)stream.ReceiveNext();
-            Debug.LogError("got x " + x);
             y = (int)stream.ReceiveNext();
             LookDirection = new Direction((Vector2)stream.ReceiveNext());
         }
     }
 
     #endregion
+    
+    #region MonoBehaviour Callbacks
 
-    #region Monobehaviour Callbacks
-
-    protected virtual void Start()
+    private void Awake()
     {
-        MoveTo(x, y);
+        LookDirection = new Direction(0, 1);
+        Debug.LogError(LookDirection.Vector);
     }
 
     #endregion

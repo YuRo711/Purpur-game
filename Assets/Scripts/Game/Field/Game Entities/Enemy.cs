@@ -98,19 +98,9 @@ public class Enemy : GameEntity
         Destroy(gameObject);
     }
 
-    #endregion
-
-    #region MonoBehaviour Callbacks
-
-    protected void Awake()
+    public override void SetStartParameters()
     {
-        LookDirection = new Direction(lookX, lookY);
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        health = 1;
+        base.SetStartParameters();
         enemyManager.enemies.Add(this);
     }
 

@@ -16,6 +16,7 @@ public class PlayerShip : GameEntity
 
     public override void MoveTo(int destX, int destY)
     {
+        Debug.LogError("moving to " + destX + " " + destY);
         if (CheckForBorder(destX, destY))
             return;
         levelGrid.Cells[y, x].GameEntity = null;
@@ -65,7 +66,6 @@ public class PlayerShip : GameEntity
 
     private void Awake()
     {
-        LookDirection = new Direction(0, 1);
         health = 3;
     }
 
