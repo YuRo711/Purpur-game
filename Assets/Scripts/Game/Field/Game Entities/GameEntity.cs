@@ -79,10 +79,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         photonView.RPC("SyncStart", RpcTarget.AllBuffered, entityId);
     }
 
-    // That looks bad. Rewrite it once you have free time.
+    // That looks bad. Rewrite it once you have free time, Y
     [PunRPC]
     public void SyncStart(int id)
     {
+        Debug.LogError(id + " " + entityId);
         if (entityId != id)
             return;
         levelGrid = FindObjectOfType<GameGrid>();

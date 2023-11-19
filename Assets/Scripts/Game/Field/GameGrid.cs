@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = System.Random;
 
 public class GameGrid : MonoBehaviourPunCallbacks
 {
@@ -24,6 +25,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private static readonly string PlayerPrefabPath = "Prefabs/PlayerShip";
     private static readonly string EnemyPrefabPath = "Prefabs/EnemyShip";
+    private static Random _random;
 
     #endregion
     
@@ -58,21 +60,20 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        for (var i = 0; i < enemiesCount; i++)
+        SpawnEntity(PlayerPrefabPath, 0);
+        for (var i = 1; i <= enemiesCount; i++)
             SpawnEntity(EnemyPrefabPath, i);
-        SpawnEntity(PlayerPrefabPath, enemiesCount);
     }
 
     private void SpawnEntity(string prefabPath, int id)
     {
         Debug.Log("spawning " + prefabPath);
-        var random = new System.Random();
-        var x = random.Next(0, width - 1);
-        var y = random.Next(0, height - 1);
+        var x = _random.Next(0, width - 1);
+        var y = _random.Next(0, height - 1);
         while (Cells[y, x].GameEntity is not null)
         {
-            x = random.Next(0, width - 1);
-            y = random.Next(0, height - 1);
+            x = _random.Next(0, width - 1);
+            y = _random.Next(0, height - 1);
         }
         var entityObject = PhotonNetwork.Instantiate(
             prefabPath,
@@ -88,6 +89,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        _random = new System.Random();
         Generate();
     }
     

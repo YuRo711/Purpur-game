@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4628839087870987165}
   - component: {fileID: 5722770021579243716}
   - component: {fileID: 7505497543181997316}
+  - component: {fileID: 9122414660612973668}
   m_Layer: 5
   m_Name: EnemyShip
   m_TagString: Untagged
@@ -89,12 +90,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe307801784945a09a19c56a511b1b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityId: 0
   x: 1
   y: 1
   health: 0
   size: 100
+  levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
-  LevelGrid: {fileID: 0}
   lookX: 0
   lookY: 0
 --- !u!114 &7505497543181997316
@@ -115,7 +117,25 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5722770021579243716}
+  - {fileID: 9122414660612973668}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &9122414660612973668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6363195714419096980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1

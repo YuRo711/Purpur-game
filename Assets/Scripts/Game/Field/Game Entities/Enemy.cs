@@ -20,9 +20,12 @@ public class Enemy : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
+        if (levelGrid is null)
+            SyncStart(entityId);
+        
         if (CheckForBorder(destX, destY))
         {
-            TurnTo(TurnDirections.Around);
+            TurnTo(TurnDirections.Around, callSync);
             return;
         }
 
@@ -31,14 +34,13 @@ public class Enemy : GameEntity
         var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null)
         {
-            Debug.Log(newCell.GameEntity);
             if (newCell.GameEntity is PlayerShip playerShip)
             {
                 playerShip.TakeDamage(1);
                 Die();
                 return;
             }
-            TurnTo(TurnDirections.Around);
+            TurnTo(TurnDirections.Around, callSync);
             return;
         }
 
@@ -49,12 +51,12 @@ public class Enemy : GameEntity
         rt.sizeDelta = new Vector2(size, size);
         rt.localPosition = Vector3.zero;
         newCell.GameEntity = this;
-        LookForPlayer();
+        LookForPlayer(callSync);
         if (callSync)
             CallSync();
     }
 
-    public void LookForPlayer()
+    public void LookForPlayer(bool callSync = true)
     {
         var y1 = y;
         for (var x1 = 0; x1 < levelGrid.width; x1++)
@@ -92,7 +94,8 @@ public class Enemy : GameEntity
                 else
                     break;
         }
-        CallSync();
+        if (callSync)
+            CallSync();
     }
 
     public override void Die()
