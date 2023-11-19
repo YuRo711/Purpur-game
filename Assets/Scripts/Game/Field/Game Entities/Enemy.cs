@@ -100,7 +100,8 @@ public class Enemy : GameEntity
 
     public override void Die()
     {
-        enemyManager.enemies.Remove(this);
+        if (PhotonNetwork.IsMasterClient)
+            enemyManager.enemies.Remove(this);
         PhotonNetwork.Destroy(gameObject);
     }
 

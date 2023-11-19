@@ -81,7 +81,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     // That looks bad. Rewrite it once you have free time, Y
     [PunRPC]
-    public void SyncStart(int id)
+    public virtual void SyncStart(int id)
     {
         Debug.LogError(id + " " + entityId);
         if (entityId != id)

@@ -45,6 +45,7 @@ public class PlayerShip : GameEntity
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
     {
+        Debug.LogError("shot in " + shootTurnDirection);
         var checkX = x;
         var checkY = y;
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
