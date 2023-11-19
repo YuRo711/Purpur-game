@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = System.Random;
 
-public class GameGrid : MonoBehaviour
+public class GameGrid : MonoBehaviourPunCallbacks
 {
     #region Serializable Fields
 
@@ -14,6 +16,16 @@ public class GameGrid : MonoBehaviour
     [SerializeField] public int enemiesCount;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
+    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private ControlPanelGenerator controlPanelGenerator;
+
+    #endregion
+
+    #region Static Fields
+    
+    private static readonly string PlayerPrefabPath = "Prefabs/PlayerShip";
+    private static readonly string EnemyPrefabPath = "Prefabs/EnemyShip";
+    private static Random _random;
 
     #endregion
     
@@ -35,6 +47,8 @@ public class GameGrid : MonoBehaviour
         {
             CreateCell(x, y);
         }
+        if (PhotonNetwork.IsMasterClient)
+            GenerateEntities();
     }
     
     private void CreateCell (int x, int y)
@@ -44,26 +58,38 @@ public class GameGrid : MonoBehaviour
         cell.Y = y;
     }
 
-    // private void GenerateEntities()
-    // {
-    //     var random = new System.Random();
-    //     for (var i = 0; i < enemiesCount; i++)
-    //     {
-    //         var x = random.Next(0, width - 1);
-    //         var y = random.Next(0, height - 1);
-    //         
-    //     }
-    //     
-    //     var playerX = random.Next(0, width - 1);
-    //     var playerY = random.Next(0, height - 1);
-    // }
+    private void GenerateEntities()
+    {
+        SpawnEntity(PlayerPrefabPath, 0);
+        for (var i = 1; i <= enemiesCount; i++)
+            SpawnEntity(EnemyPrefabPath, i);
+    }
+
+    private void SpawnEntity(string prefabPath, int id)
+    {
+        Debug.Log("spawning " + prefabPath);
+        var x = _random.Next(0, width - 1);
+        var y = _random.Next(0, height - 1);
+        while (Cells[y, x].GameEntity is not null)
+        {
+            x = _random.Next(0, width - 1);
+            y = _random.Next(0, height - 1);
+        }
+        var entityObject = PhotonNetwork.Instantiate(
+            prefabPath,
+            transform.position,
+            Quaternion.identity);
+        var gameEntity = entityObject.GetComponent<GameEntity>();
+        gameEntity.SetStartParameters(id);
+    }
     
     #endregion
 
     #region MonoBehaviour Callbacks
 
-    private void Awake()
+    private void Start()
     {
+        _random = new System.Random();
         Generate();
     }
     

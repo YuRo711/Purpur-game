@@ -7,21 +7,25 @@ public class PlayerShip : GameEntity
 {
     #region Public Methods
 
-    public override void TurnTo(TurnDirections turnDirections)
+    public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
-        base.TurnTo(turnDirections);
+        base.TurnTo(turnDirections, callSync);
         var angle = LookDirection.GetDirectionAngle();
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
+        if (callSync)
+            CallSync();
     }
 
-    public override void MoveTo(int destX, int destY)
+    public override void MoveTo(int destX, int destY, bool callSync = true)
     {
+        Debug.LogError("moving to " + destX + " " + destY);
         if (CheckForBorder(destX, destY))
             return;
-        LevelGrid.Cells[y, x].GameEntity = null;
+        levelGrid.Cells[y, x].GameEntity = null;
         x = destX;
         y = destY;
-        var newCell = LevelGrid.Cells[y, x];
+        var newCell = levelGrid.Cells[y, x];
         var rt = (RectTransform)transform;
         rt.SetParent(newCell.transform);
         rt.sizeDelta = new Vector2(size, size);
@@ -32,11 +36,16 @@ public class PlayerShip : GameEntity
             TakeDamage(1);
         }
         newCell.GameEntity = this;
-        enemyManager.LookForPlayer();
+        if (enemyManager is not null)
+            enemyManager.LookForPlayer();
+        
+        if (callSync)
+            CallSync();
     }
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
     {
+        Debug.LogError("shot in " + shootTurnDirection);
         var checkX = x;
         var checkY = y;
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
@@ -45,16 +54,19 @@ public class PlayerShip : GameEntity
         var shootY = (int)shootVector.y;
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
+        checkX += shootX;
+        checkY += shootY;
         while (!CheckForBorder(checkX, checkY))
         {
-            checkX += shootX;
-            checkY += shootY;
-            if (LevelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
+            if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
                 gameEntity.TakeDamage(shotPower);
                 break;
             }
+            checkX += shootX;
+            checkY += shootY;
         }
+        CallSync();
     }
 
     #endregion
@@ -63,7 +75,7 @@ public class PlayerShip : GameEntity
 
     private void Awake()
     {
-        LookDirection = new Direction(0, 1);
+        health = 3;
     }
 
     #endregion

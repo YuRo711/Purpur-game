@@ -18,27 +18,29 @@ public class Enemy : GameEntity
         MoveInDirection(TurnDirections.Forward);
     }
 
-    public override void MoveTo(int destX, int destY)
+    public override void MoveTo(int destX, int destY, bool callSync = true)
     {
+        if (levelGrid is null)
+            SyncStart(entityId);
+        
         if (CheckForBorder(destX, destY))
         {
-            TurnTo(TurnDirections.Around);
+            TurnTo(TurnDirections.Around, callSync);
             return;
         }
 
-        if (LevelGrid.Cells[y, x].GameEntity is not null)
-            LevelGrid.Cells[y, x].GameEntity = null;
-        var newCell = LevelGrid.Cells[destY, destX];
+        if (levelGrid.Cells[y, x].GameEntity is not null)
+            levelGrid.Cells[y, x].GameEntity = null;
+        var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null)
         {
-            Debug.Log(newCell.GameEntity);
             if (newCell.GameEntity is PlayerShip playerShip)
             {
                 playerShip.TakeDamage(1);
                 Die();
                 return;
             }
-            TurnTo(TurnDirections.Around);
+            TurnTo(TurnDirections.Around, callSync);
             return;
         }
 
@@ -49,15 +51,17 @@ public class Enemy : GameEntity
         rt.sizeDelta = new Vector2(size, size);
         rt.localPosition = Vector3.zero;
         newCell.GameEntity = this;
-        LookForPlayer();
+        LookForPlayer(callSync);
+        if (callSync)
+            CallSync();
     }
 
-    public void LookForPlayer()
+    public void LookForPlayer(bool callSync = true)
     {
         var y1 = y;
-        for (var x1 = 0; x1 < LevelGrid.width; x1++)
+        for (var x1 = 0; x1 < levelGrid.width; x1++)
         {
-            var checkCell = LevelGrid.Cells[y1, x1];
+            var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
                 LookDirection = x1 < x ?
@@ -73,9 +77,9 @@ public class Enemy : GameEntity
         }
 
         var x2 = x;
-        for (var y2 = 0; y2 < LevelGrid.height; y2++)
+        for (var y2 = 0; y2 < levelGrid.height; y2++)
         {
-            var checkCell = LevelGrid.Cells[y2, x2];
+            var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
                 LookDirection = y2 < y ?
@@ -90,26 +94,20 @@ public class Enemy : GameEntity
                 else
                     break;
         }
+        if (callSync)
+            CallSync();
     }
 
     public override void Die()
     {
-        enemyManager.enemies.Remove(this);
-        Destroy(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+            enemyManager.enemies.Remove(this);
+        PhotonNetwork.Destroy(gameObject);
     }
 
-    #endregion
-
-    #region MonoBehaviour Callbacks
-
-    protected void Awake()
+    public override void SetStartParameters(int id)
     {
-        LookDirection = new Direction(lookX, lookY);
-    }
-
-    protected override void Start()
-    {
-        base.Start();
+        base.SetStartParameters(id);
         enemyManager.enemies.Add(this);
     }
 
