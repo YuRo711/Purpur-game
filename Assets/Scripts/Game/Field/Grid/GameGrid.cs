@@ -34,7 +34,17 @@ public class GameGrid : MonoBehaviourPunCallbacks
     public GridCell[,] Cells;
 
     #endregion
+
     
+    #region Public Methods
+    
+    public bool CheckForBorder(int newX, int newY)
+    {
+        return newX >= width || newX < 0 ||
+               newY >= height || newY < 0;
+    }
+
+    #endregion
 
     #region Private Methods
     

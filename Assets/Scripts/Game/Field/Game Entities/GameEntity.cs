@@ -21,6 +21,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public GameGrid levelGrid;
     public EnemyManager enemyManager;
     public Direction LookDirection { get; set; }
+    public bool IsBackground { get; protected set; }
 
     #endregion
 
@@ -42,7 +43,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     // For precise movement: warp, etc.
     public virtual void MoveTo(int destX, int destY, bool callSync = true)
     {
-        var borderCheck = CheckForBorder(destX, destY);
+        var borderCheck = levelGrid.CheckForBorder(destX, destY);
         if (borderCheck)
             return;
         
@@ -110,12 +111,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Protected Methods
-    
-    protected bool CheckForBorder(int newX, int newY)
-    {
-        return newX >= levelGrid.width || newX < 0 ||
-               newY >= levelGrid.height || newY < 0;
-    }
 
     protected void CallSync()
     {

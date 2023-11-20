@@ -23,7 +23,7 @@ public class Enemy : GameEntity
         if (levelGrid is null)
             SyncStart(entityId);
         
-        if (CheckForBorder(destX, destY))
+        if (levelGrid.CheckForBorder(destX, destY))
         {
             TurnTo(TurnDirections.Around, callSync);
             return;
@@ -34,6 +34,8 @@ public class Enemy : GameEntity
         var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null)
         {
+            if (newCell.GameEntity.IsBackground)
+                return;
             if (newCell.GameEntity is PlayerShip playerShip)
             {
                 playerShip.TakeDamage(1);

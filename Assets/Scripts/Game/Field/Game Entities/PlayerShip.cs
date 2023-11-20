@@ -20,7 +20,7 @@ public class PlayerShip : GameEntity
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         Debug.LogError("moving to " + destX + " " + destY);
-        if (CheckForBorder(destX, destY))
+        if (levelGrid.CheckForBorder(destX, destY))
             return;
         levelGrid.Cells[y, x].GameEntity = null;
         x = destX;
@@ -32,6 +32,8 @@ public class PlayerShip : GameEntity
         rt.localPosition = Vector3.zero;
         if (newCell.GameEntity is not null)
         {
+            if (newCell.GameEntity.IsBackground)
+                return;
             newCell.GameEntity.Die();
             TakeDamage(1);
         }
@@ -56,10 +58,12 @@ public class PlayerShip : GameEntity
         MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
         checkX += shootX;
         checkY += shootY;
-        while (!CheckForBorder(checkX, checkY))
+        while (!levelGrid.CheckForBorder(checkX, checkY))
         {
             if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
+                if (gameEntity.IsBackground)
+                    return;
                 gameEntity.TakeDamage(shotPower);
                 break;
             }
