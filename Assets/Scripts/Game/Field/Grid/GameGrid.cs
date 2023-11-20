@@ -23,8 +23,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Static Fields
     
-    private static readonly string PlayerPrefabPath = "Prefabs/PlayerShip";
-    private static readonly string EnemyPrefabPath = "Prefabs/EnemyShip";
+    private static readonly string PlayerPrefabPath = "Prefabs/GameEntities/PlayerShip";
+    private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
     private static Random _random;
 
     #endregion
