@@ -22,6 +22,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public GameGrid levelGrid;
     public EnemyManager enemyManager;
     public Direction LookDirection { get; set; }
+    public bool IsBackground { get; set; }
 
     #endregion
 
@@ -138,22 +139,13 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         rt.sizeDelta = new Vector2(size, size);
         rt.localPosition = Vector3.zero;
     }
-    
-    protected Action<GameEntity> GetInteraction(GridCell cell, 
-        Dictionary<Type, Action<GameEntity>> dictionary)
-    {
-        if (cell.GameEntity is null)
-            return null;
-        var gameEntity = cell.GameEntity;
-        var geType = gameEntity.GetType();
-        dictionary.TryGetValue(geType, out var action);
-        return action;
-    }
 
-    protected void InteractWithCellEntity(GridCell cell,
-        Dictionary<Type, Action<GameEntity>> dictionary)
+    protected void CollideWithCellEntity(GridCell cell)
     {
-        var action = GetInteraction(cell, dictionary);
+        var gameEntity = cell.GameEntity;
+        if (gameEntity is null) return;
+        var geType = gameEntity.GetType();
+        CollisionInteractions.TryGetValue(geType, out var action);
         if (action is null)
             return;
         action.Invoke(cell.GameEntity);

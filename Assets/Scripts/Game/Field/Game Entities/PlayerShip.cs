@@ -8,7 +8,8 @@ public class PlayerShip : GameEntity
 {
     #region Interactions
     
-    protected Dictionary<Type, Action<GameEntity>> ShootingInteractions;
+    protected Action<GameEntity> ShootingInteraction;
+    protected Action<GameEntity> TeleportInteraction;
 
     private void PickUpCargo(Cargo cargo)
     {
@@ -43,7 +44,7 @@ public class PlayerShip : GameEntity
         y = destY;
         var newCell = levelGrid.Cells[y, x];
         AdaptTransform(newCell);
-        GetInteraction(newCell, CollisionInteractions);
+        CollideWithCellEntity(newCell);
         newCell.GameEntity = this;
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
@@ -52,29 +53,32 @@ public class PlayerShip : GameEntity
             CallSync();
     }
 
-    public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
+    public void Shoot(TurnDirections shootTurnDirection)
     {
-        var checkX = x;
-        var checkY = y;
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
-        var shootVector = shootAbsDirection.Vector;
-        var shootX = (int)shootVector.x;
-        var shootY = (int)shootVector.y;
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
-        checkX += shootX;
-        checkY += shootY;
+        InteractWithFirst(shootTurnDirection, ShootingInteraction);
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void InteractWithFirst(TurnDirections direction, Action<GameEntity> interaction)
+    {
+        var deltaVector = LookDirection.TurnTo(direction).Vector;
+        var deltaX = (int)deltaVector.x;
+        var deltaY = (int)deltaVector.y;
+        var checkX = x + deltaX;
+        var checkY = y + deltaY;
         while (!levelGrid.CheckForBorder(checkX, checkY))
         {
             var cell = levelGrid.Cells[checkY, checkX];
-            var isShot = GetInteraction(cell, ShootingInteractions);
-            if (isShot is not null)
-            {
-                InteractWithCellEntity(cell, ShootingInteractions);
-                break;
-            }
-            checkX += shootX;
-            checkY += shootY;
+            if (cell.GameEntity is GameEntity gameEntity && !gameEntity.IsBackground)
+                interaction.Invoke(gameEntity);
+            checkX += deltaX;
+            checkY += deltaY;
         }
         CallSync();
     }
@@ -93,12 +97,7 @@ public class PlayerShip : GameEntity
             {typeof(Cargo), e => PickUpCargo((Cargo)e)},
             {typeof(Gates), e => EnterGates((Gates)e)},
         };
-        ShootingInteractions = new()
-        {
-            { typeof(Enemy), e => DamageEntity(e, 1) },
-            { typeof(Asteroid), e => DamageEntity(e, 1) },
-            { typeof(Cargo), e => DamageEntity(e, 1) },
-        };
+        ShootingInteraction = entity => DamageEntity(entity, 1);
     }
 
     #endregion
