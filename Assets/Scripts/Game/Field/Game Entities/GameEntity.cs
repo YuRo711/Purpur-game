@@ -12,6 +12,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected int entityId;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
+    [SerializeField] protected Vector2 moveVector;
 
     #endregion
     
@@ -46,7 +47,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         var newX = X;
         var newY = Y;
-        var moveVector = LookDirection.TurnTo(moveDir).Vector;
+        moveVector = LookDirection.TurnTo(moveDir).Vector;
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
         MoveTo(newX, newY);

@@ -8,18 +8,8 @@ public class PlayerShip : GameEntity
 {
     #region Interactions
     
-    protected Action<GameEntity> ShootingInteraction;
-    protected Action<GameEntity> TeleportInteraction;
-
-    private void PickUpCargo(Cargo cargo)
-    {
-        
-    }
-
-    private void EnterGates(Gates gates)
-    {
-        
-    }
+    private Action<GameEntity> _shootingInteraction;
+    private Action<GameEntity> _teleportInteraction;
 
     #endregion
     
@@ -58,12 +48,12 @@ public class PlayerShip : GameEntity
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
-        InteractWithFirst(shootTurnDirection, ShootingInteraction);
+        InteractWithFirst(shootTurnDirection, _shootingInteraction);
     }
 
     public void Teleport(TurnDirections teleportTurnDirection)
     {
-        InteractWithFirst(teleportTurnDirection, TeleportInteraction);
+        InteractWithFirst(teleportTurnDirection, _teleportInteraction);
     }
 
     #endregion
@@ -97,6 +87,20 @@ public class PlayerShip : GameEntity
         MoveTo(destX, destY);
     }
 
+    private void PushCargo(Cargo cargo)
+    {
+        var moveX = (int)moveVector.x;
+        var moveY = (int)moveVector.y;
+        var newCargoX = cargo.X + moveX;
+        var newCargoY = cargo.Y + moveY;
+        if (levelGrid.CheckForBorder(newCargoX, newCargoY))
+        {
+            MoveTo(X - moveX, X - moveY);
+            return;
+        }
+        cargo.MoveTo(newCargoX, newCargoY);
+    }
+    
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -108,11 +112,10 @@ public class PlayerShip : GameEntity
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
-            {typeof(Cargo), e => PickUpCargo((Cargo)e)},
-            {typeof(Gates), e => EnterGates((Gates)e)},
+            {typeof(Cargo), e => PushCargo((Cargo)e)},
         };
-        ShootingInteraction = entity => DamageEntity(entity, 1);
-        TeleportInteraction = SwitchPlaces;
+        _shootingInteraction = entity => DamageEntity(entity, 1);
+        _teleportInteraction = SwitchPlaces;
     }
 
     #endregion
