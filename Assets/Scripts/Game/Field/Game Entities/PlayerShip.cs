@@ -6,6 +6,22 @@ using UnityEngine;
 
 public class PlayerShip : GameEntity
 {
+    #region Interactions
+    
+    protected Dictionary<Type, Action<GameEntity>> ShootingInteractions;
+
+    private void PickUpCargo(Cargo cargo)
+    {
+        
+    }
+
+    private void EnterGates(Gates gates)
+    {
+        
+    }
+
+    #endregion
+    
     #region Public Methods
 
     public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
@@ -27,7 +43,7 @@ public class PlayerShip : GameEntity
         y = destY;
         var newCell = levelGrid.Cells[y, x];
         AdaptTransform(newCell);
-        InteractWithCellEntity(newCell, CollisionInteractions);
+        GetInteraction(newCell, CollisionInteractions);
         newCell.GameEntity = this;
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
@@ -50,29 +66,17 @@ public class PlayerShip : GameEntity
         checkY += shootY;
         while (!levelGrid.CheckForBorder(checkX, checkY))
         {
-            if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
+            var cell = levelGrid.Cells[checkY, checkX];
+            var isShot = GetInteraction(cell, ShootingInteractions);
+            if (isShot is not null)
             {
-                gameEntity.TakeDamage(shotPower);
+                InteractWithCellEntity(cell, ShootingInteractions);
                 break;
             }
             checkX += shootX;
             checkY += shootY;
         }
         CallSync();
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    private void PickUpCargo(Cargo cargo)
-    {
-        
-    }
-
-    private void EnterGates(Gates gates)
-    {
-        
     }
 
     #endregion
@@ -88,6 +92,12 @@ public class PlayerShip : GameEntity
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
             {typeof(Cargo), e => PickUpCargo((Cargo)e)},
             {typeof(Gates), e => EnterGates((Gates)e)},
+        };
+        ShootingInteractions = new()
+        {
+            { typeof(Enemy), e => DamageEntity(e, 1) },
+            { typeof(Asteroid), e => DamageEntity(e, 1) },
+            { typeof(Cargo), e => DamageEntity(e, 1) },
         };
     }
 

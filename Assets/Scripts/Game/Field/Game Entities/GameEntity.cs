@@ -139,16 +139,24 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         rt.localPosition = Vector3.zero;
     }
     
-    protected void InteractWithCellEntity(GridCell cell, 
+    protected Action<GameEntity> GetInteraction(GridCell cell, 
         Dictionary<Type, Action<GameEntity>> dictionary)
     {
         if (cell.GameEntity is null)
-            return;
+            return null;
         var gameEntity = cell.GameEntity;
         var geType = gameEntity.GetType();
         dictionary.TryGetValue(geType, out var action);
-        if (action is not null)
-            action.Invoke(gameEntity);
+        return action;
+    }
+
+    protected void InteractWithCellEntity(GridCell cell,
+        Dictionary<Type, Action<GameEntity>> dictionary)
+    {
+        var action = GetInteraction(cell, dictionary);
+        if (action is null)
+            return;
+        action.Invoke(cell.GameEntity);
     }
 
     #endregion
