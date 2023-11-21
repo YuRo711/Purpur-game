@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,10 +22,21 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public GameGrid levelGrid;
     public EnemyManager enemyManager;
     public Direction LookDirection { get; set; }
-    public bool IsBackground { get; protected set; }
 
     #endregion
 
+    #region Interactions
+
+    protected Dictionary<Type, Action<GameEntity>> CollisionInteractions;
+    
+    protected void DamageEntity(GameEntity gameEntity, int damage, int damageToSelf = 0)
+    {
+        gameEntity.TakeDamage(damage);
+        if (damageToSelf != 0)
+            TakeDamage(damageToSelf);
+    }
+
+    #endregion
     
     #region Public Methods
     
@@ -119,8 +131,28 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             entityId, health, x, y, (int)vector.x, (int)vector.y);
     }
 
-    #endregion
+    protected void AdaptTransform(GridCell cell)
+    {
+        var rt = (RectTransform)transform;
+        rt.SetParent(cell.transform);
+        rt.sizeDelta = new Vector2(size, size);
+        rt.localPosition = Vector3.zero;
+    }
+    
+    protected void InteractWithCellEntity(GridCell cell, 
+        Dictionary<Type, Action<GameEntity>> dictionary)
+    {
+        if (cell.GameEntity is null)
+            return;
+        var gameEntity = cell.GameEntity;
+        var geType = gameEntity.GetType();
+        dictionary.TryGetValue(geType, out var action);
+        if (action is not null)
+            action.Invoke(gameEntity);
+    }
 
+    #endregion
+    
     #region IPunObservable Callbacks
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

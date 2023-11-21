@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,24 +20,14 @@ public class PlayerShip : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
-        Debug.LogError("moving to " + destX + " " + destY);
         if (levelGrid.CheckForBorder(destX, destY))
             return;
         levelGrid.Cells[y, x].GameEntity = null;
         x = destX;
         y = destY;
         var newCell = levelGrid.Cells[y, x];
-        var rt = (RectTransform)transform;
-        rt.SetParent(newCell.transform);
-        rt.sizeDelta = new Vector2(size, size);
-        rt.localPosition = Vector3.zero;
-        if (newCell.GameEntity is not null)
-        {
-            if (newCell.GameEntity.IsBackground)
-                return;
-            newCell.GameEntity.Die();
-            TakeDamage(1);
-        }
+        AdaptTransform(newCell);
+        InteractWithCellEntity(newCell, CollisionInteractions);
         newCell.GameEntity = this;
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
@@ -47,7 +38,6 @@ public class PlayerShip : GameEntity
 
     public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
     {
-        Debug.LogError("shot in " + shootTurnDirection);
         var checkX = x;
         var checkY = y;
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
@@ -62,8 +52,6 @@ public class PlayerShip : GameEntity
         {
             if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
             {
-                if (gameEntity.IsBackground)
-                    return;
                 gameEntity.TakeDamage(shotPower);
                 break;
             }
@@ -75,11 +63,32 @@ public class PlayerShip : GameEntity
 
     #endregion
 
+    #region Private Methods
+
+    private void PickUpCargo(Cargo cargo)
+    {
+        
+    }
+
+    private void EnterGates(Gates gates)
+    {
+        
+    }
+
+    #endregion
+
     #region MonoBehaviour Callbacks
 
     private void Awake()
     {
         health = 3;
+        CollisionInteractions = new()
+        {
+            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
+            {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
+            {typeof(Cargo), e => PickUpCargo((Cargo)e)},
+            {typeof(Gates), e => EnterGates((Gates)e)},
+        };
     }
 
     #endregion
