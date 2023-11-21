@@ -1,6 +1,4 @@
-using System;
-
-public class Gates : GameEntity
+public class Signal : GameEntity
 {
     #region MonoBehaviour Callbacks
 

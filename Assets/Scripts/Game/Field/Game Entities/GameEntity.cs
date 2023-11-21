@@ -10,8 +10,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #region Serializable Fields
 
     [SerializeField] protected int entityId;
-    [SerializeField] protected int x;
-    [SerializeField] protected int y;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
 
@@ -23,6 +21,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public EnemyManager enemyManager;
     public Direction LookDirection { get; set; }
     public bool IsBackground { get; set; }
+    [SerializeField] public int X { get; protected set; }
+    [SerializeField] public int Y { get; protected set; }
 
     #endregion
 
@@ -44,8 +44,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     // For movement in some direction
     public void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
-        var newX = x;
-        var newY = y;
+        var newX = X;
+        var newY = Y;
         var moveVector = LookDirection.TurnTo(moveDir).Vector;
         newX += (int)moveVector.x * speed;
         newY += (int)moveVector.y * speed;
@@ -60,8 +60,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (borderCheck)
             return;
         
-        x = destX;
-        y = destY;
+        X = destX;
+        Y = destY;
         if (callSync)
             CallSync();
     }
@@ -105,7 +105,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (this is PlayerShip playerShip)
             FindObjectOfType<ControlPanelGenerator>()
                 .ConnectToPlayer(playerShip);
-        MoveTo(x, y);
+        MoveTo(X, Y);
         transform.localScale = new Vector3(1, 1, 1);
         LookDirection = new Direction(0, 1);
     }
@@ -129,7 +129,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         var vector = LookDirection is null ? new Vector2(0, 1) : LookDirection.Vector;
         photonView.RPC("SyncParameters", RpcTarget.AllBuffered, 
-            entityId, health, x, y, (int)vector.x, (int)vector.y);
+            entityId, health, X, Y, (int)vector.x, (int)vector.y);
     }
 
     protected void AdaptTransform(GridCell cell)

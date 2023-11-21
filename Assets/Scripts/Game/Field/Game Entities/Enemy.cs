@@ -29,8 +29,8 @@ public class Enemy : GameEntity
             return;
         }
 
-        if (levelGrid.Cells[y, x].GameEntity is not null)
-            levelGrid.Cells[y, x].GameEntity = null;
+        if (levelGrid.Cells[Y, X].GameEntity is not null)
+            levelGrid.Cells[Y, X].GameEntity = null;
         var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null)
         {
@@ -44,8 +44,8 @@ public class Enemy : GameEntity
             return;
         }
 
-        x = destX;
-        y = destY;
+        X = destX;
+        Y = destY;
         var rt = (RectTransform)transform;
         rt.SetParent(newCell.transform);
         rt.sizeDelta = new Vector2(size, size);
@@ -58,39 +58,39 @@ public class Enemy : GameEntity
 
     public void LookForPlayer(bool callSync = true)
     {
-        var y1 = y;
+        var y1 = Y;
         for (var x1 = 0; x1 < levelGrid.width; x1++)
         {
             var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
-                LookDirection = x1 < x ?
+                LookDirection = x1 < X ?
                     new Direction(-1, 0) :
                     new Direction(1, 0);
                 return;
             }
             if (checkCell.GameEntity is not null)
-                if (x1 <= x)
-                    x1 = x;
+                if (x1 <= X)
+                    x1 = X;
                 else
                     break;
         }
 
-        var x2 = x;
+        var x2 = X;
         for (var y2 = 0; y2 < levelGrid.height; y2++)
         {
             var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
-                LookDirection = y2 < y ?
+                LookDirection = y2 < Y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);
                 return;
             }
             if (checkCell.GameEntity is not null)
                 
-                if (y2 <= y)
-                    y2 = y;
+                if (y2 <= Y)
+                    y2 = Y;
                 else
                     break;
         }

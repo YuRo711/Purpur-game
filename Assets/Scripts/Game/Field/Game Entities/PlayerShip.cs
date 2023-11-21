@@ -39,10 +39,10 @@ public class PlayerShip : GameEntity
     {
         if (levelGrid.CheckForBorder(destX, destY))
             return;
-        levelGrid.Cells[y, x].GameEntity = null;
-        x = destX;
-        y = destY;
-        var newCell = levelGrid.Cells[y, x];
+        levelGrid.Cells[Y, X].GameEntity = null;
+        X = destX;
+        Y = destY;
+        var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
         newCell.GameEntity = this;
@@ -57,8 +57,13 @@ public class PlayerShip : GameEntity
     {
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
-        MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
+        MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
         InteractWithFirst(shootTurnDirection, ShootingInteraction);
+    }
+
+    public void Teleport(TurnDirections teleportTurnDirection)
+    {
+        InteractWithFirst(teleportTurnDirection, TeleportInteraction);
     }
 
     #endregion
@@ -70,8 +75,8 @@ public class PlayerShip : GameEntity
         var deltaVector = LookDirection.TurnTo(direction).Vector;
         var deltaX = (int)deltaVector.x;
         var deltaY = (int)deltaVector.y;
-        var checkX = x + deltaX;
-        var checkY = y + deltaY;
+        var checkX = X + deltaX;
+        var checkY = Y + deltaY;
         while (!levelGrid.CheckForBorder(checkX, checkY))
         {
             var cell = levelGrid.Cells[checkY, checkX];
@@ -81,6 +86,15 @@ public class PlayerShip : GameEntity
             checkY += deltaY;
         }
         CallSync();
+    }
+
+    private void SwitchPlaces(GameEntity gameEntity)
+    {
+        var destX = gameEntity.X;
+        var destY = gameEntity.Y;
+        levelGrid.Cells[X, Y] = null;
+        gameEntity.MoveTo(X, Y);
+        MoveTo(destX, destY);
     }
 
     #endregion
@@ -98,6 +112,7 @@ public class PlayerShip : GameEntity
             {typeof(Gates), e => EnterGates((Gates)e)},
         };
         ShootingInteraction = entity => DamageEntity(entity, 1);
+        TeleportInteraction = SwitchPlaces;
     }
 
     #endregion
