@@ -48,6 +48,7 @@ public class PanelButton : MonoBehaviour
         ButtonType.PerformAction(controlPanel);
 
         CurrentCharge = 0;
+        StopCharging();
 
         if(ButtonType.BreaksAfterTrigger)
             IsFunctional = false;
