@@ -115,9 +115,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void SpawnEntityType(string prefabPath, int count)
     {
-        for (var i = currentId; i <= count; i++)
+        for (var i = currentId; i < currentId + count; i++)
             SpawnEntityOnRandom(prefabPath, i);
-        currentId += count + 1;
+        currentId += count;
     }
 
     private void SpawnEntityOnRandom(string prefabPath, int id)

@@ -30,7 +30,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Interactions
 
-    protected Dictionary<Type, Action<GameEntity>> CollisionInteractions;
+    protected Dictionary<Type, Action<GameEntity>> CollisionInteractions = new ();
     
     protected void DamageEntity(GameEntity gameEntity, int damage, int damageToSelf = 0)
     {
@@ -66,7 +66,10 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
-        newCell.GameEntity = this;
+        if (isBackground)
+            newCell.BgEntity = this;
+        else
+            newCell.GameEntity = this;
         if (callSync)
             CallSync();
     }
@@ -80,7 +83,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(int damage)
     {
-        Debug.Log(name + " took " + damage + " damage");
+        Debug.LogError(name + " took " + damage + " damage");
         health -= damage;
         if (health <= 0)
             Die();
@@ -118,6 +121,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (entityId != id)
             return;
         health = newHealth;
+        if (health <= 0)
+            Die();
         MoveTo(newX, newY, false);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
