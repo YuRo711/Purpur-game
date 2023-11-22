@@ -15,6 +15,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected Vector2 moveVector;
     [SerializeField] protected GameGrid levelGrid;
     [SerializeField] protected EnemyManager enemyManager;
+    [SerializeField] public bool isBackground;
 
     #endregion
     
@@ -22,7 +23,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public LevelManager LevelManager { get; set; }
     public Direction LookDirection { get; set; }
-    public bool IsBackground { get; set; }
     [SerializeField] public int X { get; protected set; }
     [SerializeField] public int Y { get; protected set; }
 

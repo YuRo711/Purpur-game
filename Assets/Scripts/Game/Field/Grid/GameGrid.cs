@@ -14,6 +14,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] public int height;
     [SerializeField] public int width;
     [SerializeField] public int enemiesCount;
+    [SerializeField] public int cargoCount;
+    [SerializeField] public int gatesCount;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
     [FormerlySerializedAs("levelManager2")] [SerializeField] private LevelManager levelManager;
@@ -24,6 +26,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private static readonly string PlayerPrefabPath = "Prefabs/GameEntities/PlayerShip";
     private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
+    private static readonly string GatesPrefabPath = "Prefabs/GameEntities/Gates";
+    private static readonly string CargoPrefabPath = "Prefabs/GameEntities/Cargo";
     private static Random _random;
 
     #endregion
@@ -73,7 +77,13 @@ public class GameGrid : MonoBehaviourPunCallbacks
     private void GenerateEntities()
     {
         SpawnEntity(PlayerPrefabPath, 0);
-        for (var i = 1; i <= enemiesCount; i++)
+        for (var i = 1; i <= gatesCount; i++)
+            SpawnEntity(GatesPrefabPath, i);
+        var id = gatesCount + 1;
+        for (var i = id; i <= id + cargoCount; i++)
+            SpawnEntity(CargoPrefabPath, i);
+        id = gatesCount + cargoCount + 2;
+        for (var i = id; i <= id + enemiesCount; i++)
             SpawnEntity(EnemyPrefabPath, i);
     }
 
@@ -92,11 +102,13 @@ public class GameGrid : MonoBehaviourPunCallbacks
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
-        gameEntity.SetStartParameters(id);
         
         gameEntity.LevelManager = levelManager;
         if (gameEntity is PlayerShip playerShip)
             levelManager.player = playerShip;
+        
+        gameEntity.SetStartParameters(id);
+        gameEntity.MoveTo(x, y);
     }
     
     #endregion
