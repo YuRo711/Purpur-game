@@ -3,7 +3,7 @@ using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerShip : GameEntity, IPlayerControllable
+public class PlayerShip : GameEntity
 {
     #region Public Methods
 
@@ -67,25 +67,6 @@ public class PlayerShip : GameEntity, IPlayerControllable
             checkY += shootY;
         }
         CallSync();
-    }
-
-    #endregion
-
-    #region CrutchPlayerControllableImplementation
-
-    public void MoveInDirection(TurnDirections direction)
-    {
-        MoveInDirection(direction);
-    }
-
-    public void TurnTo(TurnDirections direction)
-    {
-        TurnTo(direction);
-    }
-
-    public void Shoot(TurnDirections direction)
-    {
-        Shoot(direction);
     }
 
     #endregion
