@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerShip : GameEntity
 {
-    #region Interactions
-    
-    private Action<GameEntity> _shootingInteraction;
-    private Action<GameEntity> _teleportInteraction;
-
-    #endregion
-    
     #region Public Methods
 
     public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
@@ -27,69 +19,56 @@ public class PlayerShip : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
-        base.MoveTo(destX, destY, callSync);
+        Debug.LogError("moving to " + destX + " " + destY);
+        if (CheckForBorder(destX, destY))
+            return;
+        levelGrid.Cells[y, x].GameEntity = null;
+        x = destX;
+        y = destY;
+        var newCell = levelGrid.Cells[y, x];
+        var rt = (RectTransform)transform;
+        rt.SetParent(newCell.transform);
+        rt.sizeDelta = new Vector2(size, size);
+        rt.localPosition = Vector3.zero;
+        if (newCell.GameEntity is not null)
+        {
+            newCell.GameEntity.Die();
+            TakeDamage(1);
+        }
+        newCell.GameEntity = this;
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
+        
+        if (callSync)
+            CallSync();
     }
 
-    public void Shoot(TurnDirections shootTurnDirection)
+    public void Shoot(TurnDirections shootTurnDirection, int shotPower = 1)
     {
+        Debug.LogError("shot in " + shootTurnDirection);
+        var checkX = x;
+        var checkY = y;
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
+        var shootVector = shootAbsDirection.Vector;
+        var shootX = (int)shootVector.x;
+        var shootY = (int)shootVector.y;
         var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
-        MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
-        InteractWithFirst(shootTurnDirection, _shootingInteraction);
-    }
-
-    public void Teleport(TurnDirections teleportTurnDirection)
-    {
-        InteractWithFirst(teleportTurnDirection, _teleportInteraction);
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    private void InteractWithFirst(TurnDirections direction, Action<GameEntity> interaction)
-    {
-        var deltaVector = LookDirection.TurnTo(direction).Vector;
-        var deltaX = (int)deltaVector.x;
-        var deltaY = (int)deltaVector.y;
-        var checkX = X + deltaX;
-        var checkY = Y + deltaY;
-        while (!levelGrid.CheckForBorder(checkX, checkY))
+        MoveTo(x + (int)moveVector.x, y + (int)moveVector.y);
+        checkX += shootX;
+        checkY += shootY;
+        while (!CheckForBorder(checkX, checkY))
         {
-            var cell = levelGrid.Cells[checkY, checkX];
-            if (cell.GameEntity is GameEntity gameEntity && !gameEntity.IsBackground)
-                interaction.Invoke(gameEntity);
-            checkX += deltaX;
-            checkY += deltaY;
+            if (levelGrid.Cells[checkY, checkX].GameEntity is GameEntity gameEntity)
+            {
+                gameEntity.TakeDamage(shotPower);
+                break;
+            }
+            checkX += shootX;
+            checkY += shootY;
         }
         CallSync();
     }
 
-    private void SwitchPlaces(GameEntity gameEntity)
-    {
-        var destX = gameEntity.X;
-        var destY = gameEntity.Y;
-        levelGrid.Cells[X, Y] = null;
-        gameEntity.MoveTo(X, Y);
-        MoveTo(destX, destY);
-    }
-
-    private void PushCargo(Cargo cargo)
-    {
-        var moveX = (int)moveVector.x;
-        var moveY = (int)moveVector.y;
-        var newCargoX = cargo.X + moveX;
-        var newCargoY = cargo.Y + moveY;
-        if (levelGrid.CheckForBorder(newCargoX, newCargoY))
-        {
-            MoveTo(X - moveX, X - moveY);
-            return;
-        }
-        cargo.MoveTo(newCargoX, newCargoY);
-    }
-    
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -97,14 +76,6 @@ public class PlayerShip : GameEntity
     private void Awake()
     {
         health = 3;
-        CollisionInteractions = new()
-        {
-            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
-            {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
-            {typeof(Cargo), e => PushCargo((Cargo)e)},
-        };
-        _shootingInteraction = entity => DamageEntity(entity, 1);
-        _teleportInteraction = SwitchPlaces;
     }
 
     #endregion
