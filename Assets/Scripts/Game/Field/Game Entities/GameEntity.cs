@@ -13,13 +13,14 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
     [SerializeField] protected Vector2 moveVector;
+    [SerializeField] protected GameGrid levelGrid;
+    [SerializeField] protected EnemyManager enemyManager;
 
     #endregion
     
     #region Properties
 
-    public GameGrid levelGrid;
-    public EnemyManager enemyManager;
+    public LevelManager LevelManager { get; set; }
     public Direction LookDirection { get; set; }
     public bool IsBackground { get; set; }
     [SerializeField] public int X { get; protected set; }
@@ -57,12 +58,15 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     // For precise movement: warp, etc.
     public virtual void MoveTo(int destX, int destY, bool callSync = true)
     {
-        var borderCheck = levelGrid.CheckForBorder(destX, destY);
-        if (borderCheck)
+        if (levelGrid.CheckForBorder(destX, destY))
             return;
-        
+        levelGrid.Cells[Y, X].GameEntity = null;
         X = destX;
         Y = destY;
+        var newCell = levelGrid.Cells[Y, X];
+        AdaptTransform(newCell);
+        CollideWithCellEntity(newCell);
+        newCell.GameEntity = this;
         if (callSync)
             CallSync();
     }
@@ -94,18 +98,15 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         photonView.RPC("SyncStart", RpcTarget.AllBuffered, entityId);
     }
 
-    // That looks bad. Rewrite it once you have free time, Y
     [PunRPC]
     public virtual void SyncStart(int id)
     {
-        Debug.LogError(id + " " + entityId);
         if (entityId != id)
             return;
-        levelGrid = FindObjectOfType<GameGrid>();
-        enemyManager = FindObjectOfType<EnemyManager>();
+        levelGrid = LevelManager.levelGrid;
+        enemyManager = LevelManager.enemyManager;
         if (this is PlayerShip playerShip)
-            FindObjectOfType<ControlPanelGenerator>()
-                .ConnectToPlayer(playerShip);
+            LevelManager.controlPanelGenerator.ConnectToPlayer(playerShip);
         MoveTo(X, Y);
         transform.localScale = new Vector3(1, 1, 1);
         LookDirection = new Direction(0, 1);

@@ -27,20 +27,9 @@ public class PlayerShip : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
-        if (levelGrid.CheckForBorder(destX, destY))
-            return;
-        levelGrid.Cells[Y, X].GameEntity = null;
-        X = destX;
-        Y = destY;
-        var newCell = levelGrid.Cells[Y, X];
-        AdaptTransform(newCell);
-        CollideWithCellEntity(newCell);
-        newCell.GameEntity = this;
+        base.MoveTo(destX, destY, callSync);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
-        
-        if (callSync)
-            CallSync();
     }
 
     public void Shoot(TurnDirections shootTurnDirection)

@@ -21,8 +21,11 @@ public class Enemy : GameEntity
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         if (levelGrid is null)
+        {
             SyncStart(entityId);
-        
+            return;
+        }
+
         if (levelGrid.CheckForBorder(destX, destY))
         {
             TurnTo(TurnDirections.Around, callSync);
@@ -32,24 +35,14 @@ public class Enemy : GameEntity
         if (levelGrid.Cells[Y, X].GameEntity is not null)
             levelGrid.Cells[Y, X].GameEntity = null;
         var newCell = levelGrid.Cells[destY, destX];
-        if (newCell.GameEntity is not null)
+        if (newCell.GameEntity is not null && newCell.GameEntity is not PlayerShip)
         {
-            if (newCell.GameEntity is PlayerShip playerShip)
-            {
-                playerShip.TakeDamage(1);
-                Die();
-                return;
-            }
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
-
         X = destX;
         Y = destY;
-        var rt = (RectTransform)transform;
-        rt.SetParent(newCell.transform);
-        rt.sizeDelta = new Vector2(size, size);
-        rt.localPosition = Vector3.zero;
+        AdaptTransform(newCell);
         newCell.GameEntity = this;
         LookForPlayer(callSync);
         if (callSync)
@@ -109,6 +102,15 @@ public class Enemy : GameEntity
     {
         base.SetStartParameters(id);
         enemyManager.enemies.Add(this);
+    }
+
+    #endregion
+
+    #region MonoBehaviour Callbacks
+
+    private void Awake()
+    {
+        health = 3;
     }
 
     #endregion
