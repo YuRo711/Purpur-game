@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class PlayerShip : GameEntity
 {
+    #region SerializedProperties
+
+    [field: SerializeField] public ActionMultiplier ActionMultiplier { get; private set; }
+
+    #endregion
+
     #region Public Methods
 
     public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
