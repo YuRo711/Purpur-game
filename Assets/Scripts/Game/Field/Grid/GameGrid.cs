@@ -13,12 +13,16 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private float cellSize;
     [SerializeField] public int height;
     [SerializeField] public int width;
+    [SerializeField] private GridCell cellPrefab;
+    [SerializeField] private RectTransform cellParent;
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private GridCell signalCell;
+    [SerializeField] private int currentId;
+    
     [SerializeField] public int enemiesCount;
     [SerializeField] public int cargoCount;
     [SerializeField] public int gatesCount;
-    [SerializeField] private GridCell cellPrefab;
-    [SerializeField] private RectTransform cellParent;
-    [FormerlySerializedAs("levelManager2")] [SerializeField] private LevelManager levelManager;
+    [SerializeField] public int asteroidsCount;
 
     #endregion
 
@@ -28,6 +32,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
     private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
     private static readonly string GatesPrefabPath = "Prefabs/GameEntities/Gates";
     private static readonly string CargoPrefabPath = "Prefabs/GameEntities/Cargo";
+    private static readonly string AsteroidPrefabPath = "Prefabs/GameEntities/Asteroid";
+    private static readonly string SignalPrefabPath = "Prefabs/GameEntities/Signal";
+    private static readonly string[] Spawnable = { EnemyPrefabPath, CargoPrefabPath, AsteroidPrefabPath };
     private static Random _random;
 
     #endregion
@@ -76,27 +83,39 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntity(PlayerPrefabPath, 0);
-        for (var i = 1; i <= gatesCount; i++)
-            SpawnEntity(GatesPrefabPath, i);
-        var id = gatesCount + 1;
-        for (var i = id; i <= id + cargoCount; i++)
-            SpawnEntity(CargoPrefabPath, i);
-        id = gatesCount + cargoCount + 2;
-        for (var i = id; i <= id + enemiesCount; i++)
-            SpawnEntity(EnemyPrefabPath, i);
+        SpawnEntityType(PlayerPrefabPath, 1);
+        SpawnEntityType(GatesPrefabPath, gatesCount);
+        SpawnEntityType(CargoPrefabPath, cargoCount);
+        SpawnEntityType(EnemyPrefabPath, enemiesCount);
+        SpawnEntityType(AsteroidPrefabPath, asteroidsCount);
+        SpawnEntityType(SignalPrefabPath, 1);
     }
 
-    private void SpawnEntity(string prefabPath, int id)
+    private void SpawnEntityType(string prefabPath, int count)
     {
-        Debug.Log("spawning " + prefabPath);
+        for (var i = currentId; i <= count; i++)
+            SpawnEntityOnRandom(prefabPath, i);
+        currentId += count + 1;
+    }
+
+    private void SpawnEntityOnRandom(string prefabPath, int id)
+    {
         var x = _random.Next(0, width - 1);
         var y = _random.Next(0, height - 1);
-        while (Cells[y, x].GameEntity is not null)
+        var attempts = 0;
+        while (Cells[y, x].GameEntity is not null && !Cells[y, x].GameEntity.isBackground)
         {
+            if (attempts > width * height)
+                return;
             x = _random.Next(0, width - 1);
             y = _random.Next(0, height - 1);
+            attempts++;
         }
+        SpawnEntityInCell(prefabPath, id, x, y);
+    }
+
+    private void SpawnEntityInCell(string prefabPath, int id, int x, int y)
+    {
         var entityObject = PhotonNetwork.Instantiate(
             prefabPath,
             transform.position,
