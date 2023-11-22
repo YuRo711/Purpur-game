@@ -16,15 +16,14 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] public int enemiesCount;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
-    [SerializeField] private EnemyManager enemyManager;
-    [SerializeField] private ControlPanelGenerator controlPanelGenerator;
+    [FormerlySerializedAs("levelManager2")] [SerializeField] private LevelManager levelManager;
 
     #endregion
 
     #region Static Fields
     
-    private static readonly string PlayerPrefabPath = "Prefabs/PlayerShip";
-    private static readonly string EnemyPrefabPath = "Prefabs/EnemyShip";
+    private static readonly string PlayerPrefabPath = "Prefabs/GameEntities/PlayerShip";
+    private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
     private static Random _random;
 
     #endregion
@@ -34,12 +33,25 @@ public class GameGrid : MonoBehaviourPunCallbacks
     public GridCell[,] Cells;
 
     #endregion
+
     
+    #region Public Methods
+    
+    public bool CheckForBorder(int newX, int newY)
+    {
+        return newX >= width || newX < 0 ||
+               newY >= height || newY < 0;
+    }
+
+    #endregion
 
     #region Private Methods
     
     private void Generate()
     {
+        if (levelManager is null)
+            throw new Exception("Where is the level manager?");
+            
         cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
         Cells = new GridCell[height, width];
         for (var x = 0; x < width; x++)
@@ -81,6 +93,10 @@ public class GameGrid : MonoBehaviourPunCallbacks
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
         gameEntity.SetStartParameters(id);
+        
+        gameEntity.LevelManager = levelManager;
+        if (gameEntity is PlayerShip playerShip)
+            levelManager.player = playerShip;
     }
     
     #endregion
