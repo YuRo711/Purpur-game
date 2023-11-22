@@ -37,8 +37,8 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
     {
         TimerValue = 0;
         enemyManager.TakeActions();
-        // if (signal is not null)
-        //     signal.UpdateSignal();
+        if (signal is not null)
+            signal.UpdateSignal();
         StartCoroutine(Wait(moveDuration));
     }
 
