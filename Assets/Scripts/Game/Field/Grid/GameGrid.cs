@@ -13,10 +13,15 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private float cellSize;
     [SerializeField] public int height;
     [SerializeField] public int width;
-    [SerializeField] public int enemiesCount;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
-    [FormerlySerializedAs("levelManager2")] [SerializeField] private LevelManager levelManager;
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private int currentId;
+    
+    [SerializeField] public int enemiesCount;
+    [SerializeField] public int cargoCount;
+    [SerializeField] public int gatesCount;
+    [SerializeField] public int asteroidsCount;
 
     #endregion
 
@@ -24,6 +29,11 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private static readonly string PlayerPrefabPath = "Prefabs/GameEntities/PlayerShip";
     private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
+    private static readonly string GatesPrefabPath = "Prefabs/GameEntities/Gates";
+    private static readonly string CargoPrefabPath = "Prefabs/GameEntities/Cargo";
+    private static readonly string AsteroidPrefabPath = "Prefabs/GameEntities/Asteroid";
+    private static readonly string SignalPrefabPath = "Prefabs/GameEntities/Signal";
+    private static readonly string[] Spawnable = { EnemyPrefabPath, CargoPrefabPath, AsteroidPrefabPath };
     private static Random _random;
 
     #endregion
@@ -41,6 +51,29 @@ public class GameGrid : MonoBehaviourPunCallbacks
     {
         return newX >= width || newX < 0 ||
                newY >= height || newY < 0;
+    }
+
+    public Tuple<int, int> GetRandomPosition()
+    {
+        var x = _random.Next(0, width - 1);
+        var y = _random.Next(0, height - 1);
+        var attempts = 0;
+        while (Cells[y, x].GameEntity is not null && !Cells[y, x].GameEntity.isBackground)
+        {
+            if (attempts > width * height)
+                return null;
+            x = _random.Next(0, width - 1);
+            y = _random.Next(0, height - 1);
+            attempts++;
+        }
+        return Tuple.Create(x, y);
+    }
+
+    public void SpawnRandomSpawnable(int x, int y)
+    {
+        var index = _random.Next(0, Spawnable.Length - 1);
+        SpawnEntityInCell(Spawnable[index], currentId, x, y);
+        currentId++;
     }
 
     #endregion
@@ -72,31 +105,41 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntity(PlayerPrefabPath, 0);
-        for (var i = 1; i <= enemiesCount; i++)
-            SpawnEntity(EnemyPrefabPath, i);
+        SpawnEntityType(PlayerPrefabPath, 1);
+        SpawnEntityType(GatesPrefabPath, gatesCount);
+        SpawnEntityType(CargoPrefabPath, cargoCount);
+        SpawnEntityType(EnemyPrefabPath, enemiesCount);
+        SpawnEntityType(AsteroidPrefabPath, asteroidsCount);
+        SpawnEntityType(SignalPrefabPath, 1);
     }
 
-    private void SpawnEntity(string prefabPath, int id)
+    private void SpawnEntityType(string prefabPath, int count)
     {
-        Debug.Log("spawning " + prefabPath);
-        var x = _random.Next(0, width - 1);
-        var y = _random.Next(0, height - 1);
-        while (Cells[y, x].GameEntity is not null)
-        {
-            x = _random.Next(0, width - 1);
-            y = _random.Next(0, height - 1);
-        }
+        for (var i = currentId; i < currentId + count; i++)
+            SpawnEntityOnRandom(prefabPath, i);
+        currentId += count;
+    }
+
+    private void SpawnEntityOnRandom(string prefabPath, int id)
+    {
+        var position = GetRandomPosition();
+        if (position is null)
+            return;
+        var x = position.Item1;
+        var y = position.Item2;
+        SpawnEntityInCell(prefabPath, id, x, y);
+    }
+
+    private void SpawnEntityInCell(string prefabPath, int id, int x, int y)
+    {
         var entityObject = PhotonNetwork.Instantiate(
             prefabPath,
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
+        levelManager.AddEntity(gameEntity);
         gameEntity.SetStartParameters(id);
-        
-        gameEntity.LevelManager = levelManager;
-        if (gameEntity is PlayerShip playerShip)
-            levelManager.player = playerShip;
+        gameEntity.MoveTo(x, y);
     }
     
     #endregion

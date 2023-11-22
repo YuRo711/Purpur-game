@@ -6,7 +6,7 @@ public class Gates : GameEntity
 
     private void Awake()
     {
-        IsBackground = true;
+        isBackground = true;
     }
 
     #endregion
