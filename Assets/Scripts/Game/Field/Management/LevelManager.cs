@@ -15,6 +15,22 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
+
+    #region Public Methods
+
+    public void AddEntity(GameEntity gameEntity)
+    {
+        gameEntity.LevelManager = this;
+        if (gameEntity is PlayerShip playerShip)
+            player = playerShip;
+        if (gameEntity is Enemy enemy)
+            enemyManager.enemies.Add(enemy);
+        if (gameEntity is Signal signal)
+            timer.signal = signal;
+    }
+
+    #endregion
+
     #region MonoBehaviour Callbacks
 
     private void Awake()

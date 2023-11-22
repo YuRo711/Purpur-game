@@ -16,7 +16,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
     [SerializeField] private LevelManager levelManager;
-    [SerializeField] private GridCell signalCell;
     [SerializeField] private int currentId;
     
     [SerializeField] public int enemiesCount;
@@ -52,6 +51,22 @@ public class GameGrid : MonoBehaviourPunCallbacks
     {
         return newX >= width || newX < 0 ||
                newY >= height || newY < 0;
+    }
+
+    public Tuple<int, int> GetRandomPosition()
+    {
+        var x = _random.Next(0, width - 1);
+        var y = _random.Next(0, height - 1);
+        var attempts = 0;
+        while (Cells[y, x].GameEntity is not null && !Cells[y, x].GameEntity.isBackground)
+        {
+            if (attempts > width * height)
+                return null;
+            x = _random.Next(0, width - 1);
+            y = _random.Next(0, height - 1);
+            attempts++;
+        }
+        return Tuple.Create(x, y);
     }
 
     #endregion
@@ -100,17 +115,11 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void SpawnEntityOnRandom(string prefabPath, int id)
     {
-        var x = _random.Next(0, width - 1);
-        var y = _random.Next(0, height - 1);
-        var attempts = 0;
-        while (Cells[y, x].GameEntity is not null && !Cells[y, x].GameEntity.isBackground)
-        {
-            if (attempts > width * height)
-                return;
-            x = _random.Next(0, width - 1);
-            y = _random.Next(0, height - 1);
-            attempts++;
-        }
+        var position = GetRandomPosition();
+        if (position is null)
+            return;
+        var x = position.Item1;
+        var y = position.Item2;
         SpawnEntityInCell(prefabPath, id, x, y);
     }
 
@@ -121,11 +130,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
-        
-        gameEntity.LevelManager = levelManager;
-        if (gameEntity is PlayerShip playerShip)
-            levelManager.player = playerShip;
-        
+        levelManager.AddEntity(gameEntity);
         gameEntity.SetStartParameters(id);
         gameEntity.MoveTo(x, y);
     }

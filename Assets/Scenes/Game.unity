@@ -166,7 +166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 36930516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce4c23c54bbf4cbd944ddc1e1b3309c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 37c57cbeced546eaa4d2e5efaeb82f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDuration: 4
   enemyManager: {fileID: 222065264}
+  signal: {fileID: 0}
 --- !u!4 &318839776
 Transform:
   m_ObjectHideFlags: 0
@@ -368,12 +369,15 @@ MonoBehaviour:
   cellSize: 130
   height: 6
   width: 6
+  cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
+  cellParent: {fileID: 1836010925}
+  levelManager: {fileID: 0}
+  signalCell: {fileID: 0}
+  currentId: 0
   enemiesCount: 1
   cargoCount: 1
   gatesCount: 1
-  cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
-  cellParent: {fileID: 1836010925}
-  levelManager: {fileID: 36930518}
+  asteroidsCount: 0
 --- !u!114 &939692388
 MonoBehaviour:
   m_ObjectHideFlags: 0
