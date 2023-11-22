@@ -4,4 +4,5 @@ public interface IShipController
     public void Turn(TurnDirections direction);
     public void Shoot(TurnDirections direction);
     public void RepairAll();
+    public void IncrementMultiplier();
 }

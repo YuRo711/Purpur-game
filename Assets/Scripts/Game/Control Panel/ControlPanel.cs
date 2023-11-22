@@ -44,4 +44,9 @@ public class ControlPanel : MonoBehaviour, IShipController
         foreach (var button in Buttons)
             button.Repair();
     }
+
+    public void IncrementMultiplier()
+    {
+        PlayerShip.ActionMultiplier.IncrementMultiplier();
+    }
 }
