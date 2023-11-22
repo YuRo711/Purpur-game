@@ -69,6 +69,13 @@ public class GameGrid : MonoBehaviourPunCallbacks
         return Tuple.Create(x, y);
     }
 
+    public void SpawnRandomSpawnable(int x, int y)
+    {
+        var index = _random.Next(0, Spawnable.Length - 1);
+        SpawnEntityInCell(Spawnable[index], currentId, x, y);
+        currentId++;
+    }
+
     #endregion
 
     #region Private Methods
