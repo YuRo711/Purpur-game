@@ -15,6 +15,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected Vector2 moveVector;
     [SerializeField] protected GameGrid levelGrid;
     [SerializeField] protected EnemyManager enemyManager;
+    [SerializeField] public bool isBackground;
 
     #endregion
     
@@ -22,7 +23,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public LevelManager LevelManager { get; set; }
     public Direction LookDirection { get; set; }
-    public bool IsBackground { get; set; }
     [SerializeField] public int X { get; protected set; }
     [SerializeField] public int Y { get; protected set; }
 
@@ -30,7 +30,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Interactions
 
-    protected Dictionary<Type, Action<GameEntity>> CollisionInteractions;
+    protected Dictionary<Type, Action<GameEntity>> CollisionInteractions = new ();
     
     protected void DamageEntity(GameEntity gameEntity, int damage, int damageToSelf = 0)
     {
@@ -66,7 +66,10 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
-        newCell.GameEntity = this;
+        if (isBackground)
+            newCell.BgEntity = this;
+        else
+            newCell.GameEntity = this;
         if (callSync)
             CallSync();
     }
@@ -80,7 +83,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(int damage)
     {
-        Debug.Log(name + " took " + damage + " damage");
+        Debug.LogError(name + " took " + damage + " damage");
         health -= damage;
         if (health <= 0)
             Die();
@@ -118,6 +121,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (entityId != id)
             return;
         health = newHealth;
+        if (health <= 0)
+            Die();
         MoveTo(newX, newY, false);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);

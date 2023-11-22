@@ -98,19 +98,17 @@ public class Enemy : GameEntity
         PhotonNetwork.Destroy(gameObject);
     }
 
-    public override void SetStartParameters(int id)
-    {
-        base.SetStartParameters(id);
-        enemyManager.enemies.Add(this);
-    }
-
     #endregion
 
     #region MonoBehaviour Callbacks
 
     private void Awake()
     {
-        health = 3;
+        health = 1;
+        CollisionInteractions = new()
+        {
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
+        };
     }
 
     #endregion

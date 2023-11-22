@@ -11,6 +11,7 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
 
     [SerializeField] private float moveDuration = 4;
     [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] public Signal signal;
 
     #endregion
 
@@ -36,6 +37,8 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
     {
         TimerValue = 0;
         enemyManager.TakeActions();
+        // if (signal is not null)
+        //     signal.UpdateSignal();
         StartCoroutine(Wait(moveDuration));
     }
 
