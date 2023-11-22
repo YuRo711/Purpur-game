@@ -23,7 +23,8 @@ public class Cargo : GameEntity
 
     private void EnterGates()
     {
-        
+        LevelManager.score++;
+        Die();
     }
 
     #endregion
