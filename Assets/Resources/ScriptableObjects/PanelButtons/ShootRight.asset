@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ActionDirection>k__BackingField: 2
   <ChargeMultiplier>k__BackingField: 1
-  <BreaksAfterTrigger>k__BackingField: 0
+  <BreaksAfterTrigger>k__BackingField: 1
   <AutoTriggers>k__BackingField: 0
   <BaseSprite>k__BackingField: {fileID: 21300000, guid: b29824a84e396d8499c18f2e307462d5, type: 3}
   <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: fa4f6ade97c86314c943be2bbfe6b4b6, type: 3}

@@ -12,6 +12,12 @@ public class PlayerShip : GameEntity
     private Action<GameEntity> _teleportInteraction;
 
     #endregion
+
+    #region Serializable Fields
+
+    [SerializeField] public ActionMultiplier ActionMultiplier { get; private set; }
+
+    #endregion
     
     #region Public Methods
 
