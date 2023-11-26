@@ -305,7 +305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   readyButton: {fileID: 569045143}
-  requiredPlayerCount: 1
 --- !u!114 &186680310
 MonoBehaviour:
   m_ObjectHideFlags: 0

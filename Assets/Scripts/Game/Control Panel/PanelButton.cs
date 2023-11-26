@@ -45,10 +45,9 @@ public class PanelButton : MonoBehaviour
         if (!IsFullyCharged || !IsFunctional)
             return;
 
-        PerformAction();
+        ButtonType.PerformAction(controlPanel);
 
         CurrentCharge = 0;
-        StopCharging();
 
         if(ButtonType.BreaksAfterTrigger)
             IsFunctional = false;
@@ -57,7 +56,6 @@ public class PanelButton : MonoBehaviour
     public void Repair()
     {
         IsFunctional = true;
-        CurrentCharge = 0;
     }
 
     public void StopCharging()
@@ -92,19 +90,5 @@ public class PanelButton : MonoBehaviour
 
         IsCharging = true;
         OnStartCharging?.Invoke(this);
-    }
-
-    private void PerformAction()
-    {
-        if (!ButtonType.AffectedByMultiplier)
-        {
-            ButtonType.PerformAction(controlPanel);
-            return;
-        }
-
-        for (var i = 0; i < controlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
-            ButtonType.PerformAction(controlPanel);
-
-        controlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
     }
 }

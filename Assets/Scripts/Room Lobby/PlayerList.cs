@@ -18,7 +18,6 @@ public class PlayerList : MonoBehaviourPunCallbacks
     #region Serialized Fields
 
     [SerializeField] private ReadyButton readyButton;
-    [SerializeField] private int requiredPlayerCount;
 
     #endregion
     
@@ -32,7 +31,7 @@ public class PlayerList : MonoBehaviourPunCallbacks
 
     public void CheckPlayersReady()
     {
-        if (_listItems.Count < requiredPlayerCount)
+        if (_listItems.Count < 1)
             return;
         foreach (var item in _listItems)
         {

@@ -38,15 +38,4 @@ public class ControlPanel : MonoBehaviour, IShipController
     {
         PlayerShip.Shoot(direction);
     }
-
-    public void RepairAll()
-    {
-        foreach (var button in Buttons)
-            button.Repair();
-    }
-
-    public void IncrementMultiplier()
-    {
-        PlayerShip.ActionMultiplier.IncrementMultiplier();
-    }
 }
