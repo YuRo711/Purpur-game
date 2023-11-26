@@ -43,7 +43,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
     public GridCell[,] Cells;
 
     #endregion
-
     
     #region Public Methods
     
@@ -82,9 +81,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private void Generate()
     {
-        if (levelManager is null)
-            throw new Exception("Where is the level manager?");
-            
         cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
         Cells = new GridCell[height, width];
         for (var x = 0; x < width; x++)
