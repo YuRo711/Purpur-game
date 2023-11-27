@@ -83,10 +83,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(int damage)
     {
-        Debug.LogError(name + " took " + damage + " damage");
         health -= damage;
-        if (health <= 0)
-            Die();
         CallSync();
     }
     
@@ -110,8 +107,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         enemyManager = LevelManager.enemyManager;
         if (this is PlayerShip playerShip)
             LevelManager.controlPanelGenerator.ConnectToPlayer(playerShip);
-        MoveTo(X, Y);
-        transform.localScale = new Vector3(1, 1, 1);
         LookDirection = new Direction(0, 1);
     }
 

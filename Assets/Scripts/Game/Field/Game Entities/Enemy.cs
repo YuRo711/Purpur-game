@@ -20,6 +20,7 @@ public class Enemy : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
+        Debug.LogError("moved enemy to" + X + " " + Y);
         if (levelGrid is null)
         {
             SyncStart(entityId);
@@ -91,24 +92,25 @@ public class Enemy : GameEntity
             CallSync();
     }
 
+    [PunRPC]
+    public override void SyncStart(int id)
+    {
+        base.SyncStart(id);
+        if (entityId != id)
+            return;
+        health = 1;
+        CollisionInteractions = new()
+        {
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
+            {typeof(Cargo), e => DamageEntity(e, 0, 1)}
+        };
+    }
+
     public override void Die()
     {
         if (PhotonNetwork.IsMasterClient)
             enemyManager.enemies.Remove(this);
         PhotonNetwork.Destroy(gameObject);
-    }
-
-    #endregion
-
-    #region MonoBehaviour Callbacks
-
-    private void Awake()
-    {
-        health = 1;
-        CollisionInteractions = new()
-        {
-            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
-        };
     }
 
     #endregion

@@ -26,14 +26,22 @@ public class GameGrid : MonoBehaviourPunCallbacks
     #endregion
 
     #region Static Fields
-    
-    private static readonly string PlayerPrefabPath = "Prefabs/GameEntities/PlayerShip";
-    private static readonly string EnemyPrefabPath = "Prefabs/GameEntities/EnemyShip";
-    private static readonly string GatesPrefabPath = "Prefabs/GameEntities/Gates";
-    private static readonly string CargoPrefabPath = "Prefabs/GameEntities/Cargo";
-    private static readonly string AsteroidPrefabPath = "Prefabs/GameEntities/Asteroid";
-    private static readonly string SignalPrefabPath = "Prefabs/GameEntities/Signal";
-    private static readonly string[] Spawnable = { EnemyPrefabPath, CargoPrefabPath, AsteroidPrefabPath };
+
+    private static readonly Dictionary<string, string> PrefabPaths = new()
+    {
+        { "player", "Prefabs/GameEntities/PlayerShip" },
+        { "enemy", "Prefabs/GameEntities/EnemyShip" },
+        { "gates", "Prefabs/GameEntities/Gates" },
+        { "cargo", "Prefabs/GameEntities/Cargo" },
+        { "asteroid", "Prefabs/GameEntities/Asteroid" },
+        { "signal", "Prefabs/GameEntities/Signal" },
+    };
+    private static readonly string[] Spawnable =
+    {
+        PrefabPaths["enemy"],
+        PrefabPaths["cargo"],
+        PrefabPaths["asteroid"]
+    };
     private static Random _random;
 
     #endregion
@@ -105,12 +113,12 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntityType(PlayerPrefabPath, 1);
-        SpawnEntityType(GatesPrefabPath, gatesCount);
-        SpawnEntityType(CargoPrefabPath, cargoCount);
-        SpawnEntityType(EnemyPrefabPath, enemiesCount);
-        SpawnEntityType(AsteroidPrefabPath, asteroidsCount);
-        SpawnEntityType(SignalPrefabPath, 1);
+        SpawnEntityType(PrefabPaths["player"], 1);
+        SpawnEntityType(PrefabPaths["gates"], gatesCount);
+        SpawnEntityType(PrefabPaths["cargo"], cargoCount);
+        SpawnEntityType(PrefabPaths["enemy"], enemiesCount);
+        SpawnEntityType(PrefabPaths["asteroid"], asteroidsCount);
+        SpawnEntityType(PrefabPaths["signal"], 1);
     }
 
     private void SpawnEntityType(string prefabPath, int count)
@@ -140,6 +148,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         levelManager.AddEntity(gameEntity);
         gameEntity.SetStartParameters(id);
         gameEntity.MoveTo(x, y);
+        gameEntity.transform.localScale = new Vector3(1, 1, 1);
     }
     
     #endregion

@@ -1,3 +1,5 @@
+using Photon.Pun;
+
 public class Cargo : GameEntity
 {
     #region Public Methods
@@ -16,6 +18,23 @@ public class Cargo : GameEntity
         if (callSync)
             CallSync();
     }
+    
+    [PunRPC]
+    public override void SyncStart(int id)
+    {
+        base.SyncStart(id);
+        if (entityId != id)
+            return;
+        health = 1;
+        CollisionInteractions = new()
+        {
+            {typeof(Enemy), e => DamageEntity(e, 1)},
+            {typeof(Asteroid), e => DamageEntity(e, 1)},
+            {typeof(Cargo), e => DamageEntity(e, 1)},
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
+            {typeof(Gates), e => EnterGates()}
+        };
+    }
 
     #endregion
 
@@ -25,21 +44,6 @@ public class Cargo : GameEntity
     {
         LevelManager.score++;
         Die();
-    }
-
-    #endregion
-    
-    #region MonoBehaviour Callbacks
-
-    private void Awake()
-    {
-        CollisionInteractions = new()
-        {
-            {typeof(Enemy), e => DamageEntity(e, 1)},
-            {typeof(Asteroid), e => DamageEntity(e, 1)},
-            {typeof(Cargo), e => DamageEntity(e, 1)},
-            {typeof(Gates), e => EnterGates()}
-        };
     }
 
     #endregion
