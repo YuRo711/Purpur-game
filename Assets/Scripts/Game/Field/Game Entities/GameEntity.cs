@@ -83,6 +83,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public void TakeDamage(int damage)
     {
+        Debug.LogError(name + " took damage");
         health -= damage;
         CallSync();
     }

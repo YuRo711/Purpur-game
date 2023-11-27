@@ -20,7 +20,6 @@ public class Enemy : GameEntity
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
-        Debug.LogError("moved enemy to" + X + " " + Y);
         if (levelGrid is null)
         {
             SyncStart(entityId);
@@ -44,6 +43,7 @@ public class Enemy : GameEntity
         X = destX;
         Y = destY;
         AdaptTransform(newCell);
+        CollideWithCellEntity(newCell);
         newCell.GameEntity = this;
         LookForPlayer(callSync);
         if (callSync)
