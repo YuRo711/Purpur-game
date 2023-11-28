@@ -10,7 +10,7 @@ public class Enemy : GameEntity
     [SerializeField] protected int lookY;
 
     #endregion
-    
+
     #region Public Methods
 
     public void TakeAction()
@@ -21,35 +21,28 @@ public class Enemy : GameEntity
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         if (levelGrid is null)
+        {
             SyncStart(entityId);
-        
-        if (CheckForBorder(destX, destY))
+            return;
+        }
+
+        if (levelGrid.CheckForBorder(destX, destY))
         {
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
 
-        if (levelGrid.Cells[y, x].GameEntity is not null)
-            levelGrid.Cells[y, x].GameEntity = null;
+        if (levelGrid.Cells[Y, X].GameEntity is not null)
+            levelGrid.Cells[Y, X].GameEntity = null;
         var newCell = levelGrid.Cells[destY, destX];
-        if (newCell.GameEntity is not null)
+        if (newCell.GameEntity is not null && newCell.GameEntity is not PlayerShip)
         {
-            if (newCell.GameEntity is PlayerShip playerShip)
-            {
-                playerShip.TakeDamage(1);
-                Die();
-                return;
-            }
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
-
-        x = destX;
-        y = destY;
-        var rt = (RectTransform)transform;
-        rt.SetParent(newCell.transform);
-        rt.sizeDelta = new Vector2(size, size);
-        rt.localPosition = Vector3.zero;
+        X = destX;
+        Y = destY;
+        AdaptTransform(newCell);
         newCell.GameEntity = this;
         LookForPlayer(callSync);
         if (callSync)
@@ -58,39 +51,39 @@ public class Enemy : GameEntity
 
     public void LookForPlayer(bool callSync = true)
     {
-        var y1 = y;
+        var y1 = Y;
         for (var x1 = 0; x1 < levelGrid.width; x1++)
         {
             var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
-                LookDirection = x1 < x ?
+                LookDirection = x1 < X ?
                     new Direction(-1, 0) :
                     new Direction(1, 0);
                 return;
             }
             if (checkCell.GameEntity is not null)
-                if (x1 <= x)
-                    x1 = x;
+                if (x1 <= X)
+                    x1 = X;
                 else
                     break;
         }
 
-        var x2 = x;
+        var x2 = X;
         for (var y2 = 0; y2 < levelGrid.height; y2++)
         {
             var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
-                LookDirection = y2 < y ?
+                LookDirection = y2 < Y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);
                 return;
             }
             if (checkCell.GameEntity is not null)
-                
-                if (y2 <= y)
-                    y2 = y;
+
+                if (y2 <= Y)
+                    y2 = Y;
                 else
                     break;
         }
@@ -120,4 +113,3 @@ public class Enemy : GameEntity
 
     #endregion
 }
-

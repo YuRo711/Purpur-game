@@ -1,7 +1,9 @@
+using Photon.Pun.Demo.Asteroids;
+
 public class Cargo : GameEntity
 {
     #region Public Methods
-    
+
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         if (levelGrid.CheckForBorder(destX, destY))
@@ -28,7 +30,7 @@ public class Cargo : GameEntity
     }
 
     #endregion
-    
+
     #region MonoBehaviour Callbacks
 
     private void Awake()

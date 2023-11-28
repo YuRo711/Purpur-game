@@ -47,6 +47,6 @@ public class ControlPanel : MonoBehaviour, IShipController
 
     public void IncrementMultiplier()
     {
-        PlayerShip.ActionMultiplier.IncrementMultiplier();
+        //PlayerShip.ActionMultiplier.IncrementMultiplier();
     }
 }

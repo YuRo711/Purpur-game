@@ -102,9 +102,11 @@ public class PanelButton : MonoBehaviour
             return;
         }
 
-        for (var i = 0; i < controlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
-            ButtonType.PerformAction(controlPanel);
+        //for (var i = 0; i < controlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
+        //    ButtonType.PerformAction(controlPanel);
 
-        controlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
+        ButtonType.PerformAction(controlPanel);
+
+        //controlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
     }
 }
