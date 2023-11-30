@@ -60,7 +60,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (levelGrid.CheckForBorder(destX, destY))
             return;
-        levelGrid.Cells[Y, X].GameEntity = null;
+        DeleteFromCell(entityId);
         X = destX;
         Y = destY;
         var newCell = levelGrid.Cells[Y, X];
@@ -91,6 +91,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public virtual void Die()
     {
         PhotonNetwork.Destroy(gameObject);
+        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId);
     }
     
     public virtual void SetStartParameters(int id)
@@ -127,6 +128,17 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Protected Methods
+
+    [PunRPC]
+    protected void DeleteFromCell(int id)
+    {
+        if (entityId != id)
+            return;
+        if (isBackground)
+            levelGrid.Cells[Y, X].BgEntity = null;
+        else
+            levelGrid.Cells[Y, X].GameEntity = null;
+    }
 
     protected void CallSync()
     {
