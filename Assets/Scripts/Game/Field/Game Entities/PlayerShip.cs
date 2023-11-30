@@ -64,7 +64,10 @@ public class PlayerShip : GameEntity
         {
             var cell = levelGrid.Cells[checkY, checkX];
             if (cell.GameEntity is GameEntity gameEntity && !gameEntity.isBackground)
+            {
                 interaction.Invoke(gameEntity);
+                break;
+            }
             checkX += deltaX;
             checkY += deltaY;
         }

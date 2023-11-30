@@ -66,7 +66,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         var x = _random.Next(0, width - 1);
         var y = _random.Next(0, height - 1);
         var attempts = 0;
-        while (Cells[y, x].GameEntity is not null && !Cells[y, x].GameEntity.isBackground)
+        while (Cells[y, x].GameEntity is not null/* && !Cells[y, x].GameEntity.isBackground */)
         {
             if (attempts > width * height)
                 return null;
