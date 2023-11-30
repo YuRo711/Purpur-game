@@ -78,7 +78,7 @@ public class PlayerShip : GameEntity
     {
         var destX = gameEntity.X;
         var destY = gameEntity.Y;
-        levelGrid.Cells[X, Y] = null;
+        DeleteFromCell(entityId);
         gameEntity.MoveTo(X, Y);
         MoveTo(destX, destY);
     }
