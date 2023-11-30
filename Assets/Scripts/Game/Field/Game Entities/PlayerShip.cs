@@ -14,7 +14,7 @@ public class PlayerShip : GameEntity
     #endregion
 
     #region SerializedProperties
-    [field: SerializeField] public ActionMultiplier ActionMultiplier { get; private set; }
+    [field: SerializeField] public ActionMultiplier ActionMultiplier { get; private set; } = new ActionMultiplier();
     #endregion
 
     #region Public Methods

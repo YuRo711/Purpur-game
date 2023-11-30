@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ActionMultiplier : MonoBehaviour
+public class ActionMultiplier
 {
     [field: SerializeField] public int Multiplier { get; private set; } = 1;
 
