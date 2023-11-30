@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184f1b1a745ef044c9b41ef9d323c263, type: 3}
+  m_Name: TeleportRight
+  m_EditorClassIdentifier: 
+  <ActionDirection>k__BackingField: 2
+  <ChargeMultiplier>k__BackingField: 1
+  <BreaksAfterTrigger>k__BackingField: 1
+  <AutoTriggers>k__BackingField: 0
+  <AffectedByMultiplier>k__BackingField: 1
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: e75d2b718ce4087499a023996c583195, type: 3}
+  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: 4ad65eba8a045304d94968102cd2840c, type: 3}
+  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: 5c45b69b2fbadb04fb533baeca7b5d2a, type: 3}

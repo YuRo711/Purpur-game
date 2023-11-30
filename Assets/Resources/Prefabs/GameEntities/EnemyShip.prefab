@@ -91,12 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityId: 0
-  x: 1
-  y: 1
   health: 0
   size: 100
+  moveVector: {x: 0, y: 0}
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
+  isBackground: 0
   lookX: 0
   lookY: 0
 --- !u!114 &7505497543181997316

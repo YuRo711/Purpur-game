@@ -90,12 +90,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ba59fa757547a6b1197f86e70cae36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
+  entityId: 0
   health: 0
   size: 100
+  moveVector: {x: 0, y: 0}
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
+  isBackground: 0
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0
