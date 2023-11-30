@@ -49,4 +49,9 @@ public class ControlPanel : MonoBehaviour, IShipController
     {
         PlayerShip.ActionMultiplier.IncrementMultiplier();
     }
+
+    public void Teleport(TurnDirections direction)
+    {
+        PlayerShip.Teleport(direction);
+    }
 }
