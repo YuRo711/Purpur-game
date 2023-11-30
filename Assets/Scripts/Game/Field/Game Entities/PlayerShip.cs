@@ -78,9 +78,12 @@ public class PlayerShip : GameEntity
     {
         var destX = gameEntity.X;
         var destY = gameEntity.Y;
+        var oldX = X;
+        var oldY = Y;
         DeleteFromCell(entityId);
         gameEntity.MoveTo(X, Y);
         MoveTo(destX, destY);
+        levelGrid.Cells[oldY, oldX].GameEntity = gameEntity;
     }
 
     private void PushCargo(Cargo cargo)
