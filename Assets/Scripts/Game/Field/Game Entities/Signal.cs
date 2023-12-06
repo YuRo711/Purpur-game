@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -16,13 +17,13 @@ public class Signal : GameEntity
         var pos = levelGrid.GetRandomPosition();
         MoveTo(pos.Item1, pos.Item2);
     }
-    
-    [PunRPC]
-    public override void SyncStart(int id)
+
+    #endregion
+
+    #region MonoBehaviour Callbacks
+
+    private void Awake()
     {
-        base.SyncStart(id);
-        if (entityId != id)
-            return;
         isBackground = true;
     }
 

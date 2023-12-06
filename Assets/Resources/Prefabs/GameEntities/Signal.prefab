@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b6f4ffa58d48b0ac23e30d0dad298f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityId: 0
+  entityId: -1
   health: 1
   size: 100
   moveVector: {x: 0, y: 0}

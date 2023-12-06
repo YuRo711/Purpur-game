@@ -30,14 +30,4 @@ public class LevelManager : MonoBehaviour
     }
 
     #endregion
-
-    #region MonoBehaviour Callbacks
-
-    private void Awake()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-            Destroy(gameObject);
-    }
-
-    #endregion
 }

@@ -15,7 +15,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] public int width;
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
-    [SerializeField] private LevelManager levelManager;
     [SerializeField] private int currentId;
     
     [SerializeField] public int enemiesCount;
@@ -90,9 +89,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private void Generate()
     {
-        if (levelManager is null)
-            throw new Exception("Where is the level manager?");
-            
         cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
         Cells = new GridCell[height, width];
         for (var x = 0; x < width; x++)
@@ -145,10 +141,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
-        levelManager.AddEntity(gameEntity);
-        gameEntity.SetStartParameters(id);
-        gameEntity.MoveTo(x, y);
-        gameEntity.transform.localScale = new Vector3(1, 1, 1);
+        gameEntity.SetStartParameters(id, x, y);
     }
     
     #endregion

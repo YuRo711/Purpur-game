@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -9,7 +10,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region Serializable Fields
 
-    [SerializeField] protected int entityId;
+    [SerializeField] protected int entityId = -1;
     [SerializeField] protected int health = 1;
     [SerializeField] protected int size = 100;
     [SerializeField] protected Vector2 moveVector;
@@ -58,6 +59,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     // For precise movement: warp, etc.
     public virtual void MoveTo(int destX, int destY, bool callSync = true)
     {
+        if (levelGrid is null)
+            throw new Exception("Level grid not found");
         if (levelGrid.CheckForBorder(destX, destY))
             return;
         DeleteFromCell(entityId);
@@ -94,22 +97,31 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId);
     }
     
-    public virtual void SetStartParameters(int id)
+    public virtual void SetStartParameters(int id, int x, int y)
     {
         entityId = id;
-        photonView.RPC("SyncStart", RpcTarget.AllBuffered, entityId);
+        photonView.RPC("SyncStart", RpcTarget.AllBuffered, entityId, x, y);
     }
 
     [PunRPC]
-    public virtual void SyncStart(int id)
+    public virtual void SyncStart(int id, int x, int y)
     {
+        if (entityId == -1)
+            StartCoroutine(WaitForId(id, x, y));
+
         if (entityId != id)
             return;
+        
+        LevelManager ??= FindObjectOfType<LevelManager>();
+        LevelManager.AddEntity(this);
         levelGrid = LevelManager.levelGrid;
         enemyManager = LevelManager.enemyManager;
         if (this is PlayerShip playerShip)
             LevelManager.controlPanelGenerator.ConnectToPlayer(playerShip);
+        
         LookDirection = new Direction(0, 1);
+        MoveTo(x, y);
+        transform.localScale = new Vector3(1, 1, 1);
     }
 
     [PunRPC]
@@ -128,6 +140,15 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Protected Methods
+
+    protected IEnumerator WaitForId(int id, int x, int y)
+    {
+        while (entityId == -1)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        SyncStart(id, x, y);
+    }
 
     [PunRPC]
     protected void DeleteFromCell(int id)

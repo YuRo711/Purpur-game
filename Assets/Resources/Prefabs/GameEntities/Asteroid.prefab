@@ -98,6 +98,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3012674480101036018}
+  - {fileID: 9009682848441935777}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -129,10 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d97020c48b642cba1f9944e72039766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityId: 0
-  x: 0
-  y: 0
+  entityId: -1
   health: 1
   size: 100
+  moveVector: {x: 0, y: 0}
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
+  isBackground: 0

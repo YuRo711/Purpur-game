@@ -98,6 +98,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4842180604030647739}
+  - {fileID: 1099864374912614249}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d722e0ee95c4566a51ce9ebb0ded019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityId: 0
+  entityId: -1
   health: 1
   size: 100
   moveVector: {x: 0, y: 0}
