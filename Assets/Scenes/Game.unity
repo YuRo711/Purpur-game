@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPanels:
   - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
-  - {fileID: 8156574980974248118, guid: 8ca05955665001e42ad42bc05729a951, type: 3}
+  - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
   currentIndex: 0
   controlPanel: {fileID: 0}
 --- !u!1 &222065263
@@ -371,7 +371,6 @@ MonoBehaviour:
   width: 6
   cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
   cellParent: {fileID: 1836010925}
-  levelManager: {fileID: 36930518}
   currentId: 0
   enemiesCount: 1
   cargoCount: 1
