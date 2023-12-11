@@ -12,14 +12,14 @@ public class PanelButton : MonoBehaviour
 
     public event Action<PanelButton> OnStartCharging;
 
-    private ControlPanel controlPanel;
+    public ControlPanel ControlPanel { get; private set; }
 
     public bool IsFullyCharged
         => CurrentCharge >= 1;
 
     private void Start()
     {
-        controlPanel = GetComponentInParent<ControlPanel>();
+        ControlPanel = GetComponentInParent<ControlPanel>();
     }
 
     private void FixedUpdate()
@@ -71,10 +71,10 @@ public class PanelButton : MonoBehaviour
             CurrentCharge = 0;
 
         else if (IsCharging)
-            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
+            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
 
         else if (!IsFullyCharged)
-            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * controlPanel.BasicChargeAmount);
+            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
     }
 
     private void UpdateAutoActivation()
@@ -98,13 +98,13 @@ public class PanelButton : MonoBehaviour
     {
         if (!ButtonType.AffectedByMultiplier)
         {
-            ButtonType.PerformAction(controlPanel);
+            ButtonType.PerformAction(ControlPanel);
             return;
         }
 
-        for (var i = 0; i < controlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
-            ButtonType.PerformAction(controlPanel);
+        for (var i = 0; i < ControlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
+            ButtonType.PerformAction(ControlPanel);
 
-        controlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
+        ControlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
     }
 }
