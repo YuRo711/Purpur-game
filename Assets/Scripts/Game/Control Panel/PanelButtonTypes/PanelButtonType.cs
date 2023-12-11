@@ -11,8 +11,6 @@ public abstract class PanelButtonType : ScriptableObject
     [field: SerializeField] public bool AffectedByMultiplier { get; private set; } = true;
 
     [field: SerializeField] public Sprite BaseSprite { get; private set; }
-    [field: SerializeField] public Sprite FullyChargedSprite { get; private set; }
-    [field: SerializeField] public Sprite BrokenSprite { get; private set; }
 
     public abstract void PerformAction(IShipController shipController);
 }

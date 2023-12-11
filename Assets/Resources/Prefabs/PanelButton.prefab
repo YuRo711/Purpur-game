@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee66447c35203e4b90bc242ffbc218a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ButtonType>k__BackingField: {fileID: 0}
+  <ButtonType>k__BackingField: {fileID: 11400000, guid: 0580b822f268a8249a26965e5c74cd82, type: 2}
   <IsFunctional>k__BackingField: 1
   <IsCharging>k__BackingField: 0
   <CurrentCharge>k__BackingField: 0
@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 5267941775829256488}
   - component: {fileID: 6134229018025357705}
   - component: {fileID: 7698613538761022033}
+  - component: {fileID: 5359757007338981189}
   m_Layer: 0
   m_Name: ButtonType
   m_TagString: Untagged
@@ -475,3 +476,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 0
   m_AspectRatio: 0.91365033
+--- !u!114 &5359757007338981189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310315305657523357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 220ff34a23cfd474e8e162b194e779a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentButton: {fileID: 7347118462608687539}
