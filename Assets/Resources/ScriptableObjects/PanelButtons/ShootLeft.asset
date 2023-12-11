@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9de23e0903bc34a991a005eb5f53ae, type: 3}
   m_Name: ShootLeft
   m_EditorClassIdentifier: 
-  <ActionDirection>k__BackingField: 1
+  <ActionDirection>k__BackingField: 2
   <ChargeMultiplier>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 1
   <AutoTriggers>k__BackingField: 0
-  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 63f4a131601d9f747a8378d1a18c9e05, type: 3}
-  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: c3908bbda89819146817b5ebba6b8350, type: 3}
-  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: cbcdced8dca47b947aa21b7d7a41d8f4, type: 3}
+  <AffectedByMultiplier>k__BackingField: 1
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: edcd7df62cf1f2d40a0d23f088092294, type: 3}

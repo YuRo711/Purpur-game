@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd2e7647df41cb409574ead77c8562c, type: 3}
   m_Name: MoveForward
   m_EditorClassIdentifier: 
-  <ActionDirection>k__BackingField: 0
+  <ActionDirection>k__BackingField: 1
   <ChargeMultiplier>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 1
   <AutoTriggers>k__BackingField: 0

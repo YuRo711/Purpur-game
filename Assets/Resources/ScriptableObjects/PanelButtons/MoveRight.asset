@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd2e7647df41cb409574ead77c8562c, type: 3}
   m_Name: MoveRight
   m_EditorClassIdentifier: 
-  <ActionDirection>k__BackingField: 2
+  <ActionDirection>k__BackingField: 3
   <ChargeMultiplier>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 1
   <AutoTriggers>k__BackingField: 0
-  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 8dde1bc2abf20df41995ed6b6cf2c8a3, type: 3}
-  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: e44da34ef508f044a9715b30b6cd0d20, type: 3}
-  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: 578f356f68eab364087eb02976a6bc14, type: 3}
+  <AffectedByMultiplier>k__BackingField: 1
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 9098eb5de44b72b4c9b2326677895898, type: 3}

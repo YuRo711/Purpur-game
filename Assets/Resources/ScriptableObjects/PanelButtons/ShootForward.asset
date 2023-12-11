@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9de23e0903bc34a991a005eb5f53ae, type: 3}
   m_Name: ShootForward
   m_EditorClassIdentifier: 
-  <ActionDirection>k__BackingField: 0
+  <ActionDirection>k__BackingField: 1
   <ChargeMultiplier>k__BackingField: 1
   <BreaksAfterTrigger>k__BackingField: 1
   <AutoTriggers>k__BackingField: 0
-  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 36e66ff2152199f47a50c16b4d3ff4a0, type: 3}
-  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: c39303df2fa2b454885b93cb34139505, type: 3}
-  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: c80b5664a9063724f82d56754889c174, type: 3}
+  <AffectedByMultiplier>k__BackingField: 1
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: c5e7499692ad59f4bb5a94571cdb043d, type: 3}

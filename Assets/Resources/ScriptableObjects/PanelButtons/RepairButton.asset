@@ -17,6 +17,4 @@ MonoBehaviour:
   <BreaksAfterTrigger>k__BackingField: 0
   <AutoTriggers>k__BackingField: 1
   <AffectedByMultiplier>k__BackingField: 0
-  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 7e391b9294649954db4395ae846330c7, type: 3}
-  <FullyChargedSprite>k__BackingField: {fileID: 21300000, guid: 7e391b9294649954db4395ae846330c7, type: 3}
-  <BrokenSprite>k__BackingField: {fileID: 21300000, guid: 7e391b9294649954db4395ae846330c7, type: 3}
+  <BaseSprite>k__BackingField: {fileID: 21300000, guid: 310074c4f3f8eb94291a18555dd4ae7b, type: 3}
