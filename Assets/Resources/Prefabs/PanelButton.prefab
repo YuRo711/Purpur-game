@@ -185,8 +185,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 543.7, y: 103.1248}
+  m_AnchoredPosition: {x: 0, y: 34.66687}
+  m_SizeDelta: {x: 543.7, y: 33.7911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3222584182048381825
 CanvasRenderer:
@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 4758706150915337177}
   - component: {fileID: 5083029207410223227}
   - component: {fileID: 2882298946673708429}
+  - component: {fileID: 5337204368418664214}
   m_Layer: 0
   m_Name: ButtonImage
   m_TagString: Untagged
@@ -328,10 +329,10 @@ RectTransform:
   - {fileID: 7744918773340639773}
   m_Father: {fileID: 5299404812875662014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 236.75278, y: -51.5624}
-  m_SizeDelta: {x: 0, y: 103.1248}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 33.7911, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4758706150915337177
 CanvasRenderer:
@@ -361,7 +362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 602bfc24202e9804bb69e904a883ba65, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -385,6 +386,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 1
+--- !u!114 &5337204368418664214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024501022081698876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1bc63459b4bb54d8162343047f6ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeSprite: {fileID: 21300000, guid: 602bfc24202e9804bb69e904a883ba65, type: 3}
+  chargedSprite: {fileID: 21300000, guid: 8bfe71ab4b7d3364d844cd6184d5d596, type: 3}
+  brokenSprite: {fileID: 21300000, guid: 7aadc7028c7792a4b899326a8a0e3795, type: 3}
+  parentButton: {fileID: 7347118462608687539}
 --- !u!1 &6310315305657523357
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.91365033
+  m_AspectRatio: 0.9136504
 --- !u!114 &5359757007338981189
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonImage : MonoBehaviour
+public class ButtonTypeImage : MonoBehaviour
 {
     [SerializeField]
     private PanelButton parentButton;
