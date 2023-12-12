@@ -20,6 +20,6 @@ public class ButtonTypeImage : MonoBehaviour
     {
         image.sprite = parentButton.ButtonType.BaseSprite;
 
-        //transform.rotation = parentButton.ControlPanel.PlayerShip.transform.rotation;
+        transform.rotation = parentButton.ControlPanel.PlayerShip.transform.rotation;
     }
 }
