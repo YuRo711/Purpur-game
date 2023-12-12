@@ -80,6 +80,9 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     public virtual void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
         LookDirection = LookDirection.TurnTo(turnDirections);
+        var angle = LookDirection.GetDirectionAngle();
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
         if (callSync)
             CallSync();
     }

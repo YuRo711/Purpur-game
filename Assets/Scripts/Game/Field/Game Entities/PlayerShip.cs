@@ -19,15 +19,7 @@ public class PlayerShip : GameEntity
 
     #region Public Methods
 
-    public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
-    {
-        base.TurnTo(turnDirections, callSync);
-        var angle = LookDirection.GetDirectionAngle();
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        
-        if (callSync)
-            CallSync();
-    }
+  
 
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
