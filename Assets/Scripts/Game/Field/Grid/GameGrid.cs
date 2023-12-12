@@ -78,7 +78,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     public void SpawnRandomSpawnable(int x, int y)
     {
-        var index = _random.Next(0, Spawnable.Length - 1);
+        var index = _random.Next(0, Spawnable.Length);
         SpawnEntityInCell(Spawnable[index], currentId, x, y);
         currentId++;
     }
