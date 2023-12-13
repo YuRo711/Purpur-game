@@ -15,8 +15,8 @@ public class Cargo : GameEntity
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
-        if (newCell.BgEntity is Gates)
-            EnterGates();
+        if (newCell.BgEntity is Gates gates)
+            EnterGates(gates);
         newCell.GameEntity = this;
         if (callSync)
             CallSync();
@@ -26,10 +26,11 @@ public class Cargo : GameEntity
 
     #region Private Methods
 
-    private void EnterGates()
+    private void EnterGates(Gates gates)
     {
         LevelManager.score++;
         Die();
+        gates.Die();
     }
     
     #endregion
