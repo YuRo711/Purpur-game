@@ -96,8 +96,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     
     public virtual void Die()
     {
-        PhotonNetwork.Destroy(gameObject);
-        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId);
+        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
     }
     
     public virtual void SetStartParameters(int id, int x, int y)
@@ -134,7 +133,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             return;
         health = newHealth;
         if (health <= 0)
+        {
             Die();
+            return;
+        }
+
         MoveTo(newX, newY, false);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
@@ -154,7 +157,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    protected void DeleteFromCell(int id)
+    protected void DeleteFromCell(int id, bool destroy = false)
     {
         if (entityId != id)
             return;
@@ -162,6 +165,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             levelGrid.Cells[Y, X].BgEntity = null;
         else
             levelGrid.Cells[Y, X].GameEntity = null;
+        if (destroy)
+            Destroy(gameObject);
     }
 
     protected void CallSync()

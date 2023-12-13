@@ -84,7 +84,8 @@ public class PlayerShip : GameEntity
         var moveY = (int)moveVector.y;
         var newCargoX = cargo.X + moveX;
         var newCargoY = cargo.Y + moveY;
-        if (levelGrid.CheckForBorder(newCargoX, newCargoY))
+        if (levelGrid.CheckForBorder(newCargoX, newCargoY) || 
+            levelGrid.Cells[newCargoY, newCargoX].GameEntity is Cargo)
         {
             MoveTo(X - moveX, Y - moveY);
             return;

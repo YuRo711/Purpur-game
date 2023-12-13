@@ -375,7 +375,7 @@ MonoBehaviour:
   enemiesCount: 1
   cargoCount: 1
   gatesCount: 1
-  asteroidsCount: 0
+  asteroidsCount: 1
 --- !u!114 &939692388
 MonoBehaviour:
   m_ObjectHideFlags: 0
