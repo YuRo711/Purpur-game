@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c31b69e56724c4e8de2bffd43c4695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BasicChargeAmount>k__BackingField: 0.01
+  <BasicChargeAmount>k__BackingField: 1
   <Buttons>k__BackingField: []
   <PlayerShip>k__BackingField: {fileID: 0}
+  <ButtonBreakingEnabled>k__BackingField: 0
