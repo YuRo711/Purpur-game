@@ -15,6 +15,8 @@ public class Cargo : GameEntity
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
+        if (newCell.BgEntity is Gates)
+            EnterGates();
         newCell.GameEntity = this;
         if (callSync)
             CallSync();
@@ -42,8 +44,7 @@ public class Cargo : GameEntity
             {typeof(Enemy), e => DamageEntity(e, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1)},
             {typeof(Cargo), e => DamageEntity(e, 1)},
-            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
-            {typeof(Gates), e => EnterGates()}
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
         };
     }
 

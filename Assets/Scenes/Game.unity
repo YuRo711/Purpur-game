@@ -372,10 +372,10 @@ MonoBehaviour:
   cellPrefab: {fileID: 836014655946237754, guid: 2e8685aec23566c24a27d85e4dc214b1, type: 3}
   cellParent: {fileID: 1836010925}
   currentId: 0
-  enemiesCount: 1
-  cargoCount: 1
-  gatesCount: 1
-  asteroidsCount: 1
+  enemiesCount: 0
+  cargoCount: 2
+  gatesCount: 3
+  asteroidsCount: 0
 --- !u!114 &939692388
 MonoBehaviour:
   m_ObjectHideFlags: 0
