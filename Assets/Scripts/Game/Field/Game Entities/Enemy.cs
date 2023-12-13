@@ -32,14 +32,15 @@ public class Enemy : GameEntity
             return;
         }
 
-        if (levelGrid.Cells[Y, X].GameEntity is not null)
-            levelGrid.Cells[Y, X].GameEntity = null;
         var newCell = levelGrid.Cells[destY, destX];
-        if (newCell.GameEntity is not null && newCell.GameEntity is not PlayerShip)
+        if (newCell.GameEntity is not null && newCell.GameEntity is not PlayerShip
+            || newCell.BgEntity is not null)
         {
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
+        if (levelGrid.Cells[Y, X].GameEntity is not null)
+            levelGrid.Cells[Y, X].GameEntity = null;
         X = destX;
         Y = destY;
         AdaptTransform(newCell);
