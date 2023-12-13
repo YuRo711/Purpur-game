@@ -373,8 +373,8 @@ MonoBehaviour:
   cellParent: {fileID: 1836010925}
   currentId: 0
   enemiesCount: 0
-  cargoCount: 2
-  gatesCount: 3
+  cargoCount: 1
+  gatesCount: 1
   asteroidsCount: 0
 --- !u!114 &939692388
 MonoBehaviour:

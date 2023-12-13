@@ -34,7 +34,7 @@ public class Enemy : GameEntity
 
         var newCell = levelGrid.Cells[destY, destX];
         if (newCell.GameEntity is not null && newCell.GameEntity is not PlayerShip
-            || newCell.BgEntity is not null)
+            || newCell.BgEntity is Gates)
         {
             TurnTo(TurnDirections.Around, callSync);
             return;
