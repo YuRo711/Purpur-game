@@ -42,8 +42,8 @@ public class Cargo : GameEntity
         health = 1;
         CollisionInteractions = new()
         {
-            {typeof(Enemy), e => DamageEntity(e, 1)},
-            {typeof(Asteroid), e => DamageEntity(e, 1)},
+            {typeof(Enemy), e => DamageEntity(e, 0, 1)},
+            {typeof(Asteroid), e => DamageEntity(e, 0, 1)},
             {typeof(Cargo), e => DamageEntity(e, 1)},
             {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
         };
