@@ -38,9 +38,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
     private static readonly string[] Spawnable =
     {
         PrefabPaths["enemy"],
-        // PrefabPaths["cargo"],
-        // PrefabPaths["asteroid"],
-        // PrefabPaths["gates"],
+        PrefabPaths["cargo"],
+        PrefabPaths["asteroid"],
+        PrefabPaths["gates"],
     };
     private static Random _random;
 
