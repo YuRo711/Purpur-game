@@ -94,11 +94,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         CallSync();
     }
     
-    public virtual void Die()
-    {
-        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
-    }
-    
     public virtual void SetStartParameters(int id, int x, int y)
     {
         entityId = id;
@@ -146,6 +141,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     #region Protected Methods
+    
+    protected virtual void Die()
+    {
+        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
+    }
 
     protected IEnumerator WaitForId(int id, int x, int y)
     {

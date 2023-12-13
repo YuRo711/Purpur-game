@@ -29,8 +29,8 @@ public class Cargo : GameEntity
     private void EnterGates(Gates gates)
     {
         LevelManager.score++;
-        Die();
-        gates.Die();
+        TakeDamage(1);
+        gates.TakeDamage(1);
     }
     
     #endregion

@@ -92,8 +92,12 @@ public class Enemy : GameEntity
         if (callSync)
             CallSync();
     }
+    
+    #endregion
+    
+    #region Protected Methods
 
-    public override void Die()
+    protected override void Die()
     {
         if (PhotonNetwork.IsMasterClient)
             enemyManager.enemies.Remove(this);
