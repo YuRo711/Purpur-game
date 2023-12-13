@@ -96,7 +96,7 @@ public class Enemy : GameEntity
     {
         if (PhotonNetwork.IsMasterClient)
             enemyManager.enemies.Remove(this);
-        PhotonNetwork.Destroy(gameObject);
+        base.Die();
     }
 
     #endregion
