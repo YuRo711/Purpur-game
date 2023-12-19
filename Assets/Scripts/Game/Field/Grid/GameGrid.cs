@@ -39,7 +39,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
     {
         PrefabPaths["enemy"],
         PrefabPaths["cargo"],
-        PrefabPaths["asteroid"]
+        PrefabPaths["asteroid"],
+        PrefabPaths["gates"],
     };
     private static Random _random;
 
@@ -62,8 +63,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     public Tuple<int, int> GetRandomPosition()
     {
-        var x = _random.Next(0, width - 1);
-        var y = _random.Next(0, height - 1);
+        var x = _random.Next(0, width);
+        var y = _random.Next(0, height);
         var attempts = 0;
         while (Cells[y, x].GameEntity is not null || Cells[y, x].BgEntity is not null)
         {

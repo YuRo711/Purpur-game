@@ -19,8 +19,6 @@ public class PlayerShip : GameEntity
 
     #region Public Methods
 
-  
-
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         base.MoveTo(destX, destY, callSync);
@@ -31,7 +29,7 @@ public class PlayerShip : GameEntity
     public void Shoot(TurnDirections shootTurnDirection)
     {
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
-        var moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
+        moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
         InteractWithFirst(shootTurnDirection, _shootingInteraction);
     }
@@ -84,6 +82,7 @@ public class PlayerShip : GameEntity
         var moveY = (int)moveVector.y;
         var newCargoX = cargo.X + moveX;
         var newCargoY = cargo.Y + moveY;
+        Debug.Log(moveVector);
         if (levelGrid.CheckForBorder(newCargoX, newCargoY) || 
             levelGrid.Cells[newCargoY, newCargoX].GameEntity is Cargo)
         {
