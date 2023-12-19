@@ -6,6 +6,16 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
 
+enum GameObjects
+{
+    Player,
+    Enemy,
+    Cargo,
+    Asteroid,
+    Gate,
+    Signal
+}
+
 public class GameGrid : MonoBehaviourPunCallbacks
 {
     #region Serializable Fields
@@ -26,21 +36,14 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Static Fields
 
-    private static readonly Dictionary<string, string> PrefabPaths = new()
+    private static readonly Dictionary<GameObjects, string> PrefabPaths = new()
     {
-        { "player", "Prefabs/GameEntities/PlayerShip" },
-        { "enemy", "Prefabs/GameEntities/EnemyShip" },
-        { "gates", "Prefabs/GameEntities/Gates" },
-        { "cargo", "Prefabs/GameEntities/Cargo" },
-        { "asteroid", "Prefabs/GameEntities/Asteroid" },
-        { "signal", "Prefabs/GameEntities/Signal" },
-    };
-    private static readonly string[] Spawnable =
-    {
-        PrefabPaths["enemy"],
-        PrefabPaths["cargo"],
-        PrefabPaths["asteroid"],
-        PrefabPaths["gates"],
+        { GameObjects.Player, "Prefabs/GameEntities/PlayerShip" },
+        { GameObjects.Enemy, "Prefabs/GameEntities/EnemyShip" },
+        { GameObjects.Gate, "Prefabs/GameEntities/Gates" },
+        { GameObjects.Cargo, "Prefabs/GameEntities/Cargo" },
+        { GameObjects.Asteroid, "Prefabs/GameEntities/Asteroid" },
+        { GameObjects.Signal, "Prefabs/GameEntities/Signal" },
     };
     private static Random _random;
 
@@ -79,8 +82,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     public void SpawnRandomSpawnable(int x, int y)
     {
-        var index = _random.Next(0, Spawnable.Length);
-        SpawnEntityInCell(Spawnable[index], currentId, x, y);
+        //TODO: Implement choice of object
+        var objectToSpawn = GameObjects.Enemy;
+        SpawnEntityInCell(PrefabPaths[objectToSpawn], currentId, x, y);
         currentId++;
     }
 
@@ -110,12 +114,12 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntityType(PrefabPaths["player"], 1);
-        SpawnEntityType(PrefabPaths["gates"], gatesCount);
-        SpawnEntityType(PrefabPaths["cargo"], cargoCount);
-        SpawnEntityType(PrefabPaths["enemy"], enemiesCount);
-        SpawnEntityType(PrefabPaths["asteroid"], asteroidsCount);
-        SpawnEntityType(PrefabPaths["signal"], 1);
+        SpawnEntityType(PrefabPaths[GameObjects.Player], 1);
+        SpawnEntityType(PrefabPaths[GameObjects.Gate], gatesCount);
+        SpawnEntityType(PrefabPaths[GameObjects.Cargo], cargoCount);
+        SpawnEntityType(PrefabPaths[GameObjects.Enemy], enemiesCount);
+        SpawnEntityType(PrefabPaths[GameObjects.Asteroid], asteroidsCount);
+        SpawnEntityType(PrefabPaths[GameObjects.Signal], 1);
     }
 
     private void SpawnEntityType(string prefabPath, int count)
