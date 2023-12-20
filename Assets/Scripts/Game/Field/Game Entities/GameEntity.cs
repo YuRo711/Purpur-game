@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -24,6 +25,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public LevelManager LevelManager { get; set; }
     public Direction LookDirection { get; set; }
+    public EventHandler<Type> OnObjectDie { get; set; }
     [SerializeField] public int X { get; protected set; }
     [SerializeField] public int Y { get; protected set; }
 
@@ -145,6 +147,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     protected virtual void Die()
     {
         photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
+        OnObjectDie?.Invoke(this, GetType());
     }
 
     protected IEnumerator WaitForId(int id, int x, int y)

@@ -157,8 +157,17 @@ public class GameGrid : MonoBehaviourPunCallbacks
         var gameEntity = entityObject.GetComponent<GameEntity>();
         gameEntity.SetStartParameters(id, x, y);
         ObjectCounts[objectType]++;
+        gameEntity.OnObjectDie += (obj, e) =>
+        {
+            ObjectCounts[e]--;
+        };
     }
-    
+
+    private void Update()
+    {
+        Debug.Log(ObjectCounts[typeof(Enemy)]);
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks
