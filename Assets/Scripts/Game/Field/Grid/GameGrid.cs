@@ -98,6 +98,20 @@ public class GameGrid : MonoBehaviourPunCallbacks
     
     private Type PickObjectToSpawn()
     {
+        var asteroidsCount = ObjectCounts[typeof(Asteroid)];
+        var enemiesCount = ObjectCounts[typeof(Enemy)];
+        var cargoCount = ObjectCounts[typeof(Cargo)];
+        var gateCount = ObjectCounts[typeof(Gates)];
+
+        if (gateCount > cargoCount)
+            return typeof(Cargo);
+
+        if (cargoCount > asteroidsCount || enemiesCount > asteroidsCount)
+            return typeof(Asteroid);
+
+        if (gateCount < 3)
+            return typeof(Gates);
+
         return typeof(Enemy);
     }
 
