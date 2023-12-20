@@ -78,8 +78,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
         {
             if (attempts > width * height)
                 return null;
-            x = _random.Next(0, width - 1);
-            y = _random.Next(0, height - 1);
+            x = _random.Next(0, width);
+            y = _random.Next(0, height);
             attempts++;
         }
         return Tuple.Create(x, y);
