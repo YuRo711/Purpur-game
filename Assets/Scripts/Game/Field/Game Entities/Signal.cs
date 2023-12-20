@@ -15,6 +15,8 @@ public class Signal : GameEntity
     private void ChangePosition()
     {
         var pos = levelGrid.GetRandomPosition();
+        if (pos is null)
+            return;
         MoveTo(pos.Item1, pos.Item2);
     }
 
