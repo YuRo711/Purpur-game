@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
 
-enum GameObjects
+public enum GameObjects
 {
     Player,
     Enemy,
@@ -27,10 +27,10 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private RectTransform cellParent;
     [SerializeField] private int currentId;
     
-    [SerializeField] public int enemiesCount;
-    [SerializeField] public int cargoCount;
-    [SerializeField] public int gatesCount;
-    [SerializeField] public int asteroidsCount;
+    [SerializeField] public int startingEnemiesCount;
+    [SerializeField] public int startingCargoCount;
+    [SerializeField] public int startingGatesCount;
+    [SerializeField] public int startingAsteroidsCount;
 
     #endregion
 
@@ -45,17 +45,31 @@ public class GameGrid : MonoBehaviourPunCallbacks
         { GameObjects.Asteroid, "Prefabs/GameEntities/Asteroid" },
         { GameObjects.Signal, "Prefabs/GameEntities/Signal" },
     };
+
     private static Random _random;
 
     #endregion
-    
+
+    #region Private Fields
+
+    private readonly Dictionary<GameObjects, int> ObjectCounts = new()
+    {
+        {GameObjects.Cargo, 0 },
+        {GameObjects.Gate, 0 },
+        {GameObjects.Enemy, 0 },
+        {GameObjects.Asteroid, 0 },
+        {GameObjects.Player, 0 },
+        {GameObjects.Signal, 0 },
+    };
+
+    #endregion
+
     #region Properties
 
     public GridCell[,] Cells;
 
     #endregion
 
-    
     #region Public Methods
     
     public bool CheckForBorder(int newX, int newY)
@@ -82,9 +96,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     public void SpawnRandomSpawnable(int x, int y)
     {
-        //TODO: Implement choice of object
-        var objectToSpawn = GameObjects.Enemy;
-        SpawnEntityInCell(PrefabPaths[objectToSpawn], currentId, x, y);
+        var objectToSpawn = PickObjectToSpawn();
+        SpawnEntityInCell(objectToSpawn, currentId, x, y);
         currentId++;
     }
 
@@ -92,6 +105,11 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Private Methods
     
+    private GameObjects PickObjectToSpawn()
+    {
+        return GameObjects.Enemy;
+    }
+
     private void Generate()
     {
         cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);
@@ -114,39 +132,40 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntityType(PrefabPaths[GameObjects.Player], 1);
-        SpawnEntityType(PrefabPaths[GameObjects.Gate], gatesCount);
-        SpawnEntityType(PrefabPaths[GameObjects.Cargo], cargoCount);
-        SpawnEntityType(PrefabPaths[GameObjects.Enemy], enemiesCount);
-        SpawnEntityType(PrefabPaths[GameObjects.Asteroid], asteroidsCount);
-        SpawnEntityType(PrefabPaths[GameObjects.Signal], 1);
+        SpawnEntityType(GameObjects.Player, 1);
+        SpawnEntityType(GameObjects.Gate, startingGatesCount);
+        SpawnEntityType(GameObjects.Cargo, startingCargoCount);
+        SpawnEntityType(GameObjects.Enemy, startingEnemiesCount);
+        SpawnEntityType(GameObjects.Asteroid, startingAsteroidsCount);
+        SpawnEntityType(GameObjects.Signal, 1);
     }
 
-    private void SpawnEntityType(string prefabPath, int count)
+    private void SpawnEntityType(GameObjects objectType, int count)
     {
         for (var i = currentId; i < currentId + count; i++)
-            SpawnEntityOnRandom(prefabPath, i);
+            SpawnEntityOnRandom(objectType, i);
         currentId += count;
     }
 
-    private void SpawnEntityOnRandom(string prefabPath, int id)
+    private void SpawnEntityOnRandom(GameObjects objectType, int id)
     {
         var position = GetRandomPosition();
         if (position is null)
             return;
         var x = position.Item1;
         var y = position.Item2;
-        SpawnEntityInCell(prefabPath, id, x, y);
+        SpawnEntityInCell(objectType, id, x, y);
     }
 
-    private void SpawnEntityInCell(string prefabPath, int id, int x, int y)
+    private void SpawnEntityInCell(GameObjects objectType, int id, int x, int y)
     {
         var entityObject = PhotonNetwork.Instantiate(
-            prefabPath,
+            PrefabPaths[objectType],
             transform.position,
             Quaternion.identity);
         var gameEntity = entityObject.GetComponent<GameEntity>();
         gameEntity.SetStartParameters(id, x, y);
+        ObjectCounts[objectType]++;
     }
     
     #endregion
