@@ -6,15 +6,6 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
 
-public enum GameObjects
-{
-    Player,
-    Enemy,
-    Cargo,
-    Asteroid,
-    Gate,
-    Signal
-}
 
 public class GameGrid : MonoBehaviourPunCallbacks
 {
@@ -36,14 +27,14 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Static Fields
 
-    private static readonly Dictionary<GameObjects, string> PrefabPaths = new()
+    private static readonly Dictionary<Type, string> PrefabPaths = new()
     {
-        { GameObjects.Player, "Prefabs/GameEntities/PlayerShip" },
-        { GameObjects.Enemy, "Prefabs/GameEntities/EnemyShip" },
-        { GameObjects.Gate, "Prefabs/GameEntities/Gates" },
-        { GameObjects.Cargo, "Prefabs/GameEntities/Cargo" },
-        { GameObjects.Asteroid, "Prefabs/GameEntities/Asteroid" },
-        { GameObjects.Signal, "Prefabs/GameEntities/Signal" },
+        { typeof(PlayerShip), "Prefabs/GameEntities/PlayerShip" },
+        { typeof(Enemy), "Prefabs/GameEntities/EnemyShip" },
+        { typeof(Gates), "Prefabs/GameEntities/Gates" },
+        { typeof(Cargo), "Prefabs/GameEntities/Cargo" },
+        { typeof(Asteroid), "Prefabs/GameEntities/Asteroid" },
+        { typeof(Signal), "Prefabs/GameEntities/Signal" },
     };
 
     private static Random _random;
@@ -52,14 +43,14 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Private Fields
 
-    private readonly Dictionary<GameObjects, int> ObjectCounts = new()
+    private readonly Dictionary<Type, int> ObjectCounts = new()
     {
-        {GameObjects.Cargo, 0 },
-        {GameObjects.Gate, 0 },
-        {GameObjects.Enemy, 0 },
-        {GameObjects.Asteroid, 0 },
-        {GameObjects.Player, 0 },
-        {GameObjects.Signal, 0 },
+        {typeof(Cargo), 0 },
+        {typeof(Gates), 0 },
+        {typeof(Enemy), 0 },
+        {typeof(Asteroid), 0 },
+        {typeof(PlayerShip), 0 },
+        {typeof(Signal), 0 },
     };
 
     #endregion
@@ -105,9 +96,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Private Methods
     
-    private GameObjects PickObjectToSpawn()
+    private Type PickObjectToSpawn()
     {
-        return GameObjects.Enemy;
+        return typeof(Enemy);
     }
 
     private void Generate()
@@ -132,22 +123,22 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void GenerateEntities()
     {
-        SpawnEntityType(GameObjects.Player, 1);
-        SpawnEntityType(GameObjects.Gate, startingGatesCount);
-        SpawnEntityType(GameObjects.Cargo, startingCargoCount);
-        SpawnEntityType(GameObjects.Enemy, startingEnemiesCount);
-        SpawnEntityType(GameObjects.Asteroid, startingAsteroidsCount);
-        SpawnEntityType(GameObjects.Signal, 1);
+        SpawnEntityType(typeof(PlayerShip), 1);
+        SpawnEntityType(typeof(Gates), startingGatesCount);
+        SpawnEntityType(typeof(Cargo), startingCargoCount);
+        SpawnEntityType(typeof(Enemy), startingEnemiesCount);
+        SpawnEntityType(typeof(Asteroid), startingAsteroidsCount);
+        SpawnEntityType(typeof(Signal), 1);
     }
 
-    private void SpawnEntityType(GameObjects objectType, int count)
+    private void SpawnEntityType(Type objectType, int count)
     {
         for (var i = currentId; i < currentId + count; i++)
             SpawnEntityOnRandom(objectType, i);
         currentId += count;
     }
 
-    private void SpawnEntityOnRandom(GameObjects objectType, int id)
+    private void SpawnEntityOnRandom(Type objectType, int id)
     {
         var position = GetRandomPosition();
         if (position is null)
@@ -157,7 +148,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         SpawnEntityInCell(objectType, id, x, y);
     }
 
-    private void SpawnEntityInCell(GameObjects objectType, int id, int x, int y)
+    private void SpawnEntityInCell(Type objectType, int id, int x, int y)
     {
         var entityObject = PhotonNetwork.Instantiate(
             PrefabPaths[objectType],
