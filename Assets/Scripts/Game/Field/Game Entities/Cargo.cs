@@ -16,7 +16,11 @@ public class Cargo : GameEntity
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
         if (newCell.BgEntity is Gates gates)
+        {
             EnterGates(gates);
+            return;
+        }
+
         newCell.GameEntity = this;
         if (callSync)
             CallSync();
@@ -42,9 +46,9 @@ public class Cargo : GameEntity
         health = 1;
         CollisionInteractions = new()
         {
-            {typeof(Enemy), e => DamageEntity(e, 1)},
-            {typeof(Asteroid), e => DamageEntity(e, 1)},
-            {typeof(Cargo), e => DamageEntity(e, 1)},
+            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
+            {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
+            {typeof(Cargo), e => DamageEntity(e, 1, 1)},
             {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
         };
     }
