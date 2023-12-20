@@ -62,6 +62,7 @@ public class Enemy : GameEntity
                 LookDirection = x1 < X ?
                     new Direction(-1, 0) :
                     new Direction(1, 0);
+                TurnTo(TurnDirections.Forward, false);
                 return;
             }
             if (checkCell.GameEntity is not null)
@@ -80,6 +81,7 @@ public class Enemy : GameEntity
                 LookDirection = y2 < Y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);
+                TurnTo(TurnDirections.Forward, false);
                 return;
             }
             if (checkCell.GameEntity is not null)
