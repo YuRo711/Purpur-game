@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c1659c0d49f4124a4edac9dc11728b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDuration: 4
+  moveDuration: 0.5
   enemyManager: {fileID: 222065264}
   signal: {fileID: 0}
 --- !u!4 &318839776
