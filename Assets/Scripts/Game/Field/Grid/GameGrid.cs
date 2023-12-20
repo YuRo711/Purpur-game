@@ -163,11 +163,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
         };
     }
 
-    private void Update()
-    {
-        Debug.Log(ObjectCounts[typeof(Enemy)]);
-    }
-
     #endregion
 
     #region MonoBehaviour Callbacks
