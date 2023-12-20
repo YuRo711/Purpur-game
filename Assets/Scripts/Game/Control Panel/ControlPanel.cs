@@ -18,11 +18,11 @@ public class ControlPanel : MonoBehaviour, IShipController
 
     private void ButtonSelected(PanelButton button)
     {
-        foreach (var b in Buttons)
-        {
-            if (b != button)
-                b.StopCharging();
-        }
+        //foreach (var b in Buttons)
+        //{
+        //    if (b != button)
+        //        b.StopCharging();
+        //}
     }
 
     public void Move(TurnDirections direction)

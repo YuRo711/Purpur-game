@@ -236,8 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ButtonType>k__BackingField: {fileID: 11400000, guid: 0580b822f268a8249a26965e5c74cd82, type: 2}
   <IsFunctional>k__BackingField: 1
-  <IsCharging>k__BackingField: 0
-  <CurrentCharge>k__BackingField: 0
+  <IsCharging>k__BackingField: 1
+  <CurrentCharge>k__BackingField: 1
 --- !u!114 &2743976727134958071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,10 +329,10 @@ RectTransform:
   - {fileID: 7744918773340639773}
   m_Father: {fileID: 5299404812875662014}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 33.7911, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 236.75278, y: -16.89555}
+  m_SizeDelta: {x: 0, y: 33.7911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4758706150915337177
 CanvasRenderer:

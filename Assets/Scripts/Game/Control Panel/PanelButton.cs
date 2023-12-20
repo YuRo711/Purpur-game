@@ -20,13 +20,15 @@ public class PanelButton : MonoBehaviour
     private void Start()
     {
         ControlPanel = GetComponentInParent<ControlPanel>();
+        CurrentCharge = 1;
     }
 
     private void FixedUpdate()
     {
         UpdateCharge();
-        UpdateAutoActivation();
+        //UpdateAutoActivation();
     }
+
     public void HandleClick()
     {
         if (!IsFunctional)
@@ -67,14 +69,16 @@ public class PanelButton : MonoBehaviour
 
     private void UpdateCharge()
     {
-        if (!IsFunctional)
-            CurrentCharge = 0;
+        //if (!IsFunctional)
+        //    CurrentCharge = 0;
 
-        else if (IsCharging)
-            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
+        //else if (IsCharging)
+        //    CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
 
-        else if (!IsFullyCharged)
-            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
+        //else if (!IsFullyCharged)
+        //    CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
+
+        CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
     }
 
     private void UpdateAutoActivation()
