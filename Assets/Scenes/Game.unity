@@ -225,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPanels:
   - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
-  - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
+  - {fileID: 2468219131767743505, guid: d7a76f6b6d1f31744b79f7b89639ca61, type: 3}
   currentIndex: 0
   controlPanel: {fileID: 0}
 --- !u!1 &222065263
