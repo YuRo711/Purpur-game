@@ -8,8 +8,10 @@ public class Signal : GameEntity
 
     public void UpdateSignal()
     {
-        levelGrid.SpawnRandomSpawnable(X, Y);
+        var oldX = X;
+        var oldY = Y;
         ChangePosition();
+        levelGrid.SpawnRandomSpawnable(oldX, oldY);
     }
     
     private void ChangePosition()
