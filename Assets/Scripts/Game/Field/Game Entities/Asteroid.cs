@@ -7,7 +7,8 @@ public class Asteroid : GameEntity
         health = 1;
         CollisionInteractions = new()
         {
-            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)}
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
+            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
         };
     }
 

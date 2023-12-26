@@ -46,12 +46,12 @@ public class Enemy : GameEntity
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
         newCell.GameEntity = this;
-        LookForPlayer(callSync);
+        LookForPlayer();
         if (callSync)
             CallSync();
     }
 
-    public void LookForPlayer(bool callSync = true)
+    public void LookForPlayer()
     {
         var y1 = Y;
         for (var x1 = 0; x1 < levelGrid.width; x1++)
@@ -59,10 +59,11 @@ public class Enemy : GameEntity
             var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
+                Debug.Log("turning on x");
                 LookDirection = x1 < X ?
                     new Direction(-1, 0) :
                     new Direction(1, 0);
-                TurnTo(TurnDirections.Forward, false);
+                TurnTo(TurnDirections.Forward, true);
                 return;
             }
             if (checkCell.GameEntity is not null)
@@ -78,10 +79,11 @@ public class Enemy : GameEntity
             var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
+                Debug.Log("turning on y");
                 LookDirection = y2 < Y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);
-                TurnTo(TurnDirections.Forward, false);
+                TurnTo(TurnDirections.Forward, true);
                 return;
             }
             if (checkCell.GameEntity is not null)
@@ -91,8 +93,6 @@ public class Enemy : GameEntity
                 else
                     break;
         }
-        if (callSync)
-            CallSync();
     }
     
     #endregion
