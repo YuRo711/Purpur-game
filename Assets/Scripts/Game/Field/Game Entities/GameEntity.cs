@@ -37,9 +37,16 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     
     protected void DamageEntity(GameEntity gameEntity, int damage, int damageToSelf = 0)
     {
-        gameEntity.TakeDamage(damage);
+        if (gameEntity is not PlayerShip)
+            gameEntity.TakeDamage(damage);
         if (damageToSelf != 0)
             TakeDamage(damageToSelf);
+        if (gameEntity is PlayerShip)
+        {
+            gameEntity.TakeDamage(damage);
+            if (gameEntity.health > 0)
+                gameEntity.MoveTo(gameEntity.X, gameEntity.Y);
+        }
     }
 
     #endregion
@@ -89,7 +96,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             CallSync();
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         Debug.LogError(name + " took damage");
         health -= damage;

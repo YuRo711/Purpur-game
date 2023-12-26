@@ -39,12 +39,12 @@ public class Enemy : GameEntity
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
+        CollideWithCellEntity(newCell);
         if (levelGrid.Cells[Y, X].GameEntity is not null)
             levelGrid.Cells[Y, X].GameEntity = null;
         X = destX;
         Y = destY;
         AdaptTransform(newCell);
-        CollideWithCellEntity(newCell);
         newCell.GameEntity = this;
         LookForPlayer();
         if (callSync)
@@ -59,7 +59,6 @@ public class Enemy : GameEntity
             var checkCell = levelGrid.Cells[y1, x1];
             if (checkCell.GameEntity is PlayerShip)
             {
-                Debug.Log("turning on x");
                 LookDirection = x1 < X ?
                     new Direction(-1, 0) :
                     new Direction(1, 0);
@@ -79,7 +78,6 @@ public class Enemy : GameEntity
             var checkCell = levelGrid.Cells[y2, x2];
             if (checkCell.GameEntity is PlayerShip)
             {
-                Debug.Log("turning on y");
                 LookDirection = y2 < Y ?
                     new Direction(0, -1) :
                     new Direction(0, 1);

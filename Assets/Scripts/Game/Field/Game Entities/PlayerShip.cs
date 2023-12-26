@@ -22,6 +22,8 @@ public class PlayerShip : GameEntity
     public override void MoveTo(int destX, int destY, bool callSync = true)
     {
         base.MoveTo(destX, destY, callSync);
+        if (callSync)
+            Debug.Log("player moved to " + X + " " + Y);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
     }
