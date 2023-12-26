@@ -5,7 +5,7 @@ public class Cargo : GameEntity
 {
     #region Public Methods
     
-    public override void MoveTo(int destX, int destY, bool callSync = true)
+    public override void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
         if (levelGrid.CheckForBorder(destX, destY))
             return;

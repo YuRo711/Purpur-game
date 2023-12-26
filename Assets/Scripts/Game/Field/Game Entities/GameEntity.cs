@@ -66,7 +66,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     // For precise movement: warp, etc.
-    public virtual void MoveTo(int destX, int destY, bool callSync = true)
+    public virtual void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
         if (levelGrid is null)
             throw new Exception("Level grid not found");
@@ -77,13 +77,13 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         Y = destY;
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
-        CollideWithCellEntity(newCell);
+        CollideWithCellEntity(newCell, ignoreObjectCollision);
         if (isBackground)
             newCell.BgEntity = this;
         else
             newCell.GameEntity = this;
         if (callSync)
-            CallSync();
+            CallSync(ignoreObjectCollision);
     }
 
     public virtual void TurnTo(TurnDirections turnDirections, bool callSync = true)
@@ -131,7 +131,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    public void SyncParameters(int id, int newHealth, int newX, int newY, int turnX, int turnY)
+    public void SyncParameters(int id, int newHealth, int newX, int newY, int turnX, int turnY,
+        bool ignoreObjectCollision = false)
     {
         if (entityId != id)
             return;
@@ -142,7 +143,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        MoveTo(newX, newY, false);
+        MoveTo(newX, newY, false, ignoreObjectCollision);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
     }
@@ -179,11 +180,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             Destroy(gameObject);
     }
 
-    protected void CallSync()
+    protected void CallSync(bool ignoreObjectCollision = false)
     {
         var vector = LookDirection is null ? new Vector2(0, 1) : LookDirection.Vector;
         photonView.RPC("SyncParameters", RpcTarget.AllBuffered, 
-            entityId, health, X, Y, (int)vector.x, (int)vector.y);
+            entityId, health, X, Y, (int)vector.x, (int)vector.y, ignoreObjectCollision);
     }
 
     protected void AdaptTransform(GridCell cell)
@@ -194,10 +195,11 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         rt.localPosition = Vector3.zero;
     }
 
-    protected void CollideWithCellEntity(GridCell cell)
+    protected void CollideWithCellEntity(GridCell cell, bool ignoreObjectCollision = false)
     {
         var gameEntity = cell.GameEntity;
         if (gameEntity is null) return;
+        if (!gameEntity.isBackground && ignoreObjectCollision) return;
         var geType = gameEntity.GetType();
         CollisionInteractions.TryGetValue(geType, out var action);
         if (action is null)

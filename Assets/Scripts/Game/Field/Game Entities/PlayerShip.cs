@@ -19,8 +19,10 @@ public class PlayerShip : GameEntity
 
     #region Public Methods
 
-    public override void MoveTo(int destX, int destY, bool callSync = true)
+    public override void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
+        if (levelGrid.Cells[destY, destX].GameEntity is not null)
+            Debug.LogError(levelGrid.Cells[destY, destX].GameEntity);
         base.MoveTo(destX, destY, callSync);
         if (callSync)
             Debug.Log("player moved to " + X + " " + Y);
@@ -73,8 +75,8 @@ public class PlayerShip : GameEntity
         var oldX = X;
         var oldY = Y;
         DeleteFromCell(entityId);
-        gameEntity.MoveTo(X, Y);
-        MoveTo(destX, destY);
+        gameEntity.MoveTo(X, Y, true, true);
+        MoveTo(destX, destY, true, true);
         levelGrid.Cells[oldY, oldX].GameEntity = gameEntity;
     }
 

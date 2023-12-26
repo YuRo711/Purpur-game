@@ -18,7 +18,7 @@ public class Enemy : GameEntity
         MoveInDirection(TurnDirections.Forward);
     }
 
-    public override void MoveTo(int destX, int destY, bool callSync = true)
+    public override void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
         if (levelGrid is null)
         {
