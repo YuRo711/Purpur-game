@@ -20,8 +20,10 @@ public class PanelButton : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateType();
         UpdateCharge();
     }
+
     public void HandleClick()
     {
         if (IsFullyCharged)
@@ -37,6 +39,15 @@ public class PanelButton : MonoBehaviour
         PerformAction();
 
         CurrentCharge = 0;
+        ButtonType = null;
+    }
+
+    private void UpdateType()
+    {
+        if (ButtonType != null)
+            return;
+
+        ButtonType = ControlPanel.PlayerShip.ButtonDeck.TakeNext();
     }
 
     private void UpdateCharge()

@@ -98,7 +98,7 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  <ButtonDeck>k__BackingField: {fileID: 0}
+  <ButtonDeck>k__BackingField: {fileID: 7069335999648092360}
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,3 +201,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2329502130350389792, guid: 4c798a4b93e4ed44ba226c54159e41c8, type: 3}
   m_PrefabInstance: {fileID: 3441506468432416196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7069335999648092360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5609792184954412300, guid: 4c798a4b93e4ed44ba226c54159e41c8, type: 3}
+  m_PrefabInstance: {fileID: 3441506468432416196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c695cdc9006d547b622253a00a4dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
