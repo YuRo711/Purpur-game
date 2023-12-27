@@ -20,13 +20,10 @@ public class ButtonStateImage : MonoBehaviour
 
     void Update()
     {
-        if (!parentButton.IsFunctional)
-            image.sprite = brokenSprite;
-
-        else if (parentButton.IsFullyCharged)
-            image.sprite = chargedSprite;
+        if (parentButton.IsFullyCharged)
+            image.sprite = activeSprite;
 
         else
-            image.sprite = activeSprite;
+            image.sprite = brokenSprite;
     }
 }

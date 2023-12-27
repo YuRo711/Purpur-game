@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,17 +13,6 @@ public class ControlPanel : MonoBehaviour, IShipController
     private void Start()
     {
         Buttons = GetComponentsInChildren<PanelButton>();
-        foreach (var button in Buttons)
-            button.OnStartCharging += ButtonSelected;
-    }
-
-    private void ButtonSelected(PanelButton button)
-    {
-        foreach (var b in Buttons)
-        {
-            if (b != button)
-                b.StopCharging();
-        }
     }
 
     public void Move(TurnDirections direction)
@@ -42,8 +32,7 @@ public class ControlPanel : MonoBehaviour, IShipController
 
     public void RepairAll()
     {
-        foreach (var button in Buttons)
-            button.Repair();
+        throw new NotImplementedException();
     }
 
     public void IncrementMultiplier()

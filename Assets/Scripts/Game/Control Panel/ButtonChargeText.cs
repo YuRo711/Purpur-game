@@ -17,11 +17,5 @@ public class ButtonChargeText : MonoBehaviour
     void Update()
     {
         textMesh.text = ((int)(parentButton.CurrentCharge * 100)).ToString() + "%";
-
-        if (parentButton.IsCharging)
-            textMesh.color = Color.yellow;
-
-        else
-            textMesh.color = Color.white;
     }
 }
