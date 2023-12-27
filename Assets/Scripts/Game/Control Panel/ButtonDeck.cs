@@ -16,6 +16,9 @@ namespace Assets.Scripts.Game.Control_Panel
 
         public PanelButtonType TakeNext()
         {
+            if (buttonDeck == null)
+                return null;
+
             return buttonDeck.TakeNext();
         }
     }
