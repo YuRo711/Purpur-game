@@ -41,7 +41,7 @@ public class PanelButton : MonoBehaviour
 
     private void UpdateCharge()
     {
-        CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
+        CurrentCharge = Mathf.Min(1, CurrentCharge + ControlPanel.BasicChargeAmount);
     }
 
     private void PerformAction()
