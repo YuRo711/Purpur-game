@@ -19,9 +19,11 @@ public class PlayerShip : GameEntity
 
     #region Audio Clips
 
+    [SerializeField] protected AudioClip deathClip;
     [SerializeField] private AudioClip movementClip;
     [SerializeField] private AudioClip turnClip;
     [SerializeField] private AudioClip shotClip;
+    [SerializeField] private AudioClip pushCargoClip;
 
     #endregion
 
@@ -113,8 +115,15 @@ public class PlayerShip : GameEntity
             return;
         }
         cargo.MoveTo(newCargoX, newCargoY);
+        soundManager.PlayAudioClip(pushCargoClip);
     }
-    
+
+    protected override void Die()
+    {
+        base.Die();
+        soundManager.PlayAudioClip(deathClip);
+    }
+
     #endregion
 
     #region MonoBehaviour Callbacks

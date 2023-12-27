@@ -19,7 +19,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected EnemyManager enemyManager;
     [SerializeField] public bool isBackground;
 
-    [SerializeField] protected AudioClip deathClip;
+    [SerializeField] public AudioClip spawnClip;
+    [SerializeField] protected AudioClip collisionClip;
     [SerializeField] protected SoundManager soundManager;
 
     #endregion
@@ -158,7 +159,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
         OnObjectDie?.Invoke(this, GetType());
-        soundManager.PlayAudioClip(deathClip);
     }
 
     protected IEnumerator WaitForId(int id, int x, int y)
@@ -208,6 +208,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (action is null)
             return;
         action.Invoke(cell.GameEntity);
+        soundManager.PlayAudioClip(collisionClip);
     }
 
     #endregion

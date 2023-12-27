@@ -23,6 +23,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] public int startingGatesCount;
     [SerializeField] public int startingAsteroidsCount;
 
+    [SerializeField] private SoundManager soundManager;
+
     #endregion
 
     #region Static Fields
@@ -88,7 +90,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
     public void SpawnRandomSpawnable(int x, int y)
     {
         var objectToSpawn = PickObjectToSpawn();
-        SpawnEntityInCell(objectToSpawn, currentId, x, y);
+        SpawnEntityInCell(objectToSpawn, currentId, x, y, true);
         currentId++;
     }
 
@@ -162,7 +164,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         SpawnEntityInCell(objectType, id, x, y);
     }
 
-    private void SpawnEntityInCell(Type objectType, int id, int x, int y)
+    private void SpawnEntityInCell(Type objectType, int id, int x, int y, bool playAudio = false)
     {
         var entityObject = PhotonNetwork.Instantiate(
             PrefabPaths[objectType],
@@ -175,6 +177,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
         {
             ObjectCounts[e]--;
         };
+        if (playAudio)
+            soundManager.PlayAudioClip(gameEntity.spawnClip);
     }
 
     #endregion
