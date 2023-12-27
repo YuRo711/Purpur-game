@@ -97,6 +97,8 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
+  deathClip: {fileID: 8300000, guid: e08efe86119ac53a893d39771302db5e, type: 3}
+  soundManager: {fileID: 0}
   lookX: 0
   lookY: 0
 --- !u!114 &7505497543181997316

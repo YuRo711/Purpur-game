@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    #region Serializable Fields
+    #region Public Fields
 
-    [SerializeField] public int score = 0;
-    [SerializeField] public GameGrid levelGrid;
-    [SerializeField] public GlobalGameTimer timer;
-    [SerializeField] public EnemyManager enemyManager;
-    [SerializeField] public PlayerShip player;
-    [SerializeField] public ControlPanelGenerator controlPanelGenerator; 
+    public int score = 0;
+    public GameGrid levelGrid;
+    public GlobalGameTimer timer;
+    public EnemyManager enemyManager;
+    public PlayerShip player;
+    public ControlPanelGenerator controlPanelGenerator;
+    public SoundManager soundManager;
 
     #endregion
 

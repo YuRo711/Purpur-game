@@ -19,6 +19,9 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected EnemyManager enemyManager;
     [SerializeField] public bool isBackground;
 
+    [SerializeField] protected AudioClip deathClip;
+    [SerializeField] protected SoundManager soundManager;
+
     #endregion
     
     #region Properties
@@ -54,7 +57,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #region Public Methods
     
     // For movement in some direction
-    public void MoveInDirection(TurnDirections moveDir, int speed = 1)
+    public virtual void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
         var newX = X;
         var newY = Y;
@@ -68,8 +71,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     // For precise movement: warp, etc.
     public virtual void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
-        if (levelGrid is null)
-            throw new Exception("Level grid not found");
         if (levelGrid.CheckForBorder(destX, destY))
             return;
         DeleteFromCell(entityId);
@@ -122,6 +123,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         LevelManager.AddEntity(this);
         levelGrid = LevelManager.levelGrid;
         enemyManager = LevelManager.enemyManager;
+        soundManager = LevelManager.soundManager;
         if (this is PlayerShip playerShip)
             LevelManager.controlPanelGenerator.ConnectToPlayer(playerShip);
         
@@ -156,6 +158,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, true);
         OnObjectDie?.Invoke(this, GetType());
+        soundManager.PlayAudioClip(deathClip);
     }
 
     protected IEnumerator WaitForId(int id, int x, int y)

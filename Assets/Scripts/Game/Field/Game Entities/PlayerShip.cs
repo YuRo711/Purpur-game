@@ -17,17 +17,37 @@ public class PlayerShip : GameEntity
     [field: SerializeField] public ActionMultiplier ActionMultiplier { get; private set; } = new ActionMultiplier();
     #endregion
 
+    #region Audio Clips
+
+    [SerializeField] private AudioClip movementClip;
+    [SerializeField] private AudioClip turnClip;
+    [SerializeField] private AudioClip shotClip;
+
+    #endregion
+
     #region Public Methods
+
+    public override void MoveInDirection(TurnDirections moveDir, int speed = 1)
+    {
+        base.MoveInDirection(moveDir, speed);
+        soundManager.PlayAudioClip(movementClip);
+    }
 
     public override void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
     {
-        if (levelGrid.Cells[destY, destX].GameEntity is not null)
-            Debug.LogError(levelGrid.Cells[destY, destX].GameEntity);
+        if (levelGrid.CheckForBorder(destX, destY))
+            return;
         base.MoveTo(destX, destY, callSync);
         if (callSync)
             Debug.Log("player moved to " + X + " " + Y);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
+    }
+
+    public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
+    {
+        base.TurnTo(turnDirections, callSync);
+        soundManager.PlayAudioClip(turnClip);
     }
 
     public void Shoot(TurnDirections shootTurnDirection)
@@ -36,6 +56,7 @@ public class PlayerShip : GameEntity
         moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
         InteractWithFirst(shootTurnDirection, _shootingInteraction);
+        soundManager.PlayAudioClip(shotClip);
     }
 
     public void Teleport(TurnDirections teleportTurnDirection)
