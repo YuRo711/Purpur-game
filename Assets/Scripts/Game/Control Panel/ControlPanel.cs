@@ -30,16 +30,6 @@ public class ControlPanel : MonoBehaviour, IShipController
         PlayerShip.Shoot(direction);
     }
 
-    public void RepairAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void IncrementMultiplier()
-    {
-        PlayerShip.ActionMultiplier.IncrementMultiplier();
-    }
-
     public void Teleport(TurnDirections direction)
     {
         PlayerShip.Teleport(direction);
