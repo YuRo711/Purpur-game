@@ -39,7 +39,15 @@ public class Enemy : GameEntity
             TurnTo(TurnDirections.Around, callSync);
             return;
         }
+
+        var player = LevelManager.player;
+        if (player.X == destX && player.Y == destY)
+        {
+            CollisionInteractions[typeof(PlayerShip)].Invoke(player);
+            return;
+        }
         CollideWithCellEntity(newCell);
+        
         if (levelGrid.Cells[Y, X].GameEntity is not null)
             levelGrid.Cells[Y, X].GameEntity = null;
         X = destX;
@@ -114,7 +122,8 @@ public class Enemy : GameEntity
         CollisionInteractions = new()
         {
             {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
-            {typeof(Cargo), e => DamageEntity(e, 0, 1)}
+            {typeof(Cargo), e => DamageEntity(e, 0, 1)},
+            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
         };
     }
 

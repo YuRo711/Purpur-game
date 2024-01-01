@@ -97,6 +97,14 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
+  spawnClip: {fileID: 0}
+  collisionClip: {fileID: 0}
+  soundManager: {fileID: 0}
+  deathClip: {fileID: 0}
+  movementClip: {fileID: 0}
+  turnClip: {fileID: 0}
+  shotClip: {fileID: 0}
+  pushCargoClip: {fileID: 0}
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -207,6 +207,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         CollisionInteractions.TryGetValue(geType, out var action);
         if (action is null)
             return;
+        Debug.Log(name + "colliding with " + cell.GameEntity);
         action.Invoke(cell.GameEntity);
         soundManager.PlayAudioClip(collisionClip);
     }

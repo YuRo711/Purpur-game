@@ -137,3 +137,6 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 1
+  spawnClip: {fileID: 0}
+  collisionClip: {fileID: 0}
+  soundManager: {fileID: 0}

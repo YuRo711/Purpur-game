@@ -66,6 +66,13 @@ public class PlayerShip : GameEntity
         InteractWithFirst(teleportTurnDirection, _teleportInteraction);
     }
 
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        if (health > 0)
+            MoveTo(X, Y);
+    }
+
     #endregion
 
     #region Private Methods
@@ -97,7 +104,7 @@ public class PlayerShip : GameEntity
         var destY = gameEntity.Y;
         var oldX = X;
         var oldY = Y;
-        DeleteFromCell(entityId);
+        photonView.RPC("DeleteFromCell", RpcTarget.AllBuffered, entityId, false);
         gameEntity.MoveTo(X, Y, true, true);
         MoveTo(destX, destY, true, true);
         levelGrid.Cells[oldY, oldX].GameEntity = gameEntity;

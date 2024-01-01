@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
     {
         if (clip is null)
             return;
-        photonView.RPC("PlaySoundRPC", RpcTarget.AllBuffered, clip);
+        // photonView.RPC("PlaySoundRPC", RpcTarget.AllBuffered, clip);
     }
 
     #endregion
