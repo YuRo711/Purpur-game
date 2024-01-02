@@ -6,11 +6,7 @@ using UnityEngine;
 public class PanelButton : MonoBehaviour
 {
     [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
-    [field: SerializeField] public bool IsFunctional { get; private set; } = true;
-    [field: SerializeField] public bool IsCharging { get; private set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
-
-    public event Action<PanelButton> OnStartCharging;
 
     public ControlPanel ControlPanel { get; private set; }
 
@@ -24,87 +20,44 @@ public class PanelButton : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateType();
         UpdateCharge();
-        UpdateAutoActivation();
     }
+
     public void HandleClick()
     {
-        if (!IsFunctional)
-            return;
-
         if (IsFullyCharged)
             Trigger();
-
-        else
-            StartCharging();
     }
 
     [ContextMenu("Trigger")]
     public virtual void Trigger()
     {
-        if (!IsFullyCharged || !IsFunctional)
+        if (!IsFullyCharged)
             return;
 
         PerformAction();
 
         CurrentCharge = 0;
-        StopCharging();
-
-        if(ButtonType.BreaksAfterTrigger && ControlPanel.ButtonBreakingEnabled)
-            IsFunctional = false;
+        ButtonType = null;
     }
 
-    public void Repair()
+    private void UpdateType()
     {
-        IsFunctional = true;
-        CurrentCharge = 0;
-    }
+        if (ButtonType != null)
+            return;
 
-    public void StopCharging()
-    {
-        IsCharging = false;
+        ButtonType = ControlPanel.PlayerShip.ButtonDeck.TakeNext();
     }
 
     private void UpdateCharge()
     {
-        if (!IsFunctional)
-            CurrentCharge = 0;
-
-        else if (IsCharging)
-            CurrentCharge = Mathf.Min(1, CurrentCharge + ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
-
-        else if (!IsFullyCharged)
-            CurrentCharge = Mathf.Max(0, CurrentCharge - ButtonType.ChargeMultiplier * ControlPanel.BasicChargeAmount);
-    }
-
-    private void UpdateAutoActivation()
-    {
-        if(ButtonType.AutoTriggers && IsFullyCharged)
-        {
-            Trigger();
-        }
-    }
-
-    private void StartCharging()
-    {
-        if (!IsFunctional)
-            return;
-
-        IsCharging = true;
-        OnStartCharging?.Invoke(this);
+        CurrentCharge = Mathf.Min(1, CurrentCharge + ControlPanel.BasicChargeAmount);
     }
 
     private void PerformAction()
     {
-        if (!ButtonType.AffectedByMultiplier)
-        {
-            ButtonType.PerformAction(ControlPanel);
-            return;
-        }
-
-        for (var i = 0; i < ControlPanel.PlayerShip.ActionMultiplier.Multiplier; i++)
-            ButtonType.PerformAction(ControlPanel);
-
-        ControlPanel.PlayerShip.ActionMultiplier.ResetMultiplier();
+        ButtonType.PerformAction(ControlPanel);
+        return;
     }
 }

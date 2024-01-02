@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Game.Control_Panel;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class PlayerShip : GameEntity
     #endregion
 
     #region SerializedProperties
-    [field: SerializeField] public ActionMultiplier ActionMultiplier { get; private set; } = new ActionMultiplier();
+    [field: SerializeField] public ButtonDeck ButtonDeck { get; private set; }
     #endregion
 
     #region Audio Clips
@@ -137,7 +138,7 @@ public class PlayerShip : GameEntity
 
     private void Awake()
     {
-        health = 3;
+        health = 1;
         CollisionInteractions = new()
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},

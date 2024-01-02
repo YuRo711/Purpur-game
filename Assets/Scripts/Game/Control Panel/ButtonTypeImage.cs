@@ -18,9 +18,21 @@ public class ButtonTypeImage : MonoBehaviour
 
     void Update()
     {
-        image.sprite = parentButton.ButtonType.BaseSprite;
+        UpdateType();
+        UpdateRotation();
+    }
 
-        if(parentButton.ButtonType.ActionDirection != TurnDirections.None )
-            transform.rotation = parentButton.ControlPanel.PlayerShip.transform.rotation;
+    private void UpdateType()
+    {
+        if (parentButton.ButtonType == null)
+            return;
+
+        image.sprite = parentButton.ButtonType.BaseSprite;
+        
+    }
+
+    private void UpdateRotation()
+    {
+        transform.rotation = parentButton.ControlPanel.PlayerShip.transform.rotation;
     }
 }
