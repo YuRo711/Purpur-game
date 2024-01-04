@@ -9,6 +9,9 @@ public class ControlPanel : MonoBehaviour, IShipController
     [field: SerializeField] public PanelButton[] Buttons { get; private set; }
     [field: SerializeField] public PlayerShip PlayerShip { get; set; }
     [field: SerializeField] public bool ButtonBreakingEnabled { get; private set; }
+    [field: SerializeField] public bool IsChargedByTime { get; private set; }
+    [field: SerializeField] public bool IsChargedByOtherPlayers { get; private set; }
+    [field: SerializeField] public int ReceivedCharge { get; private set; } = 0;
 
     private void Start()
     {
@@ -33,5 +36,15 @@ public class ControlPanel : MonoBehaviour, IShipController
     public void Teleport(TurnDirections direction)
     {
         PlayerShip.Teleport(direction);
+    }
+
+    public void SpendCharge()
+    {
+        ReceivedCharge = Mathf.Max(0, ReceivedCharge - 1);
+    }
+
+    public void ReceiveCharge()
+    {
+        ReceivedCharge++;
     }
 }

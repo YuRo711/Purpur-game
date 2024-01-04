@@ -52,12 +52,21 @@ public class PanelButton : MonoBehaviour
 
     private void UpdateCharge()
     {
-        CurrentCharge = Mathf.Min(1, CurrentCharge + ControlPanel.BasicChargeAmount);
+        if (ControlPanel.IsChargedByTime)
+        {
+            CurrentCharge = Mathf.Min(1, CurrentCharge + ControlPanel.BasicChargeAmount);
+            return;
+        }
+
+        if(ControlPanel.IsChargedByOtherPlayers && CurrentCharge == 0 && ControlPanel.ReceivedCharge > 0)
+        {
+            ControlPanel.SpendCharge();
+            CurrentCharge = 1;
+        }
     }
 
     private void PerformAction()
     {
         ButtonType.PerformAction(ControlPanel);
-        return;
     }
 }

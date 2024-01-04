@@ -528,6 +528,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 694635255147491423, guid: 62c6d593450a32346b7cf0431a84b24f, type: 3}
+      propertyPath: <IsChargedByOtherPlayers>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6172629264514250931, guid: 62c6d593450a32346b7cf0431a84b24f, type: 3}
       propertyPath: m_Name
       value: OnePlayer
