@@ -12,6 +12,8 @@ public class ControlPanelGenerator : MonoBehaviour
 
     [SerializeField] private List<GameObject> playerPanels;
     [SerializeField] private ControlPanel controlPanel;
+    [SerializeField] private bool isTestingModeEnabled;
+    [SerializeField] private GameObject testingPanel;
 
     #endregion
     
@@ -29,8 +31,17 @@ public class ControlPanelGenerator : MonoBehaviour
 
     private void Awake()
     {
-        var index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
-        var panel = playerPanels[index];
+        GameObject panel;
+
+        if (isTestingModeEnabled)
+            panel = testingPanel;
+
+        else
+        {
+            var index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            panel = playerPanels[index];
+        }
+        
         var newPanel = Instantiate(panel, transform);
         if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
         {

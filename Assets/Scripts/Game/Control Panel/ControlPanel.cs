@@ -9,6 +9,7 @@ public class ControlPanel : MonoBehaviour, IShipController
     [field: SerializeField] public PanelButton[] Buttons { get; private set; }
     [field: SerializeField] public PlayerShip PlayerShip { get; set; }
     [field: SerializeField] public bool ButtonBreakingEnabled { get; private set; }
+    [field: SerializeField] public bool IsTestingModeEnabled { get; private set; }
 
     private void Start()
     {
