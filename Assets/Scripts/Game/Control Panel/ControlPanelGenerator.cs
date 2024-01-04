@@ -11,7 +11,6 @@ public class ControlPanelGenerator : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField] private List<GameObject> playerPanels;
-    [SerializeField] private int currentIndex;
     [SerializeField] private ControlPanel controlPanel;
 
     #endregion
@@ -30,8 +29,7 @@ public class ControlPanelGenerator : MonoBehaviour
 
     private void Awake()
     {
-        // КОСТЫЛЬ
-        var index = PhotonNetwork.IsMasterClient ? 0 : 1;
+        var index = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         var panel = playerPanels[index];
         var newPanel = Instantiate(panel, transform);
         if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
