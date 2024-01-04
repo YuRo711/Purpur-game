@@ -28,7 +28,7 @@ public class Signal : GameEntity
 
     private void Awake()
     {
-        isBackground = true;
+        //isBackground = true;
     }
 
     #endregion
