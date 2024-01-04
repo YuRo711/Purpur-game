@@ -29,7 +29,4 @@ public class Deck<T>
         var randomizedList = elements.ToList().OrderBy(x => rng.Next());
         currentDeck = new Stack<T>(randomizedList);
     }
-
-    
-
 }

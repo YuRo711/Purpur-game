@@ -14,8 +14,10 @@ public class PlayerShip : GameEntity
 
     #endregion
 
-    #region SerializedProperties
+    #region Properties
     [field: SerializeField] public ButtonDeck ButtonDeck { get; private set; }
+
+    public ChargeManager ChargeManager { get; } = new ChargeManager();
     #endregion
 
     #region Audio Clips

@@ -40,6 +40,8 @@ public class PanelButton : MonoBehaviour
 
         CurrentCharge = 0;
         ButtonType = null;
+
+        ControlPanel.PlayerShip.ChargeManager.ReceiveChargeFrom(ControlPanel);
     }
 
     private void UpdateType()
