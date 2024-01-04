@@ -28,7 +28,11 @@ public class Signal : GameEntity
 
     private void Awake()
     {
-        //isBackground = true;
+        health = 1;
+        CollisionInteractions = new()
+        {
+            {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
+        };
     }
 
     #endregion
