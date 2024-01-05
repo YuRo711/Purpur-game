@@ -130,18 +130,18 @@ public class PlayerShip : GameEntity
         levelGrid.Cells[oldY, oldX].GameEntity = gameEntity;
     }
 
-    private void PushCargo(Cargo cargo)
+    private void PushEntity(GameEntity entity)
     {
         var moveX = (int)moveVector.x;
         var moveY = (int)moveVector.y;
-        var newCargoX = cargo.X + moveX;
-        var newCargoY = cargo.Y + moveY;
+        var newCargoX = entity.X + moveX;
+        var newCargoY = entity.Y + moveY;
         if (levelGrid.CheckForBorder(newCargoX, newCargoY))
         {
-            cargo.TakeDamage(1);
+            entity.TakeDamage(1);
             return;
         }
-        cargo.MoveTo(newCargoX, newCargoY);
+        entity.MoveTo(newCargoX, newCargoY);
         soundManager.PlayAudioClip(pushCargoClip);
     }
 
@@ -163,7 +163,8 @@ public class PlayerShip : GameEntity
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
             {typeof(Signal), e => DamageEntity(e, 1, 1)},
-            {typeof(Cargo), e => PushCargo((Cargo)e)},
+            {typeof(Cargo), e => PushEntity(e)},
+            {typeof(Gates), e => PushEntity(e)},
         };
         _shootingInteraction = entity => DamageEntity(entity, 1);
         _teleportInteraction = SwitchPlaces;
