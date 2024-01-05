@@ -58,13 +58,27 @@ public class PlayerShip : GameEntity
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
         moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
-        InteractWithFirst(shootTurnDirection, _shootingInteraction);
+        var targetCell = FindFirstEntityOrLastCell(shootTurnDirection);
+        if(targetCell.GameEntity is GameEntity gameEntity)
+        {
+            _shootingInteraction.Invoke(gameEntity);
+        }
+        CallSync();
         soundManager.PlayAudioClip(shotClip);
     }
 
     public void Teleport(TurnDirections teleportTurnDirection)
     {
-        InteractWithFirst(teleportTurnDirection, _teleportInteraction);
+        var targetCell = FindFirstEntityOrLastCell(teleportTurnDirection);
+        if(targetCell.GameEntity is GameEntity gameEntity)
+        {
+            _teleportInteraction(gameEntity);
+        }
+        else
+        {
+            MoveTo(targetCell.X, targetCell.Y, true, true);
+        }
+        CallSync();
     }
 
     public override void TakeDamage(int damage)
@@ -78,25 +92,30 @@ public class PlayerShip : GameEntity
 
     #region Private Methods
 
-    private void InteractWithFirst(TurnDirections direction, Action<GameEntity> interaction)
+    private GridCell FindFirstEntityOrLastCell(TurnDirections direction)
     {
         var deltaVector = LookDirection.TurnTo(direction).Vector;
         var deltaX = (int)deltaVector.x;
         var deltaY = (int)deltaVector.y;
         var checkX = X + deltaX;
         var checkY = Y + deltaY;
+        GridCell lastValidCell = null;
+
         while (!levelGrid.CheckForBorder(checkX, checkY))
         {
             var cell = levelGrid.Cells[checkY, checkX];
+            lastValidCell = cell;
+
             if (cell.GameEntity is GameEntity gameEntity && !gameEntity.isBackground)
             {
-                interaction.Invoke(gameEntity);
-                break;
+                return cell;
             }
+
             checkX += deltaX;
             checkY += deltaY;
         }
-        CallSync();
+
+        return lastValidCell;
     }
 
     private void SwitchPlaces(GameEntity gameEntity)
