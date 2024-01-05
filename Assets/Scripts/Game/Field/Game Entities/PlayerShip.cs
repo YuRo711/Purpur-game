@@ -162,6 +162,7 @@ public class PlayerShip : GameEntity
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
+            {typeof(Signal), e => DamageEntity(e, 1, 1)},
             {typeof(Cargo), e => PushCargo((Cargo)e)},
         };
         _shootingInteraction = entity => DamageEntity(entity, 1);

@@ -32,6 +32,7 @@ public class Signal : GameEntity
         CollisionInteractions = new()
         {
             {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},
+            {typeof(Enemy), e => DamageEntity(e, 1, 1)},
         };
     }
 
