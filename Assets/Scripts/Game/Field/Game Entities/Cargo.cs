@@ -30,7 +30,7 @@ public class Cargo : GameEntity
 
     #region Private Methods
 
-    private void EnterGates(Gates gates)
+    public void EnterGates(Gates gates)
     {
         LevelManager.score++;
         TakeDamage(1);
