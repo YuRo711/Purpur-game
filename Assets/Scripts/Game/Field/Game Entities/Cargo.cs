@@ -15,7 +15,7 @@ public class Cargo : GameEntity
         var newCell = levelGrid.Cells[Y, X];
         AdaptTransform(newCell);
         CollideWithCellEntity(newCell);
-        if (newCell.BgEntity is Gates gates)
+        if (newCell.GameEntity is Gates gates)
         {
             EnterGates(gates);
             return;
