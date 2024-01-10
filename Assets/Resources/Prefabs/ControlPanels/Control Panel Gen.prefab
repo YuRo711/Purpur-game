@@ -52,6 +52,7 @@ MonoBehaviour:
   - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
   - {fileID: 5908547228794487066, guid: c92b3984c01c10b4cb5b3f2530688840, type: 3}
   - {fileID: 5908547228794487066, guid: d94906bccc548b34783ec1244a5aa77b, type: 3}
+  - {fileID: 5908547228794487066, guid: d94906bccc548b34783ec1244a5aa77b, type: 3}
   controlPanel: {fileID: 0}
-  isTestingModeEnabled: 1
+  isTestingModeEnabled: 0
   testingPanel: {fileID: 1965201136652072909, guid: cb579eda3e14ca34c8f865dde9e8e12a, type: 3}
