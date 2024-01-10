@@ -338,6 +338,7 @@ MonoBehaviour:
   cellParent: {fileID: 1836010925}
   currentId: 0
   signal: {fileID: 0}
+  IsGhostHuntEnabled: 1
   startingEnemiesCount: 1
   startingCargoCount: 1
   startingGatesCount: 1

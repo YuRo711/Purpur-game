@@ -16,6 +16,7 @@ public class PlayerShip : GameEntity
 
     #region SerializedProperties
     [field: SerializeField] public ButtonDeck ButtonDeck { get; private set; }
+    [field: SerializeField] public bool IsImmortal { get; private set; }
     #endregion
 
     #region Audio Clips
@@ -42,7 +43,7 @@ public class PlayerShip : GameEntity
             return;
         base.MoveTo(destX, destY, callSync);
         if (callSync)
-            Debug.Log("player moved to " + X + " " + Y);
+            //Debug.Log("player moved to " + X + " " + Y);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
     }
@@ -157,7 +158,11 @@ public class PlayerShip : GameEntity
 
     private void Awake()
     {
-        health = 1;
+        if (IsImmortal)
+            health = 999999;
+        else
+            health = 1;
+
         CollisionInteractions = new()
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
