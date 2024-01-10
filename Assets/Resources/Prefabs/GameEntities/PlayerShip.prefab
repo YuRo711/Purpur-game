@@ -102,6 +102,7 @@ MonoBehaviour:
   collisionClip: {fileID: 0}
   soundManager: {fileID: 0}
   <ButtonDeck>k__BackingField: {fileID: 7271721207699500509}
+  <IsImmortal>k__BackingField: 1
   deathClip: {fileID: 0}
   movementClip: {fileID: 0}
   turnClip: {fileID: 0}

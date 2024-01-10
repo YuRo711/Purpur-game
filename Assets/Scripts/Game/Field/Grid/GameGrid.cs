@@ -18,7 +18,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private RectTransform cellParent;
     [SerializeField] private int currentId;
     [SerializeField] private Signal signal;
-    
+
+    [SerializeField] public bool IsGhostHuntEnabled;
     [SerializeField] public int startingEnemiesCount;
     [SerializeField] public int startingCargoCount;
     [SerializeField] public int startingGatesCount;
