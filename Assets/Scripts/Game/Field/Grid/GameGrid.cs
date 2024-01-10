@@ -17,6 +17,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
     [SerializeField] private GridCell cellPrefab;
     [SerializeField] private RectTransform cellParent;
     [SerializeField] private int currentId;
+    [SerializeField] private Signal signal;
     
     [SerializeField] public int startingEnemiesCount;
     [SerializeField] public int startingCargoCount;
@@ -39,7 +40,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         { typeof(Signal), "Prefabs/GameEntities/Signal" },
     };
 
-    private static Random _random;
+    private static readonly Random _random = new();
 
     #endregion
 
@@ -65,6 +66,20 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     #region Public Methods
     
+    public void SpawnRandomAtSignalPosition()
+    {
+        if (signal == null)
+        {
+            SpawnEntityType(typeof(Signal), 1);
+            return;
+        }
+
+        var oldX = signal.X;
+        var oldY = signal.Y;
+        signal.ChangePosition();
+        SpawnRandomSpawnable(oldX, oldY);
+    }
+
     public bool CheckForBorder(int newX, int newY)
     {
         return newX >= width || newX < 0 ||
@@ -179,6 +194,9 @@ public class GameGrid : MonoBehaviourPunCallbacks
         };
         if (playAudio)
             soundManager.PlayAudioClip(gameEntity.spawnClip);
+
+        if (objectType == typeof(Signal))
+            signal = (Signal)gameEntity;
     }
 
     #endregion
@@ -187,7 +205,6 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        _random = new System.Random();
         Generate();
     }
     

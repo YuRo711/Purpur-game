@@ -26,8 +26,6 @@ public class LevelManager : MonoBehaviour
             player = playerShip;
         if (gameEntity is Enemy enemy)
             enemyManager.enemies.Add(enemy);
-        if (gameEntity is Signal signal)
-            timer.signal = signal;
     }
 
     #endregion
