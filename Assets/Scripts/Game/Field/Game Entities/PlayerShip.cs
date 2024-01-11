@@ -71,6 +71,10 @@ public class PlayerShip : GameEntity
     public void Teleport(TurnDirections teleportTurnDirection)
     {
         var targetCell = FindFirstEntityOrLastCell(teleportTurnDirection);
+
+        if (targetCell == null)
+            return;
+
         if(targetCell.GameEntity is GameEntity gameEntity)
         {
             _teleportInteraction(gameEntity);
