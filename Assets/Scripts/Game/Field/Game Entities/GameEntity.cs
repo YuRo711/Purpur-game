@@ -217,7 +217,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     #region
     private void Update()
     {
-        if (levelGrid.IsGhostHuntEnabled)
+        if (levelGrid != null && levelGrid.IsGhostHuntEnabled)
             CheckForGhost();
     }
 
