@@ -47,7 +47,7 @@ public class PanelButton : MonoBehaviour
 
     private void UpdateType()
     {
-        if (ButtonType != null)
+        if (ButtonType != null || ControlPanel.PlayerShip == null)
             return;
 
         ButtonType = ControlPanel.PlayerShip.ButtonDeck.TakeNext();
