@@ -40,14 +40,18 @@ public class Enemy : GameEntity
             return;
         }
 
-        var player = LevelManager.player;
-        if (player.X == destX && player.Y == destY)
+        if (!ignoreObjectCollision)
         {
-            CollisionInteractions[typeof(PlayerShip)].Invoke(player);
-            return;
+            var player = LevelManager.player;
+            if (player.X == destX && player.Y == destY)
+            {
+                CollisionInteractions[typeof(PlayerShip)].Invoke(player);
+                return;
+            }
+
+            CollideWithCellEntity(newCell);
         }
-        CollideWithCellEntity(newCell);
-        
+
         if (levelGrid.Cells[Y, X].GameEntity is not null)
             levelGrid.Cells[Y, X].GameEntity = null;
         X = destX;

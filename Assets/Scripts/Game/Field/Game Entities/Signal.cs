@@ -5,16 +5,8 @@ using UnityEngine;
 public class Signal : GameEntity
 {
     #region Public Methods
-
-    public void UpdateSignal()
-    {
-        var oldX = X;
-        var oldY = Y;
-        ChangePosition();
-        levelGrid.SpawnRandomSpawnable(oldX, oldY);
-    }
     
-    private void ChangePosition()
+    public void ChangePosition()
     {
         var pos = levelGrid.GetRandomPosition();
         if (pos is null)
@@ -28,7 +20,7 @@ public class Signal : GameEntity
 
     private void Awake()
     {
-        isBackground = true;
+        health = 1;
     }
 
     #endregion

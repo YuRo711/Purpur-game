@@ -100,7 +100,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     public virtual void TakeDamage(int damage)
     {
-        Debug.LogError(name + " took damage");
+        //Debug.LogError(name + " took damage");
         health -= damage;
         CallSync();
     }
@@ -213,7 +213,24 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
-    
+
+    #region
+    private void Update()
+    {
+        if (levelGrid.IsGhostHuntEnabled)
+            CheckForGhost();
+    }
+
+    private void CheckForGhost()
+    {
+        if (levelGrid.Cells[Y, X].GameEntity == this)
+            return;
+
+        Debug.LogError($"Ghost caught! Object at [{X},{Y}] did not belong to any cell.");
+        levelGrid.Cells[Y, X].GameEntity = this;
+    }
+    #endregion
+
     #region IPunObservable Callbacks
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

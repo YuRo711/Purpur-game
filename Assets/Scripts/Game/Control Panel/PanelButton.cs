@@ -38,6 +38,9 @@ public class PanelButton : MonoBehaviour
 
         PerformAction();
 
+        if (ControlPanel.IsTestingModeEnabled)
+            return;
+
         CurrentCharge = 0;
         ButtonType = null;
 

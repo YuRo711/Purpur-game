@@ -12,6 +12,7 @@ public class ControlPanel : MonoBehaviour, IShipController
     [field: SerializeField] public bool IsChargedByTime { get; private set; }
     [field: SerializeField] public bool IsChargedByOtherPlayers { get; private set; }
     [field: SerializeField] public int ReceivedCharge { get; private set; } = 0;
+    [field: SerializeField] public bool IsTestingModeEnabled { get; private set; }
 
     private void Start()
     {

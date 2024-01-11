@@ -136,7 +136,7 @@ MonoBehaviour:
   moveVector: {x: 0, y: 0}
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
-  isBackground: 1
+  isBackground: 0
   spawnClip: {fileID: 0}
   collisionClip: {fileID: 0}
   soundManager: {fileID: 0}

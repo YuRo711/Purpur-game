@@ -4,10 +4,10 @@ public class GridCell : MonoBehaviour
 {
     #region Properties
 
-    public GameEntity GameEntity;
-    public GameEntity BgEntity;
-    public int X { get; set; }
-    public int Y { get; set; }
+    [SerializeField] public GameEntity GameEntity;
+    [SerializeField] public GameEntity BgEntity;
+    [field: SerializeField] public int X { get; set; }
+    [field: SerializeField] public int Y { get; set; }
 
     #endregion
 }

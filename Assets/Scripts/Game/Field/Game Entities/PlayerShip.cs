@@ -18,6 +18,7 @@ public class PlayerShip : GameEntity
     [field: SerializeField] public ButtonDeck ButtonDeck { get; private set; }
 
     public ChargeManager ChargeManager { get; } = new ChargeManager();
+    [field: SerializeField] public bool IsImmortal { get; private set; }
     #endregion
 
     #region Audio Clips
@@ -44,7 +45,7 @@ public class PlayerShip : GameEntity
             return;
         base.MoveTo(destX, destY, callSync);
         if (callSync)
-            Debug.Log("player moved to " + X + " " + Y);
+            //Debug.Log("player moved to " + X + " " + Y);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
     }
@@ -60,13 +61,27 @@ public class PlayerShip : GameEntity
         var shootAbsDirection = LookDirection.TurnTo(shootTurnDirection);
         moveVector = shootAbsDirection.TurnTo(TurnDirections.Around).Vector;
         MoveTo(X + (int)moveVector.x, Y + (int)moveVector.y);
-        InteractWithFirst(shootTurnDirection, _shootingInteraction);
+        var targetCell = FindFirstEntityOrLastCell(shootTurnDirection);
+        if(targetCell.GameEntity is GameEntity gameEntity)
+        {
+            _shootingInteraction.Invoke(gameEntity);
+        }
+        CallSync();
         soundManager.PlayAudioClip(shotClip);
     }
 
     public void Teleport(TurnDirections teleportTurnDirection)
     {
-        InteractWithFirst(teleportTurnDirection, _teleportInteraction);
+        var targetCell = FindFirstEntityOrLastCell(teleportTurnDirection);
+        if(targetCell.GameEntity is GameEntity gameEntity)
+        {
+            _teleportInteraction(gameEntity);
+        }
+        else
+        {
+            MoveTo(targetCell.X, targetCell.Y, true, true);
+        }
+        CallSync();
     }
 
     public override void TakeDamage(int damage)
@@ -80,25 +95,30 @@ public class PlayerShip : GameEntity
 
     #region Private Methods
 
-    private void InteractWithFirst(TurnDirections direction, Action<GameEntity> interaction)
+    private GridCell FindFirstEntityOrLastCell(TurnDirections direction)
     {
         var deltaVector = LookDirection.TurnTo(direction).Vector;
         var deltaX = (int)deltaVector.x;
         var deltaY = (int)deltaVector.y;
         var checkX = X + deltaX;
         var checkY = Y + deltaY;
+        GridCell lastValidCell = null;
+
         while (!levelGrid.CheckForBorder(checkX, checkY))
         {
             var cell = levelGrid.Cells[checkY, checkX];
+            lastValidCell = cell;
+
             if (cell.GameEntity is GameEntity gameEntity && !gameEntity.isBackground)
             {
-                interaction.Invoke(gameEntity);
-                break;
+                return cell;
             }
+
             checkX += deltaX;
             checkY += deltaY;
         }
-        CallSync();
+
+        return lastValidCell;
     }
 
     private void SwitchPlaces(GameEntity gameEntity)
@@ -113,18 +133,18 @@ public class PlayerShip : GameEntity
         levelGrid.Cells[oldY, oldX].GameEntity = gameEntity;
     }
 
-    private void PushCargo(Cargo cargo)
+    private void PushEntity(GameEntity entity)
     {
         var moveX = (int)moveVector.x;
         var moveY = (int)moveVector.y;
-        var newCargoX = cargo.X + moveX;
-        var newCargoY = cargo.Y + moveY;
+        var newCargoX = entity.X + moveX;
+        var newCargoY = entity.Y + moveY;
         if (levelGrid.CheckForBorder(newCargoX, newCargoY))
         {
-            cargo.TakeDamage(1);
+            entity.TakeDamage(1);
             return;
         }
-        cargo.MoveTo(newCargoX, newCargoY);
+        entity.MoveTo(newCargoX, newCargoY);
         soundManager.PlayAudioClip(pushCargoClip);
     }
 
@@ -140,12 +160,18 @@ public class PlayerShip : GameEntity
 
     private void Awake()
     {
-        health = 1;
+        if (IsImmortal)
+            health = 999999;
+        else
+            health = 1;
+
         CollisionInteractions = new()
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
-            {typeof(Cargo), e => PushCargo((Cargo)e)},
+            {typeof(Signal), e => DamageEntity(e, 1, 1)},
+            {typeof(Cargo), e => PushEntity(e)},
+            {typeof(Gates), e => PushEntity(e)},
         };
         _shootingInteraction = entity => DamageEntity(entity, 1);
         _teleportInteraction = SwitchPlaces;
