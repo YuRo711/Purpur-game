@@ -50,7 +50,9 @@ public class PanelButton : MonoBehaviour
         if (ButtonType != null || ControlPanel.PlayerShip == null)
             return;
 
-        ButtonType = ControlPanel.PlayerShip.ButtonDeck.TakeNext();
+        var buttonDeck = ControlPanel.PlayerShip.ButtonDeck;
+        buttonDeck.RequestNextButton();
+        ButtonType = buttonDeck.LastDrawnButton;
     }
 
     private void UpdateCharge()
