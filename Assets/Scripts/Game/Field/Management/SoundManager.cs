@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -8,15 +9,15 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private PhotonView photonView;
 
+    private const string ClipsDirectory = "Sounds/";
+
     #endregion
 
     #region Public Methods
 
-    public void PlayAudioClip(AudioClip clip)
+    public void PlayAudioClip(string clipLink)
     {
-        if (clip is null)
-            return;
-        // photonView.RPC("PlaySoundRPC", RpcTarget.AllBuffered, clip);
+        photonView.RPC("PlaySoundRPC", RpcTarget.AllBuffered, clipLink);
     }
 
     #endregion
@@ -24,8 +25,14 @@ public class SoundManager : MonoBehaviour
     #region Private Methods
 
     [PunRPC]
-    private void PlaySoundRPC(AudioClip clip)
+    private void PlaySoundRPC(string clipLink)
     {
+        var path = ClipsDirectory + clipLink;
+        var clip = Resources.Load<AudioClip>(path);
+        Debug.Log("trying to play " + path);
+        if (clip is null)
+            return;
+        Debug.Log("playing " + path);
         audioSource.clip = clip;
         audioSource.Play();
     }

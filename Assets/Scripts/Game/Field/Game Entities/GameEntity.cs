@@ -19,9 +19,10 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected EnemyManager enemyManager;
     [SerializeField] public bool isBackground;
 
-    [SerializeField] public AudioClip spawnClip;
-    [SerializeField] protected AudioClip collisionClip;
+    [SerializeField] public string spawnClip;
+    [SerializeField] protected string collisionClip;
     [SerializeField] protected SoundManager soundManager;
+    [SerializeField] protected bool isSoundOn;
 
     #endregion
     
@@ -149,6 +150,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         MoveTo(newX, newY, false, ignoreObjectCollision);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
+        isSoundOn = true;
     }
 
     #endregion
@@ -209,7 +211,14 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             return;
         Debug.Log(name + "colliding with " + cell.GameEntity);
         action.Invoke(cell.GameEntity);
-        soundManager.PlayAudioClip(collisionClip);
+        PlayAudioClip(collisionClip);
+    }
+
+    protected void PlayAudioClip(string clipLink)
+    {
+        if (clipLink is null || !isSoundOn)
+            return;
+        soundManager.PlayAudioClip(clipLink);
     }
 
     #endregion

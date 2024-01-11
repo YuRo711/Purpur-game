@@ -98,16 +98,17 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: {fileID: 0}
-  collisionClip: {fileID: 0}
+  spawnClip: 
+  collisionClip: hit
   soundManager: {fileID: 0}
+  isSoundOn: 0
   <ButtonDeck>k__BackingField: {fileID: 7271721207699500509}
   <IsImmortal>k__BackingField: 1
-  deathClip: {fileID: 0}
-  movementClip: {fileID: 0}
-  turnClip: {fileID: 0}
-  shotClip: {fileID: 0}
-  pushCargoClip: {fileID: 0}
+  deathClip: death
+  movementClip: ship move
+  turnClip: turn
+  shotClip: shot
+  pushCargoClip: carh
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0
