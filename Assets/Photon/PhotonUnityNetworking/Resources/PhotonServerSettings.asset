@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  # DevRegion: ru
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -54,6 +54,8 @@ MonoBehaviour:
   - Die
   - Kill
   - PlaySoundRPC
+  - ReceiveButton
+  - RequestButtonFromMasterClient
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
