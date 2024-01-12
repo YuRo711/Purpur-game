@@ -16,13 +16,11 @@ public class ChargeManager
     {
         indexes.Add(panel, panels.Count);
         panels.Add(panel);
-        Debug.LogError($"Got {indexes.Count} indexes! And {panels.Count} panels, yeah");
     }
 
     public void ReceiveChargeFrom(ControlPanel panel)
     {
         var ind = (indexes[panel] + 1) % panels.Count;
         panels[ind].ReceiveCharge();
-        Debug.LogError($"Giving charge to {ind}");
     }
 }
