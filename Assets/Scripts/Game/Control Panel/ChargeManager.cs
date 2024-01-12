@@ -53,7 +53,5 @@ public class ChargeManager : MonoBehaviourPunCallbacks
     void ReceiveCharge()
     {
         localPanel.ReceiveCharge();
-
-        Debug.Log($"Got charge!");
     }
 }

@@ -88,3 +88,7 @@ MonoBehaviour:
   <Buttons>k__BackingField: []
   <PlayerShip>k__BackingField: {fileID: 0}
   <ButtonBreakingEnabled>k__BackingField: 0
+  <IsChargedByTime>k__BackingField: 0
+  <IsChargedByOtherPlayers>k__BackingField: 1
+  <ReceivedCharge>k__BackingField: 0
+  <IsTestingModeEnabled>k__BackingField: 0
