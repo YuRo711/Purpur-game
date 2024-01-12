@@ -1,22 +1,14 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChargeManager : MonoBehaviourPunCallbacks
 {
-    private Dictionary<int, int> actorNumberToIndex;
-    private List<int> indexToActorNumber;
+    private Dictionary<int, int> actorNumberToIndex = new Dictionary<int, int>();
+    private List<int> indexToActorNumber = new List<int>();
     private ControlPanel localPanel;
-
-    void Start()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            actorNumberToIndex = new Dictionary<int, int>();
-            indexToActorNumber = new List<int>();
-        }
-    }
 
     public void RequestRegisterPlayer(ControlPanel panel)
     {
@@ -39,13 +31,29 @@ public class ChargeManager : MonoBehaviourPunCallbacks
         var ind = indexToActorNumber.Count;
         actorNumberToIndex.Add(playerActorNumber, ind);
         indexToActorNumber.Add(playerActorNumber);
-
-        Debug.Log($"Player {playerActorNumber} registered at index {actorNumberToIndex[playerActorNumber]}");
-        Debug.Log($"Current player list: {string.Join(", ", indexToActorNumber)}");
     }
 
-    public void ReceiveChargeFrom(ControlPanel panel)
+    public void RequestSendCharge()
     {
-        return;
+        photonView.RPC("SendCharge", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+
+    [PunRPC]
+    void SendCharge(int sendingActorNumber)
+    {
+        var ind = actorNumberToIndex[sendingActorNumber];
+        var targetInd = (ind + 1) % indexToActorNumber.Count;
+        var targetPlayerNumber = indexToActorNumber[targetInd];
+        photonView.RPC("ReceiveCharge", PhotonNetwork.CurrentRoom.GetPlayer(targetPlayerNumber));
+
+        //Debug.Log($"{ind} sent charge to {targetInd}");
+    }
+
+    [PunRPC]
+    void ReceiveCharge()
+    {
+        localPanel.ReceiveCharge();
+
+        Debug.Log($"Got charge!");
     }
 }

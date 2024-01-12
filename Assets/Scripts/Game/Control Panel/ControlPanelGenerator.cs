@@ -23,7 +23,7 @@ public class ControlPanelGenerator : MonoBehaviour
     public void ConnectToPlayer(PlayerShip player)
     {
         controlPanel.PlayerShip = player;
-        player.ChargeManager.RegisterPlayer(controlPanel);
+        player.ChargeManager.RequestRegisterPlayer(controlPanel);
     }
     
     #endregion

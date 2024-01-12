@@ -11,14 +11,12 @@ namespace Assets.Scripts.Game.Control_Panel
     public class ButtonDeck : MonoBehaviourPunCallbacks
     {
         [field: SerializeField] public PanelButtonType[] ButtonTypes { get; private set; }
-        public Queue<PanelButton> RequestQueue { get; private set; }
+        public Queue<PanelButton> RequestQueue { get; private set; } = new Queue<PanelButton>();
 
         private Deck<int> indexDeck;
 
         void Start()
         {
-            RequestQueue = new Queue<PanelButton> ();
-
             if (PhotonNetwork.IsMasterClient)
             {
                 var digits = Enumerable.Range(0, ButtonTypes.Length);
