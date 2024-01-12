@@ -111,8 +111,7 @@ public class Enemy : GameEntity
 
     protected override void Die()
     {
-        if (PhotonNetwork.IsMasterClient)
-            enemyManager.enemies.Remove(this);
+        enemyManager.enemies.Remove(this);
         base.Die();
     }
 

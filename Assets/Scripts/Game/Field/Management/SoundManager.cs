@@ -29,10 +29,8 @@ public class SoundManager : MonoBehaviour
     {
         var path = ClipsDirectory + clipLink;
         var clip = Resources.Load<AudioClip>(path);
-        Debug.Log("trying to play " + path);
         if (clip is null)
             return;
-        Debug.Log("playing " + path);
         audioSource.clip = clip;
         audioSource.Play();
     }
