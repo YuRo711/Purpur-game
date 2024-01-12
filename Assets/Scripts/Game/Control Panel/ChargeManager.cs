@@ -1,26 +1,51 @@
+using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class ChargeManager
+public class ChargeManager : MonoBehaviourPunCallbacks
 {
-    private readonly Dictionary<ControlPanel, int> indexes;
-    private readonly List<ControlPanel> panels;
-    
-    public ChargeManager()
+    private Dictionary<int, int> actorNumberToIndex;
+    private List<int> indexToActorNumber;
+    private ControlPanel localPanel;
+
+    void Start()
     {
-        indexes = new Dictionary<ControlPanel, int>();
-        panels = new List<ControlPanel>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            actorNumberToIndex = new Dictionary<int, int>();
+            indexToActorNumber = new List<int>();
+        }
     }
 
-    public void AddPanel(ControlPanel panel)
+    public void RequestRegisterPlayer(ControlPanel panel)
     {
-        indexes.Add(panel, panels.Count);
-        panels.Add(panel);
+        localPanel = panel;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            RegisterPlayer(PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+
+        else
+        {
+            photonView.RPC("RegisterPlayer", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+    }
+
+    [PunRPC]
+    void RegisterPlayer(int playerActorNumber)
+    {
+        var ind = indexToActorNumber.Count;
+        actorNumberToIndex.Add(playerActorNumber, ind);
+        indexToActorNumber.Add(playerActorNumber);
+
+        Debug.Log($"Player {playerActorNumber} registered at index {actorNumberToIndex[playerActorNumber]}");
+        Debug.Log($"Current player list: {string.Join(', ', indexToActorNumber)}");
     }
 
     public void ReceiveChargeFrom(ControlPanel panel)
     {
-        var ind = (indexes[panel] + 1) % panels.Count;
-        panels[ind].ReceiveCharge();
+        return;
     }
 }

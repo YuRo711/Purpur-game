@@ -16,8 +16,8 @@ public class PlayerShip : GameEntity
 
     #region Properties
     [field: SerializeField] public ButtonDeck ButtonDeck { get; private set; }
+    [field: SerializeField] public ChargeManager ChargeManager{ get; private set; }
 
-    public ChargeManager ChargeManager { get; } = new ChargeManager();
     [field: SerializeField] public bool IsImmortal { get; private set; }
     #endregion
 
