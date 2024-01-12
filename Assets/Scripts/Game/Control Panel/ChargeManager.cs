@@ -41,7 +41,7 @@ public class ChargeManager : MonoBehaviourPunCallbacks
         indexToActorNumber.Add(playerActorNumber);
 
         Debug.Log($"Player {playerActorNumber} registered at index {actorNumberToIndex[playerActorNumber]}");
-        Debug.Log($"Current player list: {string.Join(', ', indexToActorNumber)}");
+        Debug.Log($"Current player list: {string.Join(", ", indexToActorNumber)}");
     }
 
     public void ReceiveChargeFrom(ControlPanel panel)
