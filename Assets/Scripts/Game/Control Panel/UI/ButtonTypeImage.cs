@@ -33,6 +33,9 @@ public class ButtonTypeImage : MonoBehaviour
 
     private void UpdateRotation()
     {
+        if (parentButton.ControlPanel.PlayerShip == null)
+            return;
+
         transform.rotation = parentButton.ControlPanel.PlayerShip.transform.rotation;
     }
 }

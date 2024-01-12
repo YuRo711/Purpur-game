@@ -97,9 +97,10 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: {fileID: 8300000, guid: 463a86a90ed9dff0b8871f44cbd80903, type: 3}
-  collisionClip: {fileID: 8300000, guid: 163bb416e73c18caba2dc1505dcfef74, type: 3}
+  spawnClip: enemy spawn
+  collisionClip: hi
   soundManager: {fileID: 0}
+  isSoundOn: 0
   lookX: 0
   lookY: 0
 --- !u!114 &7505497543181997316

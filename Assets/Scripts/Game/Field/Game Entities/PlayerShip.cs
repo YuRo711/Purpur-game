@@ -23,11 +23,11 @@ public class PlayerShip : GameEntity
 
     #region Audio Clips
 
-    [SerializeField] protected AudioClip deathClip;
-    [SerializeField] private AudioClip movementClip;
-    [SerializeField] private AudioClip turnClip;
-    [SerializeField] private AudioClip shotClip;
-    [SerializeField] private AudioClip pushCargoClip;
+    [SerializeField] protected string deathClip;
+    [SerializeField] private string movementClip;
+    [SerializeField] private string turnClip;
+    [SerializeField] private string shotClip;
+    [SerializeField] private string pushCargoClip;
 
     #endregion
 
@@ -36,7 +36,7 @@ public class PlayerShip : GameEntity
     public override void MoveInDirection(TurnDirections moveDir, int speed = 1)
     {
         base.MoveInDirection(moveDir, speed);
-        soundManager.PlayAudioClip(movementClip);
+        PlayAudioClip(movementClip);
     }
 
     public override void MoveTo(int destX, int destY, bool callSync = true, bool ignoreObjectCollision = false)
@@ -53,7 +53,7 @@ public class PlayerShip : GameEntity
     public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
         base.TurnTo(turnDirections, callSync);
-        soundManager.PlayAudioClip(turnClip);
+        PlayAudioClip(turnClip);
     }
 
     public void Shoot(TurnDirections shootTurnDirection)
@@ -67,12 +67,16 @@ public class PlayerShip : GameEntity
             _shootingInteraction.Invoke(gameEntity);
         }
         CallSync();
-        soundManager.PlayAudioClip(shotClip);
+        PlayAudioClip(shotClip);
     }
 
     public void Teleport(TurnDirections teleportTurnDirection)
     {
         var targetCell = FindFirstEntityOrLastCell(teleportTurnDirection);
+
+        if (targetCell == null)
+            return;
+
         if(targetCell.GameEntity is GameEntity gameEntity)
         {
             _teleportInteraction(gameEntity);
@@ -145,13 +149,13 @@ public class PlayerShip : GameEntity
             return;
         }
         entity.MoveTo(newCargoX, newCargoY);
-        soundManager.PlayAudioClip(pushCargoClip);
+        PlayAudioClip(pushCargoClip);
     }
 
     protected override void Die()
     {
         base.Die();
-        soundManager.PlayAudioClip(deathClip);
+        PlayAudioClip(deathClip);
     }
 
     #endregion

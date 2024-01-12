@@ -137,6 +137,7 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: {fileID: 8300000, guid: 94b7c3fe3d9edcc01a9f333c6d17a777, type: 3}
-  collisionClip: {fileID: 8300000, guid: 163bb416e73c18caba2dc1505dcfef74, type: 3}
+  spawnClip: cargo spawn
+  collisionClip: h
   soundManager: {fileID: 0}
+  isSoundOn: 0
