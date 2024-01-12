@@ -1,3 +1,4 @@
+using Assets.Scripts.Game.Control_Panel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class PanelButton : MonoBehaviour
 {
-    [field: SerializeField] public PanelButtonType ButtonType { get; private set; }
+    [field: SerializeField] public PanelButtonType ButtonType { get; set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
 
     public ControlPanel ControlPanel { get; private set; }
@@ -47,12 +48,10 @@ public class PanelButton : MonoBehaviour
 
     private void UpdateType()
     {
-        if (ButtonType != null || ControlPanel.PlayerShip == null)
+        if (ButtonType != null || ControlPanel.PlayerShip == null || ControlPanel.PlayerShip.ButtonDeck.RequestQueue.Contains(this))
             return;
 
-        var buttonDeck = ControlPanel.PlayerShip.ButtonDeck;
-        buttonDeck.RequestNextButton();
-        ButtonType = buttonDeck.LastDrawnButton;
+        ControlPanel.PlayerShip.ButtonDeck.RequestNextButton(this);
     }
 
     private void UpdateCharge()
