@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private PhotonView photonView;
+    [SerializeField] private bool soundEnabled;
 
     private const string ClipsDirectory = "Sounds/";
 
@@ -17,6 +18,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlayAudioClip(string clipLink)
     {
+        if (!soundEnabled)
+            return;
+
         photonView.RPC("PlaySoundRPC", RpcTarget.AllBuffered, clipLink);
     }
 
