@@ -42,12 +42,10 @@ public class ControlPanel : MonoBehaviour, IShipController
     public void SpendCharge()
     {
         ReceivedCharge = Mathf.Max(0, ReceivedCharge - 1);
-        Debug.Log($"Spent charge! Remaining charge: {ReceivedCharge}");
     }
 
     public void ReceiveCharge()
     {
         ReceivedCharge++;
-        Debug.Log($"Recieved charge! Remaining charge: {ReceivedCharge}");
     }
 }
