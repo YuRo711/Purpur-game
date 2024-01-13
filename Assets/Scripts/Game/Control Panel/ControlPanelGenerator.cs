@@ -11,7 +11,7 @@ public class ControlPanelGenerator : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField] private List<GameObject> playerPanels;
-    [SerializeField] private ControlPanel controlPanel;
+    [field: SerializeField] public ControlPanel ControlPanel { get; private set; }
     [SerializeField] private bool isTestingModeEnabled;
     [SerializeField] private GameObject testingPanel;
 
@@ -22,8 +22,8 @@ public class ControlPanelGenerator : MonoBehaviour
 
     public void ConnectToPlayer(PlayerShip player)
     {
-        controlPanel.PlayerShip = player;
-        player.ChargeManager.RequestRegisterPlayer(controlPanel);
+        ControlPanel.PlayerShip = player;
+        player.ChargeManager.RequestRegisterPlayer(ControlPanel);
     }
     
     #endregion
@@ -46,7 +46,7 @@ public class ControlPanelGenerator : MonoBehaviour
         var newPanel = Instantiate(panel, transform);
         if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
         {
-            controlPanel = newControlPanel;
+            ControlPanel = newControlPanel;
         }
     }
 
