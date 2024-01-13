@@ -8,6 +8,7 @@ public class PanelButton : MonoBehaviour
 {
     [field: SerializeField] public PanelButtonType ButtonType { get; set; }
     [field: SerializeField] public float CurrentCharge { get; private set; }
+    [field: SerializeField] public KeyCode KeyCode { get; set; }
 
     public ControlPanel ControlPanel { get; private set; }
 
@@ -23,6 +24,12 @@ public class PanelButton : MonoBehaviour
     {
         UpdateType();
         UpdateCharge();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode))
+            Trigger();
     }
 
     public void HandleClick()

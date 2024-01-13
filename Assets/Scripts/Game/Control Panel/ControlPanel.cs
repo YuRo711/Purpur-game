@@ -14,9 +14,23 @@ public class ControlPanel : MonoBehaviour, IShipController
     [field: SerializeField] public int ReceivedCharge { get; private set; } = 0;
     [field: SerializeField] public bool IsTestingModeEnabled { get; private set; }
 
+    private static readonly KeyCode[] Keys = new KeyCode[]
+    {
+        KeyCode.Q,
+        KeyCode.W,
+        KeyCode.E,
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D
+    };
+
     private void Start()
     {
         Buttons = GetComponentsInChildren<PanelButton>();
+        for (var i = 0; i < Buttons.Length; i++)
+        {
+            Buttons[i].KeyCode = Keys[i];
+        }
     }
 
     public void Move(TurnDirections direction)
