@@ -27,6 +27,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     [SerializeField] private SoundManager soundManager;
 
+    [field: SerializeField] public LevelManager LevelManager { get; private set; }
+
     #endregion
 
     #region Static Fields
@@ -110,6 +112,11 @@ public class GameGrid : MonoBehaviourPunCallbacks
         currentId++;
     }
 
+    public void OnEntityCannotSpawn()
+    {
+        LevelManager.FinishGame();
+    }
+
     #endregion
 
     #region Private Methods
@@ -174,7 +181,10 @@ public class GameGrid : MonoBehaviourPunCallbacks
     {
         var position = GetRandomPosition();
         if (position is null)
+        {
+            OnEntityCannotSpawn();
             return;
+        }
         var x = position.Item1;
         var y = position.Item2;
         SpawnEntityInCell(objectType, id, x, y);
@@ -207,6 +217,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
     private void Start()
     {
         Generate();
+        LevelManager = FindObjectOfType<LevelManager>();
     }
     
     #endregion

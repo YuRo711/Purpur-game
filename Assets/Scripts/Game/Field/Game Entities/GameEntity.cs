@@ -235,7 +235,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         if (levelGrid.Cells[Y, X].GameEntity == this)
             return;
 
-        Debug.LogError($"Ghost caught! Object at [{X},{Y}] did not belong to any cell.");
+        //Debug.LogError($"Ghost caught! Object at [{X},{Y}] did not belong to any cell.");
         levelGrid.Cells[Y, X].GameEntity = this;
     }
     #endregion

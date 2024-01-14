@@ -10,7 +10,11 @@ public class Signal : GameEntity
     {
         var pos = levelGrid.GetRandomPosition();
         if (pos is null)
+        {
+            Die();
+            levelGrid.OnEntityCannotSpawn();
             return;
+        }
         MoveTo(pos.Item1, pos.Item2);
     }
 

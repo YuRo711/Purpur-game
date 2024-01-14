@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour
     public void FinishGame()
     {
         IsGameOver = true;
+        Debug.Log("GAME OVER");
     }
 
     #endregion
