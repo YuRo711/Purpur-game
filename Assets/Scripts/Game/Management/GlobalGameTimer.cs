@@ -12,6 +12,7 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
     [SerializeField] private float moveDuration = 4;
     [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private GameGrid grid;
+    [field: SerializeField] public LevelManager LevelManager { get; private set; }
 
     #endregion
 
@@ -35,6 +36,9 @@ public class GlobalGameTimer : MonoBehaviourPunCallbacks
 
     private void TriggerTimer()
     {
+        if (LevelManager.IsGameOver)
+            return;
+
         ResetTimer();
         TakeActions();
     }

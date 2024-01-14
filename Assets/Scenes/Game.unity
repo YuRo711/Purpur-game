@@ -177,6 +177,7 @@ MonoBehaviour:
   player: {fileID: 0}
   controlPanelGenerator: {fileID: 90415194}
   soundManager: {fileID: 1471945355}
+  <IsGameOver>k__BackingField: 0
 --- !u!224 &90415193 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1690099323735130461, guid: f379ecd444a00d94a9154eb9b209e3ce, type: 3}
@@ -270,6 +271,7 @@ MonoBehaviour:
   moveDuration: 4
   enemyManager: {fileID: 222065264}
   grid: {fileID: 939692387}
+  <LevelManager>k__BackingField: {fileID: 36930518}
 --- !u!4 &318839776
 Transform:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class ControlPanel : MonoBehaviour, IShipController
     [field: SerializeField] public bool IsChargedByOtherPlayers { get; private set; }
     [field: SerializeField] public int ReceivedCharge { get; private set; } = 0;
     [field: SerializeField] public bool IsTestingModeEnabled { get; private set; }
+    
+    public LevelManager LevelManager { get; private set; }
 
     private static readonly KeyCode[] Keys = new KeyCode[]
     {
@@ -31,6 +33,7 @@ public class ControlPanel : MonoBehaviour, IShipController
         {
             Buttons[i].KeyCode = Keys[i];
         }
+        LevelManager = FindObjectOfType<LevelManager>();
     }
 
     public void Move(TurnDirections direction)

@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     public ControlPanelGenerator controlPanelGenerator;
     public SoundManager soundManager;
 
+    [field: SerializeField] public bool IsGameOver { get; private set; } = false;
+
     #endregion
 
 

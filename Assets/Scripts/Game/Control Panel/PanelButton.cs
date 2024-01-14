@@ -41,7 +41,7 @@ public class PanelButton : MonoBehaviour
     [ContextMenu("Trigger")]
     public virtual void Trigger()
     {
-        if (!IsFullyCharged)
+        if (!IsFullyCharged || ControlPanel.LevelManager.IsGameOver)
             return;
 
         PerformAction();
