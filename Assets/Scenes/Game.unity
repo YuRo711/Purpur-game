@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TimeDuration>k__BackingField: 7
-  <Acceleration>k__BackingField: 0.025
+  <Acceleration>k__BackingField: 0.05
   <MinDuration>k__BackingField: 2
 --- !u!1 &1464325619
 GameObject:
@@ -1225,7 +1225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TimeDuration>k__BackingField: 7
-  <Acceleration>k__BackingField: 0.025
+  <Acceleration>k__BackingField: 0.05
   <MinDuration>k__BackingField: 2
 --- !u!1001 &8033525333429358268
 PrefabInstance:
