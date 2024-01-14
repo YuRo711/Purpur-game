@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
-    public int score = 0;
+    public int Score { get; private set; } = 0;
     public GameGrid levelGrid;
     public GlobalGameTimer timer;
     public EnemyManager enemyManager;
@@ -33,6 +33,17 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void FinishGame()
     {
         IsGameOver = true;
+    }
+
+    public void RequestScoreIncrease()
+    {
+        photonView.RPC("IncreaseScore", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void IncreaseScore()
+    {
+        Score++;
     }
 
     #endregion

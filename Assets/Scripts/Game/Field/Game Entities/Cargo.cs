@@ -32,7 +32,7 @@ public class Cargo : GameEntity
 
     public void EnterGates(Gates gates)
     {
-        LevelManager.score++;
+        LevelManager.RequestScoreIncrease();
         TakeDamage(1);
         gates.TakeDamage(1);
     }

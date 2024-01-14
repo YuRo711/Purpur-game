@@ -17,6 +17,6 @@ public class ScoreText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textMesh.text = levelManager.score.ToString();
+        textMesh.text = levelManager.Score.ToString();
     }
 }
