@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36930517}
   - component: {fileID: 36930518}
+  - component: {fileID: 36930519}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -178,6 +179,28 @@ MonoBehaviour:
   controlPanelGenerator: {fileID: 90415194}
   soundManager: {fileID: 1471945355}
   <IsGameOver>k__BackingField: 0
+--- !u!114 &36930519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36930516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!224 &90415193 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1690099323735130461, guid: f379ecd444a00d94a9154eb9b209e3ce, type: 3}
@@ -346,6 +369,7 @@ MonoBehaviour:
   startingGatesCount: 1
   startingAsteroidsCount: 0
   soundManager: {fileID: 1471945355}
+  <LevelManager>k__BackingField: {fileID: 0}
 --- !u!114 &939692388
 MonoBehaviour:
   m_ObjectHideFlags: 0

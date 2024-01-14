@@ -60,6 +60,7 @@ MonoBehaviour:
   - ReceiveCharge
   - SendCharge
   - SendRequestToMaster
+  - RestartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

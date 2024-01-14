@@ -3,7 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
@@ -42,13 +42,15 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if(IsGameOver && Input.GetKeyDown(KeyCode.Space))
-            RestartGame();
+        if (IsGameOver && Input.GetKeyDown(KeyCode.Space) && PhotonNetwork.IsMasterClient)
+            photonView.RPC("RestartGame", RpcTarget.AllBuffered);
     }
 
+    [PunRPC]
     private void RestartGame()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("RESTARTING GAME");
+        PhotonNetwork.LoadLevel("Game");
     }
 
     #endregion
