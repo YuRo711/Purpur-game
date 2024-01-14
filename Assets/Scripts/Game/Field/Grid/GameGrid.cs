@@ -45,6 +45,14 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
     private static readonly Random _random = new();
 
+    private static Deck<Type> SpawnDeck = new Deck<Type>(new[]
+    {
+        typeof(Gates),
+        typeof(Cargo),
+        typeof(Asteroid),
+        typeof(Enemy),
+    });
+
     #endregion
 
     #region Private Fields
@@ -128,16 +136,13 @@ public class GameGrid : MonoBehaviourPunCallbacks
         var cargoCount = ObjectCounts[typeof(Cargo)];
         var gateCount = ObjectCounts[typeof(Gates)];
 
-        if (gateCount > cargoCount)
-            return typeof(Cargo);
-
-        if (cargoCount > asteroidsCount || enemiesCount > asteroidsCount)
-            return typeof(Asteroid);
-
-        if (gateCount < 3)
+        if (gateCount < 1)
             return typeof(Gates);
 
-        return typeof(Enemy);
+        if (cargoCount < 1)
+            return typeof(Cargo);
+
+        return SpawnDeck.TakeNext();
     }
 
     private void Generate()

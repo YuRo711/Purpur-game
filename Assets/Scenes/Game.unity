@@ -367,10 +367,10 @@ MonoBehaviour:
   currentId: 0
   signal: {fileID: 0}
   IsGhostHuntEnabled: 1
-  startingEnemiesCount: 1
-  startingCargoCount: 1
-  startingGatesCount: 1
-  startingAsteroidsCount: 0
+  startingEnemiesCount: 0
+  startingCargoCount: 2
+  startingGatesCount: 2
+  startingAsteroidsCount: 2
   soundManager: {fileID: 1471945355}
   <LevelManager>k__BackingField: {fileID: 0}
 --- !u!114 &939692388
@@ -572,7 +572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e7afde40da8b4bb23ce2e09f41c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TimeDuration>k__BackingField: 4
+  <TimeDuration>k__BackingField: 5
+  <Acceleration>k__BackingField: 0.1
+  <MinDuration>k__BackingField: 2
 --- !u!1 &1464325619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e7afde40da8b4bb23ce2e09f41c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TimeDuration>k__BackingField: 4
+  <TimeDuration>k__BackingField: 5
+  <Acceleration>k__BackingField: 0.1
+  <MinDuration>k__BackingField: 2
 --- !u!1001 &8033525333429358268
 PrefabInstance:
   m_ObjectHideFlags: 0
