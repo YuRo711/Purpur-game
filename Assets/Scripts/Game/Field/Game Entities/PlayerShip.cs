@@ -156,6 +156,7 @@ public class PlayerShip : GameEntity
     {
         base.Die();
         PlayAudioClip(deathClip);
+        LevelManager.FinishGame();
     }
 
     #endregion

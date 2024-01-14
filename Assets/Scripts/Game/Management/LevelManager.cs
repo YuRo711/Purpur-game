@@ -30,5 +30,10 @@ public class LevelManager : MonoBehaviour
             enemyManager.enemies.Add(enemy);
     }
 
+    public void FinishGame()
+    {
+        IsGameOver = true;
+    }
+
     #endregion
 }
