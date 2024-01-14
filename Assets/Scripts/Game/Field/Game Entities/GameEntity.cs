@@ -147,7 +147,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        MoveTo(newX, newY, false, ignoreObjectCollision);
+        MoveTo(newX, newY, false, true);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
         isSoundOn = true;
@@ -209,7 +209,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
         CollisionInteractions.TryGetValue(geType, out var action);
         if (action is null)
             return;
-        Debug.Log(name + "colliding with " + cell.GameEntity);
         action.Invoke(cell.GameEntity);
         PlayAudioClip(collisionClip);
     }
