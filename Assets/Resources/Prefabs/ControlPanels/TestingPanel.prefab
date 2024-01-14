@@ -116,6 +116,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7347118462608687539, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
+      propertyPath: <ButtonType>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 51c84b36ddbf6cc4aa84b9f422c4573d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -242,6 +246,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7347118462608687539, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
+      propertyPath: <ButtonType>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b48dc5763e0398428014a3167b0ef55, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -368,6 +376,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7347118462608687539, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
+      propertyPath: <ButtonType>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: ea58161c1b27a444eb51b60ad864b609, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -977,6 +989,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7347118462608687539, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
+      propertyPath: <ButtonType>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 0580b822f268a8249a26965e5c74cd82, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1103,6 +1119,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7347118462608687539, guid: ccdec07d319b9e34fb9599556d8ce2c9, type: 3}
+      propertyPath: <ButtonType>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c74727d02cd83b4d9e1b3746db2ac02, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
