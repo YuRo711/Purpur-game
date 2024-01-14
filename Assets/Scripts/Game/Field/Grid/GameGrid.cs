@@ -213,6 +213,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
         if (objectType == typeof(Signal))
             signal = (Signal)gameEntity;
+
+        gameEntity.CheckForGhost();
     }
 
     #endregion
