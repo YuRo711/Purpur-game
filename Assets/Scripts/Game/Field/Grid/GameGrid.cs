@@ -87,8 +87,8 @@ public class GameGrid : MonoBehaviourPunCallbacks
 
         var oldX = signal.X;
         var oldY = signal.Y;
-        signal.ChangePosition();
-        SpawnRandomSpawnable(oldX, oldY);
+        if(signal.TryChangePosition())
+            SpawnRandomSpawnable(oldX, oldY);
     }
 
     public bool CheckForBorder(int newX, int newY)

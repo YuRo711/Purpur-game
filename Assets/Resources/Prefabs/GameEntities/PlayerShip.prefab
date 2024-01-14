@@ -105,7 +105,7 @@ MonoBehaviour:
   isSoundOn: 0
   <ButtonDeck>k__BackingField: {fileID: 7271721207699500509}
   <ChargeManager>k__BackingField: {fileID: 4872541871077237551}
-  <IsImmortal>k__BackingField: 0
+  <IsImmortal>k__BackingField: 1
   deathClip: death
   movementClip: ship move
   turnClip: turn

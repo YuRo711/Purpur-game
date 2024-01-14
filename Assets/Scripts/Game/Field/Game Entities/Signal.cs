@@ -6,16 +6,17 @@ public class Signal : GameEntity
 {
     #region Public Methods
     
-    public void ChangePosition()
+    public bool TryChangePosition()
     {
         var pos = levelGrid.GetRandomPosition();
         if (pos is null)
         {
-            Die();
+            //Die();
             levelGrid.OnEntityCannotSpawn();
-            return;
+            return false;
         }
         MoveTo(pos.Item1, pos.Item2);
+        return true;
     }
 
     #endregion
