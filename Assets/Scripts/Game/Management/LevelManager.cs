@@ -1,6 +1,7 @@
 using System;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
-
     #region Public Methods
 
     public void AddEntity(GameEntity gameEntity)
@@ -34,6 +34,21 @@ public class LevelManager : MonoBehaviour
     {
         IsGameOver = true;
         Debug.Log("GAME OVER");
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void Update()
+    {
+        if(IsGameOver && Input.GetKeyDown(KeyCode.Space))
+            RestartGame();
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     #endregion
