@@ -44,8 +44,6 @@ public class PlayerShip : GameEntity
         if (levelGrid.CheckForBorder(destX, destY))
             return;
         base.MoveTo(destX, destY, callSync);
-        if (callSync)
-            //Debug.Log("player moved to " + X + " " + Y);
         if (enemyManager is not null)
             enemyManager.LookForPlayer();
     }
@@ -53,7 +51,8 @@ public class PlayerShip : GameEntity
     public override void TurnTo(TurnDirections turnDirections, bool callSync = true)
     {
         base.TurnTo(turnDirections, callSync);
-        PlayAudioClip(turnClip);
+        if (callSync)
+            PlayAudioClip(turnClip);
     }
 
     public void Shoot(TurnDirections shootTurnDirection)
