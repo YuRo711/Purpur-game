@@ -33,7 +33,6 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void FinishGame()
     {
         IsGameOver = true;
-        Debug.Log("GAME OVER");
     }
 
     #endregion
@@ -49,7 +48,6 @@ public class LevelManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RestartGame()
     {
-        Debug.Log("RESTARTING GAME");
         PhotonNetwork.LoadLevel("Game");
     }
 
