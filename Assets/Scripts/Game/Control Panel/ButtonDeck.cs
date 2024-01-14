@@ -35,7 +35,7 @@ namespace Assets.Scripts.Game.Control_Panel
             }
             else
             {
-                Debug.Log("[1/3] request button");
+                //Debug.Log("[1/3] request button");
                 RequestQueue.Enqueue(button);
                 photonView.RPC("RequestButtonFromMasterClient", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
             }
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Game.Control_Panel
         [PunRPC]
         public void RequestButtonFromMasterClient(int requestingClientActorNumber)
         {
-            Debug.Log("[2/3] got request");
+            //Debug.Log("[2/3] got request");
             var ind = TakeNextButtonIndex();
             if (ind == null)
                 return;
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Game.Control_Panel
         [PunRPC]
         public void ReceiveButton(int buttonIndex)
         {
-            Debug.Log("[3/3] got button");
+            //Debug.Log("[3/3] got button");
             var button = RequestQueue.Dequeue();
             button.ButtonType = ButtonTypes[buttonIndex];
         }
