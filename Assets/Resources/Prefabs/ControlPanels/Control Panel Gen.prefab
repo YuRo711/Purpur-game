@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690099323735130461}
   - component: {fileID: 7536978888538595607}
+  - component: {fileID: 6840065562199129463}
   m_Layer: 5
   m_Name: Control Panel Gen
   m_TagString: Untagged
@@ -50,10 +51,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPanels:
   - {fileID: 2468219131767743505, guid: c52d8703692d1804b8da3820c2a155fd, type: 3}
-  - {fileID: 5908547228794487066, guid: c92b3984c01c10b4cb5b3f2530688840, type: 3}
+  - {fileID: 5908547228794487066, guid: d94906bccc548b34783ec1244a5aa77b, type: 3}
   - {fileID: 5908547228794487066, guid: d94906bccc548b34783ec1244a5aa77b, type: 3}
   - {fileID: 5908547228794487066, guid: 1a294de167eb57940833b104ffc7c833, type: 3}
   - {fileID: 5908547228794487066, guid: 1a294de167eb57940833b104ffc7c833, type: 3}
   <ControlPanel>k__BackingField: {fileID: 0}
   isTestingModeEnabled: 0
   testingPanel: {fileID: 1965201136652072909, guid: cb579eda3e14ca34c8f865dde9e8e12a, type: 3}
+--- !u!114 &6840065562199129463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2847868649124174363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
