@@ -20,7 +20,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] public bool isBackground;
 
     public string spawnClip { get; private set; } = "spawn";
-    private string collisionClip = "collision";
+    protected string collisionClip = "collision";
     [SerializeField] protected SoundManager soundManager;
     [SerializeField] protected bool isSoundOn;
 

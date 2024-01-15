@@ -172,6 +172,8 @@ public class PlayerShip : GameEntity
         else
             health = 1;
 
+        collisionClip = "";
+
         CollisionInteractions = new()
         {
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},

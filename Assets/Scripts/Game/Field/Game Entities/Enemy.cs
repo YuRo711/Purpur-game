@@ -122,6 +122,7 @@ public class Enemy : GameEntity
     private void Awake()
     {
         health = 1;
+        
         CollisionInteractions = new()
         {
             {typeof(PlayerShip), e => DamageEntity(e, 1, 1)},

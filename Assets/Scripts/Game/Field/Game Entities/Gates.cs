@@ -35,6 +35,7 @@ public class Gates : GameEntity
             {typeof(Enemy), e => DamageEntity(e, 1, 1)},
             {typeof(Signal), e => DamageEntity(e, 1, 1)},
             {typeof(Asteroid), e => DamageEntity(e, 1, 1)},
+            {typeof(Gates), e => DamageEntity(e, 1, 1)},
         };
     }
 
