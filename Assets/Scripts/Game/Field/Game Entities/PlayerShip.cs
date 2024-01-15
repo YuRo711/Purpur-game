@@ -4,6 +4,7 @@ using Assets.Scripts.Game.Control_Panel;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShip : GameEntity
 {
@@ -11,6 +12,8 @@ public class PlayerShip : GameEntity
     
     private Action<GameEntity> _shootingInteraction;
     private Action<GameEntity> _teleportInteraction;
+    [SerializeField] private Sprite _deadSprite;
+    [SerializeField] private Image shipImage;
 
     #endregion
 
@@ -156,7 +159,8 @@ public class PlayerShip : GameEntity
 
     protected override void Die()
     {
-        base.Die();
+        //base.Die();
+        shipImage.sprite = _deadSprite;
         PlayAudioClip(deathClip);
         LevelManager.FinishGame();
     }

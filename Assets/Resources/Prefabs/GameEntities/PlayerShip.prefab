@@ -101,6 +101,8 @@ MonoBehaviour:
   isBackground: 0
   soundManager: {fileID: 0}
   isSoundOn: 0
+  _deadSprite: {fileID: 21300000, guid: 4ce96eb7d426bb64ba546434ba618ad5, type: 3}
+  shipImage: {fileID: 7253354734085017186}
   <ButtonDeck>k__BackingField: {fileID: 7271721207699500509}
   <ChargeManager>k__BackingField: {fileID: 4872541871077237551}
   <IsImmortal>k__BackingField: 0
