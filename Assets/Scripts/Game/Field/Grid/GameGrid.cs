@@ -145,6 +145,7 @@ public class GameGrid : MonoBehaviourPunCallbacks
         return SpawnDeck.TakeNext();
     }
 
+    [ContextMenu("Generate")]
     private void Generate()
     {
         cellParent.sizeDelta = new Vector2(width * cellSize, height * cellSize);

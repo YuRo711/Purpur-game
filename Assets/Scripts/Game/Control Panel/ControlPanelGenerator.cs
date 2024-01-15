@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -43,6 +44,17 @@ public class ControlPanelGenerator : MonoBehaviour
             panel = playerPanels[index];
         }
         
+        var newPanel = Instantiate(panel, transform);
+        if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
+        {
+            ControlPanel = newControlPanel;
+        }
+    }
+
+    [ContextMenu("Generate")]
+    private void GenerateOnePlayer()
+    {
+        var panel = playerPanels[0];
         var newPanel = Instantiate(panel, transform);
         if (newPanel.TryGetComponent(out ControlPanel newControlPanel))
         {
