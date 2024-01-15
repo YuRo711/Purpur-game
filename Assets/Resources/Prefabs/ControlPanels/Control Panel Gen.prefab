@@ -56,7 +56,7 @@ MonoBehaviour:
   - {fileID: 5908547228794487066, guid: 1a294de167eb57940833b104ffc7c833, type: 3}
   - {fileID: 5908547228794487066, guid: 1a294de167eb57940833b104ffc7c833, type: 3}
   <ControlPanel>k__BackingField: {fileID: 0}
-  isTestingModeEnabled: 1
+  isTestingModeEnabled: 0
   testingPanel: {fileID: 1965201136652072909, guid: cb579eda3e14ca34c8f865dde9e8e12a, type: 3}
 --- !u!114 &6840065562199129463
 MonoBehaviour:
