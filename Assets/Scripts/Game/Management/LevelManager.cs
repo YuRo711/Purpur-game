@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviourPunCallbacks
 {
     #region Public Fields
 
+    [SerializeField] private GameObject GameOverText;
+    [SerializeField] private GameObject RestartInstructionsText;
+
     public int Score { get; private set; } = 0;
     public GameGrid levelGrid;
     public GlobalGameTimer timer;
@@ -33,6 +36,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void FinishGame()
     {
         IsGameOver = true;
+
     }
 
     public void RequestScoreIncrease()
@@ -52,7 +56,17 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (IsGameOver && Input.GetKeyDown(KeyCode.Space) && PhotonNetwork.IsMasterClient)
+        if (!IsGameOver)
+            return;
+
+        GameOverText.SetActive(true);
+
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        RestartInstructionsText.SetActive(true);
+
+        if(Input.GetKeyDown(KeyCode.Space))
             photonView.RPC("RestartGame", RpcTarget.AllBuffered);
     }
 
