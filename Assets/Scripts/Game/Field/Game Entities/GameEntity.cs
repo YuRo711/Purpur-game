@@ -140,6 +140,9 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (entityId != id)
             return;
+        
+        MoveTo(newX, newY, false, true);
+
         health = newHealth;
         if (health <= 0)
         {
@@ -147,7 +150,6 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        MoveTo(newX, newY, false, true);
         LookDirection = new Direction(turnX, turnY);
         TurnTo(TurnDirections.Forward, false);
         isSoundOn = true;
