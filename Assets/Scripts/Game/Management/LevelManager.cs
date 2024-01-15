@@ -75,6 +75,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
         if (!Input.GetKeyDown(KeyCode.Escape))
             return;
 
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("Menu");
     }
 
