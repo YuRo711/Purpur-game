@@ -10,6 +10,6 @@ public class ScoreText : MonoBehaviour
 
     void Update()
     {
-        textMesh.text = levelManager.Score.ToString();
+        textMesh.text = "Score: "+levelManager.Score.ToString();
     }
 }

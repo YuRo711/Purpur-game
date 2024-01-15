@@ -48,6 +48,11 @@ public class LevelManager : MonoBehaviourPunCallbacks
     void IncreaseScore()
     {
         Score++;
+        var bestScore = PlayerPrefs.GetInt("highscore");
+        if(Score > bestScore)
+        {
+            PlayerPrefs.SetInt("highscore", Score);
+        }
     }
 
     #endregion
@@ -55,6 +60,20 @@ public class LevelManager : MonoBehaviourPunCallbacks
     #region Private Methods
 
     private void Update()
+    {
+        CheckForEscape();
+        CheckForGameOver();
+    }
+
+    private void CheckForEscape()
+    {
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
+
+        SceneManager.LoadScene("Menu");
+    }
+
+    private void CheckForGameOver()
     {
         if (!IsGameOver)
             return;
@@ -66,7 +85,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
         RestartInstructionsText.SetActive(true);
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             photonView.RPC("RestartGame", RpcTarget.AllBuffered);
     }
 
