@@ -37,7 +37,6 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void FinishGame()
     {
         IsGameOver = true;
-
     }
 
     public void RequestScoreIncrease()
