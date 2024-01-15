@@ -88,7 +88,7 @@ public class PlayerShip : GameEntity
             MoveTo(targetCell.X, targetCell.Y, true, true);
         }
         CallSync();
-        
+        PlayAudioClip(teleportClip);
     }
 
     public override void TakeDamage(int damage)

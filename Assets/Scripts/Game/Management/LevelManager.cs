@@ -2,6 +2,7 @@ using System;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviourPunCallbacks
 {
@@ -42,6 +43,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void RequestScoreIncrease()
     {
         photonView.RPC("IncreaseScore", RpcTarget.All);
+        soundManager.PlayAudioClip("deliver");
     }
 
     [PunRPC]

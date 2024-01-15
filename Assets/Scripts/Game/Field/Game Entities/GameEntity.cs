@@ -215,7 +215,7 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
 
     protected void PlayAudioClip(string clipLink)
     {
-        if (clipLink is null || !isSoundOn)
+        if (clipLink is null)
             return;
         soundManager.PlayAudioClip(clipLink);
     }
