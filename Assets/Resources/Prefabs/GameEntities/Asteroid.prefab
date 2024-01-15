@@ -137,7 +137,5 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: asteroid spawn
-  collisionClip: h
   soundManager: {fileID: 0}
   isSoundOn: 0

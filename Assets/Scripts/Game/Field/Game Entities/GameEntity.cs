@@ -19,8 +19,8 @@ public abstract class GameEntity : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] protected EnemyManager enemyManager;
     [SerializeField] public bool isBackground;
 
-    [SerializeField] public string spawnClip;
-    [SerializeField] protected string collisionClip;
+    public string spawnClip { get; private set; } = "spawn";
+    protected string collisionClip = "collision";
     [SerializeField] protected SoundManager soundManager;
     [SerializeField] protected bool isSoundOn;
 

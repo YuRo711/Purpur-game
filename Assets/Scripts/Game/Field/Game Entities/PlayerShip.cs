@@ -27,7 +27,7 @@ public class PlayerShip : GameEntity
     [SerializeField] private string movementClip;
     [SerializeField] private string turnClip;
     [SerializeField] private string shotClip;
-    [SerializeField] private string pushCargoClip;
+    [SerializeField] private string teleportClip;
 
     #endregion
 
@@ -74,7 +74,10 @@ public class PlayerShip : GameEntity
         var targetCell = FindFirstEntityOrLastCell(teleportTurnDirection);
 
         if (targetCell == null)
+        {
+            PlayAudioClip(teleportClip);
             return;
+        }
 
         if(targetCell.GameEntity is GameEntity gameEntity)
         {
@@ -85,6 +88,7 @@ public class PlayerShip : GameEntity
             MoveTo(targetCell.X, targetCell.Y, true, true);
         }
         CallSync();
+        
     }
 
     public override void TakeDamage(int damage)
@@ -148,7 +152,6 @@ public class PlayerShip : GameEntity
             return;
         }
         entity.MoveTo(newCargoX, newCargoY);
-        PlayAudioClip(pushCargoClip);
     }
 
     protected override void Die()

@@ -97,8 +97,6 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: enemy spawn
-  collisionClip: hi
   soundManager: {fileID: 0}
   isSoundOn: 0
   lookX: 0

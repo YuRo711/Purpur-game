@@ -99,8 +99,6 @@ MonoBehaviour:
   levelGrid: {fileID: 0}
   enemyManager: {fileID: 0}
   isBackground: 0
-  spawnClip: 
-  collisionClip: hit
   soundManager: {fileID: 0}
   isSoundOn: 0
   <ButtonDeck>k__BackingField: {fileID: 7271721207699500509}
@@ -110,7 +108,7 @@ MonoBehaviour:
   movementClip: ship move
   turnClip: turn
   shotClip: shot
-  pushCargoClip: carh
+  teleportClip: teleport
 --- !u!114 &5655577527050780640
 MonoBehaviour:
   m_ObjectHideFlags: 0
