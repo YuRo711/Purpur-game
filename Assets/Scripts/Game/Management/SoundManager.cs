@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ public class SoundManager : MonoBehaviour
     {
         var path = ClipsDirectory + clipLink;
         var clip = Resources.Load<AudioClip>(path);
-        if (clip is null)
+        if (clip is null || audioSource.isPlaying)
             return;
         audioSource.clip = clip;
         audioSource.Play();
