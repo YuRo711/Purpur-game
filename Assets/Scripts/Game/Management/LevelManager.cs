@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,15 +40,14 @@ public class LevelManager : MonoBehaviourPunCallbacks
         IsGameOver = true;
     }
 
-    public void RequestUpdateScore()
+    public void RequestIncreaseScore()
     {
         Score++;
-        photonView.RPC("IncreaseScore", RpcTarget.All, Score);
-        soundManager.PlayAudioClip("deliver");
+        StartCoroutine(CheckScore());
     }
 
     [PunRPC]
-    void IncreaseScore(int newScore)
+    void UpdateScore(int newScore)
     {
         if (newScore <= Score)
             return;
@@ -68,6 +68,13 @@ public class LevelManager : MonoBehaviourPunCallbacks
     {
         CheckForEscape();
         CheckForGameOver();
+    }
+
+    private IEnumerator CheckScore()
+    {
+        yield return new WaitForSeconds(1);
+        photonView.RPC("UpdateScore", RpcTarget.All, Score);
+        soundManager.PlayAudioClip("deliver");
     }
 
     private void CheckForEscape()
