@@ -39,16 +39,20 @@ public class LevelManager : MonoBehaviourPunCallbacks
         IsGameOver = true;
     }
 
-    public void RequestScoreIncrease()
+    public void RequestUpdateScore()
     {
-        photonView.RPC("IncreaseScore", RpcTarget.All);
+        Score++;
+        photonView.RPC("IncreaseScore", RpcTarget.All, Score);
         soundManager.PlayAudioClip("deliver");
     }
 
     [PunRPC]
-    void IncreaseScore()
+    void IncreaseScore(int newScore)
     {
-        Score++;
+        if (newScore <= Score)
+            return;
+
+        Score = newScore;
         var bestScore = PlayerPrefs.GetInt("highscore");
         if(Score > bestScore)
         {
