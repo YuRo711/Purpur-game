@@ -9,9 +9,7 @@ public class PlayerItem : MonoBehaviour, IPunObservable
 {
     #region Serializable Fields
 
-    [SerializeField] private Image readyImage;
-    [SerializeField] private Sprite trueSprite;
-    [SerializeField] private Sprite falseSprite;
+    [SerializeField] private Color readyColor;
     [SerializeField] private TMP_Text nicknameText;
     [SerializeField] private PhotonView photonView;
 
@@ -50,21 +48,20 @@ public class PlayerItem : MonoBehaviour, IPunObservable
     public void GetReady()
     {
         Ready = true;
-        UpdateImage();
     }
-    
+
     #endregion
-    
+
     #region Private Methods
 
-    [PunRPC]
-    private void UpdateImage()
+    private void Update()
     {
-        readyImage.sprite = Ready ? trueSprite : falseSprite;
+        if (Ready)
+            nicknameText.color = readyColor;
     }
-    
+
     #endregion
-    
+
     #region IPunObservable Callbacks
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -79,7 +76,6 @@ public class PlayerItem : MonoBehaviour, IPunObservable
             Ready = (bool)stream.ReceiveNext();
             UserNickname = (string)stream.ReceiveNext();
             nicknameText.text = UserNickname;
-            photonView.RPC("UpdateImage", RpcTarget.AllBuffered);
         }
     }
 

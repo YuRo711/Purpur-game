@@ -52,9 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e810ce7dd1544d7aa41835b94ed30381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  readyImage: {fileID: 0}
-  trueSprite: {fileID: 21300000, guid: 4604904a79e571059a23c3ebb4393c0f, type: 3}
-  falseSprite: {fileID: 21300000, guid: d4975f88e7c119237850c2531833f472, type: 3}
+  readyColor: {r: 0.90588236, g: 0.7294118, b: 0.3137255, a: 1}
   nicknameText: {fileID: 144242795932322666}
   photonView: {fileID: 4240557331858180144}
 --- !u!114 &4240557331858180144
